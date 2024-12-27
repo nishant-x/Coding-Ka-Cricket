@@ -1,7 +1,7 @@
 /* General styles for the main container */
 .contest-main-container {
   background-color: #f7f9fcf6;
-  background-image: url('../../assets/contestimg.png');
+  background-image: url('../../../assets/contestlogin.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

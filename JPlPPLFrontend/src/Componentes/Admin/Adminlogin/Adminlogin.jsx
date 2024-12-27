@@ -63,7 +63,7 @@ const AdminLogin = () => {
             required
           />
 
-          <input className="admin-form-submit" type="submit" value="Submit" />
+          <input className="admin-form-submit" type="submit" value="Login" />
         </form>
       </div>
     </div>

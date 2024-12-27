@@ -66,7 +66,7 @@ const ContestLogin = () => {
             required
           />
 
-          <input className="contest-form-submit" type="submit" value="Submit" />
+          <input className="contest-form-submit" type="submit" value="Join" />
         </form>
       </div>
     </div>

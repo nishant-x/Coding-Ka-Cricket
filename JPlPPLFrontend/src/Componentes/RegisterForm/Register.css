@@ -6,6 +6,8 @@
   align-items: center;
   min-height: 100vh;
   background-color: #f9f9fb;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
 }
 
 .registration-form-container {
@@ -19,7 +21,7 @@
 
 .registration-form-container h2 {
   text-align: center;
-  color: #333;
+  color: cadetblue;
   margin-bottom: 20px;
 }
 
@@ -51,7 +53,7 @@
 .registration-form-group input[type="email"]:focus,
 .registration-form-group input[type="file"]:focus,
 .registration-form-group select:focus {
-  border-color: #007bff;
+  border-color: cadetblue;
   outline: none;
 }
 
@@ -65,7 +67,7 @@
   font-size: 18px;
   font-weight: bold;
   color: #fff;
-  background-color: #007bff;
+  background-color: cadetblue;
   border: none;
   border-radius: 4px;
   cursor: pointer;

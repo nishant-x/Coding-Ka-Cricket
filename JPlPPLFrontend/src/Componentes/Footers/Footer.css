@@ -1,5 +1,4 @@
 .footer {
-  
   display: flex;
   flex-wrap: wrap;
   background-color: #101215;
@@ -18,7 +17,7 @@
 .footer-head{
   margin-bottom: 20px;
 }
-.list-con{
+.list-con{  
   padding-bottom: 5px;
 }
 
