@@ -122,9 +122,24 @@ app.post('/contestlogin', async (req, res) => {
     }
   } catch (err) {
     console.error('Server error during login:', err);
-    res.status(500).json({ error: 'Server error. Please try again later.' });
+    res.status(500).json({ error: 'Server error. Please try again later.' });a
   }
 });
+
+app.get('/contesthomepage', async (req, res) => {
+  try {
+    // Fetch all problem statements
+    const problems = await ProblemStatement.find();
+
+    // Send the problems in the response
+    res.status(200).json(problems);
+  } catch (err) {
+    console.error("Error fetching problems:", err);
+    res.status(500).json({ error: 'Failed to fetch problems', details: err.message });
+  }
+});
+
+
 
 app.post('/adminlogin', async (req, res) => {
   const { email, enrollment } = req.body;

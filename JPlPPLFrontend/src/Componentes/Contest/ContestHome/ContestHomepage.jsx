@@ -4,26 +4,28 @@ import axios from 'axios';
 import './ContestHomepage.css';
 
 const ContestHomepage = () => {
-
   const location = useLocation(); // Access navigation state
   const { user } = location.state || {}; // Retrieve user from state
 
-  const [problems, setProblems] = useState([]); // State to hold problem data
+  const [problems, setProblems] = useState([]); // Declare state to hold problems
+  const [loading, setLoading] = useState(true); // Loading state for fetching problems
 
   useEffect(() => {
-    fetchProblems(); // Fetch problems when component mounts
-  }, []);
+    if (!user) return; // Stop fetching if user is not defined
 
-  const fetchProblems = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/allquestions");
-      setProblems(response.data); // Set the problem data into state
-    } catch (error) {
-      console.error("There was an error fetching the problems!", error);
-    }
-  };
+    // Fetch problems data
+    axios
+      .get(`http://localhost:5000/contesthomepage`) // Correct template literal usage
+      .then(response => {
+        setProblems(response.data); // Set fetched problems
+        setLoading(false); // Set loading to false
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+        setLoading(false); // Set loading to false even if there's an error
+      });
+  }, [user]);
 
-  // Ensure you're using correct fields from the user object
   const userDetails = {
     name: user?.name,
     enrollment: user?.enrollment,
@@ -31,8 +33,12 @@ const ContestHomepage = () => {
     college: user?.college,
     year: user?.year,
     branch: user?.branch,
-    participation: user?.participation,
+    participation: user?.league,
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Display loading message
+  }
 
   return (
     <div className="problem-stat-container">
