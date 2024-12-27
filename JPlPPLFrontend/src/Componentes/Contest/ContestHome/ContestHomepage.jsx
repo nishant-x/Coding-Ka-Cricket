@@ -5,7 +5,7 @@ import './ContestHomepage.css'
 const ContestHomepage = () => {
 
   const location = useLocation(); // Access navigation state
-  const { userId } = location.state || {}; // Retrieve userId from state
+  const { user } = location.state || {}; // Retrieve userId from state
   const problems = [
     { id: 1, statement: 'Problem 1: Solve the sorting problem' },
     { id: 2, statement: 'Problem 2: Implement a queue system' },
@@ -14,15 +14,15 @@ const ContestHomepage = () => {
     { id: 5, statement: 'Problem 5: Implement a graph traversal algorithm' },
     { id: 6, statement: 'Problem 6: Create a file management system' },
   ];
-
+  
   const userDetails = {
-    name: 'John Doe',
-    enrollment: '12345',
-    email: 'johndoe@example.com',
-    college: 'XYZ College',
-    year: '3rd Year',
-    branch: 'Computer Science',
-    participation: 'JPL',
+    name: user.name,
+    enrollment: user.enrollment,
+    email: user.name,
+    college: user.name,
+    year: user.name,
+    branch: user.name,
+    participation: user.name,
   };
 
   return (

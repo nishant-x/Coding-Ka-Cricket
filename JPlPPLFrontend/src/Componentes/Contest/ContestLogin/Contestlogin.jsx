@@ -26,7 +26,7 @@ const ContestLogin = () => {
       const data = await response.json();
       if (response.ok) {
         // If credentials are valid, navigate to the ContestHomepage page
-        navigate('/contesthomepage', { state: { userId: data.userId } });
+        navigate('/contesthomepage', { state: { user: data.user } });
       } else {
         // Show an error message if validation fails
         alert(data.error || 'Invalid credentials. Please try again.');

@@ -115,7 +115,7 @@ app.post('/contestlogin', async (req, res) => {
     });
 
     if (user) {
-      res.status(200).json({ message: 'Welcome to contest page', userId: user._id });
+      res.status(200).json({ message: 'Welcome to contest page', user });
     } else {
       res.status(400).json({ error: 'Invalid email or enrollment number' });
     }
