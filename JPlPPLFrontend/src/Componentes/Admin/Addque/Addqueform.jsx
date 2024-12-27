@@ -63,36 +63,36 @@ const Addqueform = () => {
   };
 
   return (
-    <div className="Addqueform_FormContainer">
-      <h2 className="Addqueform_FormTitle">Add Questions</h2>
+    <div className="addque-form-container">
+      <h2 className="addque-form-title">Add Questions</h2>
 
-      <form className="Addqueform_AddForm" onSubmit={handleSubmit}>
-        <label className="Addqueform_FormLabel" htmlFor="question">
+      <form className="addque-form-add-form" onSubmit={handleSubmit}>
+        <label className="addque-form-label" htmlFor="question">
           Question Title:
         </label>
         <input
-          className="Addqueform_FormInput"
+          className="addque-form-input"
           type="text"
           id="question"
           name="question"
           required
         />
 
-        <label className="Addqueform_FormLabel" htmlFor="description">
+        <label className="addque-form-label" htmlFor="description">
           Description:
         </label>
         <textarea
-          className="Addqueform_FormTextarea"
+          className="addque-form-textarea"
           id="description"
           name="description"
           required
         />
 
-        <label className="Addqueform_FormLabel">Test Cases:</label>
+        <label className="addque-form-label">Test Cases:</label>
         {testCases.map((testCase, index) => (
-          <div key={index} className="Addqueform_TestcaseGroup">
+          <div key={index} className="addque-testcase-group">
             <input
-              className="Addqueform_FormInput"
+              className="addque-form-input"
               type="text"
               placeholder={`Input ${index + 1}`}
               value={testCase.input}
@@ -102,7 +102,7 @@ const Addqueform = () => {
               required
             />
             <input
-              className="Addqueform_FormInput"
+              className="addque-form-input"
               type="text"
               placeholder={`Expected Output ${index + 1}`}
               value={testCase.expectedOutput}
@@ -114,7 +114,7 @@ const Addqueform = () => {
             {testCases.length > 1 && (
               <button
                 type="button"
-                className="Addqueform_RemoveBtn"
+                className="addque-remove-btn"
                 onClick={() => removeTestCase(index)}
               >
                 <IoIosRemoveCircleOutline />
@@ -123,16 +123,16 @@ const Addqueform = () => {
           </div>
         ))}
 
-        <button type="button" className="Addqueform_TestcaseAddBtn" onClick={addTestCase}>
+        <button type="button" className="addque-testcaseadd-btn" onClick={addTestCase}>
           + Add Test Case
         </button>
 
-        <div className="Addqueform_SubmitContainer">
+        <div className="addque-submit-container">
           {/* Show loader when loading */}
           {loading ? (
             <ClipLoader color="#007bff" size={40} />
           ) : (
-            <input className="Addqueform_FormSubmit" type="submit" value="Submit" />
+            <input className="addque-form-submit" type="submit" value="Submit" />
           )}
         </div>
       </form>

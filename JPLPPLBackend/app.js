@@ -83,12 +83,13 @@ app.get('/allquestions', async (req, res) => {
   try {
     // Fetch only title and description from the database
     const problems = await ProblemStatement.find({}, 'title description');
-    res.status(200).json(problems);
+    res.status(200).json(problems); // Respond with the problems data
   } catch (err) {
     console.error("Error fetching all questions:", err);
     res.status(500).json({ error: 'Failed to fetch questions' });
   }
 });
+
 
 // PUT route for updating problem statement
 app.delete("/delete-question/:id", async (req, res) => {
