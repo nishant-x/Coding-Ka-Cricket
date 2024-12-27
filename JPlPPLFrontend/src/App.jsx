@@ -9,11 +9,11 @@ import Cursor from "./Componentes/Cursor/Cursor";
 import './Componentes/Cursor/Cursor.css';
 // import Compiler from "./Componentes/Compiler/CodeEditor";
 import Addqueform from "./Componentes/Admin/Addque/Addqueform";
-import AllQuestions from "./Componentes/Admin/ViewQue/AllQuestions";
 import Contestlogin from "./Componentes/Contest/Contestlogin/Contestlogin";
 import ContestHomepage from "./Componentes/Contest/ContestHome/ContestHomepage";
 import AdminLogin from "./Componentes/Admin/Adminlogin/Adminlogin";
 import AdminHomepage from "./Componentes/Admin/Adminhome/Adminhomepage";
+import Allquestions from "./Componentes/Admin/ViewQue/AllQuestions";
 
 
 const App = () => {
@@ -32,7 +32,7 @@ const App = () => {
           <Route path="/contestlogin" element={<Contestlogin/>} />
           <Route path="/contesthomepage" element={<ContestHomepage/>} />
           <Route path="/add-question" element={<Addqueform/>} />
-          <Route path="/allquestions" element={<AllQuestions/>} />
+          <Route path="/allquestions" element={<Allquestions/>} />
           <Route path="/adminlogin" element={<AdminLogin/>} />
           <Route path="/adminhomepage" element={<AdminHomepage/>} />
           

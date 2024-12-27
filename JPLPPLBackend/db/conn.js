@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // Make a connection with MongoDB
-let connect = mongoose.connect('mongodb://localhost:27017/StudentRegistrationData')
+let connect = mongoose.connect('mongodb://127.0.0.1:27017/StudentRegistrationData')
     .then(() => {
         console.log('Connected to MongoDB');
     })
@@ -10,4 +10,3 @@ let connect = mongoose.connect('mongodb://localhost:27017/StudentRegistrationDat
         console.log(err);
     });
 
-module.exports = connect;
