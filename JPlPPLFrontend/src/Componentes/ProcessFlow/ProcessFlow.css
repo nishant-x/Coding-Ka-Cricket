@@ -1,0 +1,191 @@
+.process-flow-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f7f7f7;
+}
+.Processing_steps_collection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+.process-step {
+  position: relative;
+  background: #ffffff;
+  border-radius: 0px 69px 29px 44px;
+  -webkit-border-radius: 0px 69px 29px 44px;
+  -moz-border-radius: 0px 69px 29px 44px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 14rem;
+  height: 24rem;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 2;
+  overflow: hidden; /* Ensures the background doesn't overflow */
+}
+
+
+.process-step::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px; /* Adjust size for background image */
+  height: 150px;
+  background-size: contain; /* Ensures the image scales properly */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents tiling */
+  opacity: 0.3; /* Makes the background faint */
+  z-index: 1; /* Places the background behind the content */
+}
+
+.process-step.step-1::before {
+  background-image: url("https://png.pngtree.com/png-vector/20221224/ourmid/pngtree-register-now-banner-design-transparent-background-png-image_6535781.png");
+}
+
+.process-step.step-2::before {
+  background-image: url("https://th.bing.com/th/id/R.5232029a9047ad86459e233abbb74af5?rik=8vpD6T6dhGEiGw&riu=http%3a%2f%2fwww.pngmart.com%2ffiles%2f6%2fCricket-PNG-Transparent.png&ehk=yhXVWOIyR55Vk4SkAa5TZRg8%2fdX2fEtgs576oeFsWyk%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1");
+}
+
+.process-step.step-3::before {
+  background-image: url("https://clipart-library.com/2023/team-building-clipart-xl.png");
+}
+
+.process-step.step-4::before {
+  background-image: url("https://walterstown.com/wp-content/uploads/2019/09/knockout-logo.png");
+}
+
+.process-step.step-5::before {
+  background-image: url("https://png.pngtree.com/png-vector/20221111/ourmid/pngtree-cricket-match-story-png-image_6442194.png");
+}
+
+.process-step.align-left {
+  margin-top: 0;
+}
+
+.process-step.align-right {
+  margin-top: 80px; /* Adjusts the alignment for right steps */
+}
+
+.process-step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.step-icon {
+  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  color: #282a29cb;
+  z-index: 2; /* Ensures it stays above the background */
+  position: relative;
+}
+
+.step-icon:hover {
+  color: #4a90e2;
+}
+
+.step-content {
+  text-align: center;
+  z-index: 2; /* Ensures text stays above background */
+  position: relative;
+}
+
+.step-header {
+  margin-bottom: 15px;
+  font-size: 30px;
+}
+
+.step-number {
+  font-size: 30px;
+  color: cadetblue;
+  font-weight: bold;
+}
+
+.step-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin: 10px 0;
+}
+
+.step-description {
+  font-size: 14px;
+  color: #666;
+  font-weight: bold;
+}
+
+.process-step::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.15; /* Adjust opacity for a subtle effect */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Assigning different colors to each step */
+.process-step.step-1::after {
+  background-color: #ff7f50; /* Coral */
+}
+
+.process-step.step-2::after {
+  background-color: #6495ed; /* Cornflower Blue */
+}
+
+.process-step.step-3::after {
+  background-color: #3cb371; /* Medium Sea Green */
+}
+
+.process-step.step-4::after {
+  background-color: #ffa500; /* Orange */
+}
+
+.process-step.step-5::after {
+  background-color: #9370db; /* Medium Purple */
+}
+
+/* Hover effect */
+.process-step:hover::after {
+  opacity: 0.3; /* Make the background color more visible */
+  transform: scale(1.05); /* Slight scaling for hover effect */
+}
+
+.process-step:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Enhance shadow effect */
+}
+
+
+
+
+
+.Process-head{
+  text-align: center;
+}
+.Process-head::after {
+  content: 'Process Flow';
+  top: 26px;
+  color: #2323233d;
+  left: -150px;
+  font-size: xxx-large;
+  position: relative;
+  /* z-index: -1; */
+}
+.Process_heading{
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}

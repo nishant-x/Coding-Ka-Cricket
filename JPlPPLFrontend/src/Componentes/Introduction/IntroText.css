@@ -1,0 +1,118 @@
+.IntroText-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 100vw; */
+  height: 90vh;
+  padding: 20px;
+  flex-wrap: wrap;
+  background-image: url("https://images.hdqwalls.com/download/white-cube-pattern-4k-bu-1920x1080.jpg");
+  background-color: #f8f9fade;
+  background-repeat: no-repeat; /* Avoid repeating */
+  background-position: center; /* Center the image */
+  background-size: cover; /* Cover the entire footer */
+  background-blend-mode: overlay; /* Blend with background color */
+}
+canvas {
+  mix-blend-mode: multiply;
+}
+.IntroText-left {
+  flex: 1;
+  padding: 20px;
+  max-width: 50%;
+  text-align: left;
+  margin-left: 5.5rem;
+}
+
+.IntroText-right {
+  flex: 1;
+  padding: 20px;
+  max-width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1.5rem;
+}
+
+.IntroText-part {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #5f9ea0;
+}
+
+.IntroText-detail {
+  font-size: 1.2rem;
+  color: #06080a;
+  line-height: 1.8;
+  word-spacing: 10px; /* This should increase the space between words */
+  display: block; /* Ensures it works on block-level text */
+}
+
+.IntroText-detail span {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 768px) {
+  .IntroText-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .IntroText-left,
+  .IntroText-right {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .IntroText-part {
+    font-size: 1.5rem;
+  }
+
+  .IntroText-detail {
+    font-size: 1rem;
+  }
+}
+
+iframe {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* Register Button Container Alignment */
+.register-buttons {
+  display: flex;
+  margin-top: 20px; /* Adds some space above the button */
+}
+
+.register-buttons .register-btn {
+  background: linear-gradient(
+    to right,
+    #5f9ea0,
+    #0056b3
+  ); /* Gradient from left (cadetblue) to right (blue) */
+  color: white;
+  font: bold 1.2rem "Helvetica Neue";
+  padding: 13px 50px;
+  border: none;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.register-buttons .register-btn:hover {
+  background: linear-gradient(
+    to right,
+    #0056b3,
+    #5f9ea0
+  ); /* Reverse gradient on hover */
+  transform: scale(1.05);
+}
+
+/* Ensure the container itself is centered on smaller screens */
+@media (max-width: 768px) {
+  .register-buttons {
+    justify-content: center; /* Ensures the button is centered on mobile as well */
+  }
+}

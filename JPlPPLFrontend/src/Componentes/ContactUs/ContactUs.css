@@ -1,0 +1,292 @@
+/* ContactUs.css */
+
+/* General Styling */
+.Cmain_contact {
+  font-family: 'Arial', sans-serif;
+  background-color: #f1f5f9;
+  padding: 40px 20px;
+  color: #333;
+  transition: background-color 0.5s ease;
+}
+
+.Cmain_contact:hover {
+  background-color: #e9f1fb;
+}
+
+.Ccontact_info {
+  display: flex;
+  justify-content: space-between; /* Distribute the space evenly */
+  gap: 30px;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+.Cheading h2 {
+  font-size: 2.5rem;
+  color: cadetblue;
+  text-align: center;
+  margin-bottom: 10px;
+  animation: slideInFromTop 1s ease-out;
+}
+
+.Cheading h4 {
+  font-size: 1.2rem;
+  color: #555;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 40px;
+  animation: slideInFromTop 1.2s ease-out;
+}
+
+.Ccontact_box {
+  display: flex;
+  gap: 30px;
+  animation: fadeIn 1.5s ease-in-out;
+  flex-wrap: wrap; /* Ensures it wraps in small screens */
+}
+
+.Cboxs {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  flex: 1; /* Allow the boxes to take equal space */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.Cboxs:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.Cicon {
+  font-size: 1.6rem;
+  color: cadetblue;
+  font-weight: bold;
+  transition: transform 0.3s ease-in-out;
+}
+
+.Cicon:hover {
+  transform: rotate(10deg);
+}
+
+.Cboxs p {
+  color: #777;
+  margin-top: 12px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.Cboxs h3 {
+  font-size: 1.2rem;
+  color: rgb(75, 144, 147);
+  margin-top: 12px;
+  font-weight: 400;
+  transition: color 0.3s ease-in-out;
+}
+
+.Cboxs h3:hover {
+  color: #0056b3;
+}
+
+/* Contact Form Styling */
+.Ccontact_form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 40px;
+  animation: fadeInUp 1.5s ease-in-out;
+}
+
+.Cleft {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0.98);
+  animation: slideInFromLeft 1s ease-out;
+}
+
+.Cleft h1 {
+  font-size: 2.8rem;
+  color: cadetblue;
+  margin-bottom: 15px;
+}
+
+.Cleft h1:hover {
+  transform: scale(1.05);
+}
+
+.Cright {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  transform: translateY(10px);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.Cright:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.CName_Email {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.CName_Email input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.CName_Email input:focus {
+  border-color: #007BFF;
+  transform: scale(1.05);
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: #007BFF;
+  transform: scale(1.05);
+}
+
+textarea {
+  height: 160px;
+  resize: none;
+}
+
+input[type="submit"] {
+  background-color: #007BFF;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .Cmain_contact {
+    padding: 20px 15px;
+  }
+
+  .Ccontact_info {
+    flex-direction: column;
+  }
+
+  .Ccontact_box {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .Ccontact_form {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .Cleft,
+  .Cright {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .Cheading h2 {
+    font-size: 2rem;
+  }
+
+  .Cheading h4 {
+    font-size: 1rem;
+  }
+
+  .Cleft h1 {
+    font-size: 2.2rem;
+  }
+
+  .CName_Email input,
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    font-size: 0.9rem;
+  }
+
+  input[type="submit"] {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}

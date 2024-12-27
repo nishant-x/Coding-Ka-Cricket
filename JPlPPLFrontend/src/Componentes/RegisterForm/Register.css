@@ -1,0 +1,99 @@
+
+
+.registration-fullRegister {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f9f9fb;
+}
+
+.registration-form-container {
+  width: 90%;
+  max-width: 600px;
+  background: #fff;
+  padding: 20px 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.registration-form-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Form Styling */
+.registration-form-group {
+  margin-bottom: 15px;
+}
+
+.registration-form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.registration-form-group input[type="text"],
+.registration-form-group input[type="email"],
+.registration-form-group input[type="file"],
+.registration-form-group select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.registration-form-group input[type="text"]:focus,
+.registration-form-group input[type="email"]:focus,
+.registration-form-group input[type="file"]:focus,
+.registration-form-group select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.registration-error-border {
+  border-color: #ff4d4f;
+}
+
+.registration-btn-submit {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.registration-btn-submit:hover {
+  background-color: #0056b3;
+}
+
+/* Error Messages */
+.registration-error {
+  color: #ff4d4f;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .registration-form-container {
+      padding: 15px 20px;
+  }
+
+  .registration-form-container h2 {
+      font-size: 1.5rem;
+  }
+
+  .registration-btn-submit {
+      font-size: 16px;
+  }
+}

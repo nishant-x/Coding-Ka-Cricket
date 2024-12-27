@@ -1,0 +1,132 @@
+/* Container for the form */
+.addque-form-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Form title */
+.addque-form-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: cadetblue;
+}
+
+/* Labels */
+.addque-form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Input fields */
+.addque-form-input,
+.addque-form-textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.addque-form-input:focus,
+.addque-form-textarea:focus {
+  border-color: cadetblue;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+/* Submit button */
+.addque-form-submit {
+  width: 100%;
+  padding: 10px;
+  background-color: cadetblue;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addque-form-submit:hover {
+  background-color: #45a049;
+}
+
+/* Add button */
+.addque-testcaseadd-btn {
+  margin-bottom: 10px;
+  width: 25%;
+  padding: 10px;
+  font-size: 13px;
+  background-color: #3b79e4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addque-testcaseadd-btn:hover {
+  background-color: #4ba39c;
+}
+
+/* Test case group */
+.addque-testcase-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Inputs for test cases */
+.addque-testcase-group .addque-form-input {
+  flex: 1;
+}
+
+/* Remove button */
+.addque-remove-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.addque-remove-btn:hover {
+  color: #e60000;
+  transform: scale(1.2);
+}
+
+.addque-remove-btn:focus {
+  outline: 2px solid #e60000;
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .addque-form-container {
+    padding: 15px;
+  }
+
+  .addque-form-title {
+    font-size: 20px;
+  }
+}
+
+/* Submit container */
+.addque-submit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

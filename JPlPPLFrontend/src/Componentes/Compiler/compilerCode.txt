@@ -1,0 +1,420 @@
+
+......CodeEditor................................
+
+import { useRef, useState } from "react";
+import { Editor } from "@monaco-editor/react";
+import LanguageSelector from "./languages";
+import { CODE_SNIPPETS } from "../constants";
+import Output from "./Output";
+
+const CodeEditor = () => {
+  const editorRef = useRef();
+  const [value, setValue] = useState("");
+  const [language, setLanguage] = useState("javascript");
+
+  const onMount = (editor) => {
+    editorRef.current = editor;
+    editor.focus();
+  };
+
+  const onSelect = (language) => {
+    setLanguage(language);
+    setValue(CODE_SNIPPETS[language]);
+  };
+
+  return (
+    <div style={{ display: "flex", gap: "20px" }}>
+      <div style={{ width: "50%" }}>
+        <LanguageSelector language={language} onSelect={onSelect} />
+        
+        <Editor
+          options={{
+            minimap: {
+              enabled: false,
+            },
+          }}
+          height="75vh"
+          theme="vs-dark"
+          language={language}
+          defaultValue={CODE_SNIPPETS[language]}
+          onMount={onMount}
+          value={value}
+          onChange={(value) => setValue(value)}
+        />
+      </div>
+      <Output editorRef={editorRef} language={language} />
+    </div>
+  );
+};
+
+export default CodeEditor;
+
+..........................Language.jsx......................................
+
+import { useState } from "react";
+import { LANGUAGE_VERSIONS } from "../constants";
+
+const languages = Object.entries(LANGUAGE_VERSIONS);
+const ACTIVE_COLOR = "#3182ce"; // Blue color for active item
+
+const LanguageSelector = ({ language, onSelect }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
+
+  return (
+    <div style={{ marginLeft: "10px",
+      position: "relative",zIndex:1
+    }}>
+      <p style={{ marginBottom: "10px", fontSize: "18px" }}>Language:</p>
+      <div>
+        <button
+          onClick={handleMenuToggle}
+          style={{
+            padding: "8px 16px",
+            backgroundColor: "#2b6cb0",
+            color: "#fff",
+            border: "none",
+            cursor: "pointer",
+            borderRadius: "4px",
+          }}
+        >
+          {language}
+        </button>
+        {isMenuOpen && (
+          <div
+            style={{
+              backgroundColor: "#110c1b",
+              position: "absolute",
+              borderRadius: "4px",
+              marginTop: "8px",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            {languages.map(([lang, version]) => (
+              <div
+                key={lang}
+                style={{
+                  color: lang === language ? ACTIVE_COLOR : "#ccc",
+                  backgroundColor: lang === language ? "#1a202c" : "transparent",
+                  padding: "8px 16px",
+                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+                onClick={() => {
+                  onSelect(lang);
+                  setIsMenuOpen(false); // Close menu after selection
+                }}
+              >
+                <span>{lang}</span>
+                <span style={{ fontSize: "12px", color: "#a0aec0" }}>
+                  ({version})
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default LanguageSelector;
+
+
+..................................Output..............................
+
+import { useState } from "react";
+import { executeCode } from "../../api";
+import { PROBLEM_STATEMENTS } from "../constants";
+
+const Output = ({ editorRef, language }) => {
+  const [output, setOutput] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [testResults, setTestResults] = useState([]); // State to store test case results
+
+  const runCode = async () => {
+    const sourceCode = editorRef.current.getValue();
+    if (!sourceCode) return;
+
+    try {
+      setIsLoading(true);
+      const { run: result } = await executeCode(language, sourceCode);
+      setOutput(result.output.split("\n"));
+      result.stderr ? setIsError(true) : setIsError(false);
+    } catch (error) {
+      console.log(error);
+      alert(`An error occurred: ${error.message || "Unable to run code"}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const checkTestCases = async () => {
+    const sourceCode = editorRef.current.getValue();
+    if (!sourceCode) return;
+
+    let results = []; // To store results for each test case
+    for (const { input, expectedOutput } of PROBLEM_STATEMENTS[1].testCases) {
+      const result = await executeCode(language, sourceCode, input);
+      console.log("API Response:", result);
+
+      if (result && result.run && result.run.output) {
+        // Clean up the output
+        const output = result.run.output.replace(/^"(.*)"$/, '$1').trim();
+
+        // Check if the output matches the expected output
+        const isTestCasePassed = output === expectedOutput.trim();
+        const testCaseResult = {
+          input,
+          expectedOutput,
+          output,
+          isTestCasePassed
+        };
+        results.push(testCaseResult);
+      } else {
+        results.push({
+          input,
+          expectedOutput,
+          output: "Undefined",
+          isTestCasePassed: false
+        });
+      }
+    }
+    setTestResults(results); // Update the state with test case results
+  };
+
+  return (
+    <div style={{ width: "50%", padding: "10px" }}>
+      <h2 style={{ marginBottom: "10px", fontSize: "18px" }}>Problem Statement</h2>
+      <div style={{ padding: "10px", background: "#f8f8f8", borderRadius: "5px", marginBottom: "20px" }}>
+        <h3>{PROBLEM_STATEMENTS[1].title}</h3>
+        <p>{PROBLEM_STATEMENTS[1].description}</p>
+      </div>
+
+      <h3 style={{ marginBottom: "10px" }}>First Test Case</h3>
+      <div style={{ padding: "10px", background: "#f8f8f8", borderRadius: "5px", marginBottom: "20px" }}>
+        <p><strong>Input:</strong> {PROBLEM_STATEMENTS[1].testCases[1].input}</p>
+        <p><strong>Expected Output:</strong> {PROBLEM_STATEMENTS[1].testCases[1].expectedOutput}</p>
+      </div>
+
+      <button
+        onClick={runCode}
+        style={{
+          padding: "8px 16px",
+          border: "1px solid #38a169",
+          backgroundColor: "#38a169",
+          color: "#fff",
+          borderRadius: "4px",
+          cursor: "pointer",
+          marginBottom: "20px",
+          display: "flex",
+          alignItems: "center",
+        }}
+        disabled={isLoading}
+      >
+        {isLoading ? "Running..." : "Run Code"}
+      </button>
+      <button
+        onClick={checkTestCases}
+        style={{
+          padding: "8px 16px",
+          border: "1px solid #3182ce",
+          backgroundColor: "#3182ce",
+          color: "#fff",
+          borderRadius: "4px",
+          cursor: "pointer",
+          marginBottom: "20px",
+        }}
+      >
+        Check Test Cases
+      </button>
+
+      <div
+        style={{
+          height: "20vh",
+          padding: "10px",
+          color: isError ? "#e53e3e" : "",
+          border: "1px solid",
+          borderRadius: "4px",
+          borderColor: isError ? "#e53e3e" : "#333",
+          overflowY: "auto",
+          fontFamily: "monospace",
+        }}
+      >
+        {output
+          ? output.map((line, i) => <p key={i}>{line}</p>)
+          : 'Click "Run Code" to see the output here'}
+      </div>
+
+      {/* Display Test Case Results */}
+      <div style={{ marginTop: "20px" }}>
+        <h3>Test Case Results</h3>
+        <div style={{ background: "#f8f8f8", padding: "10px", borderRadius: "5px" }}>
+          {testResults.length === 0
+            ? "Click 'Check Test Cases' to see the results."
+            : testResults.map((result, index) => (
+                <div key={index} style={{ marginBottom: "10px" }}>
+                  <p><strong>Input:</strong> {result.input}</p>
+                  <p><strong>Expected Output:</strong> {result.expectedOutput}</p>
+                  <p><strong>Output:</strong> {result.output}</p>
+                  <p style={{ color: result.isTestCasePassed ? "green" : "red" }}>
+                    Test {result.isTestCasePassed ? "Passed" : "Failed"}
+                  </p>
+                </div>
+              ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Output;
+
+
+............................constants.jsx....................................
+
+export const LANGUAGE_VERSIONS = {
+  javascript: "18.15.0",
+  typescript: "5.0.3",
+  python: "3.10.0",
+  java: "15.0.2",
+  csharp: "6.12.0",
+  php: "8.2.3",
+};
+
+export const CODE_SNIPPETS = {
+  javascript: `\nfunction greet(name) {\n\tconsole.log("Hello, " + name + "!");\n}\n\ngreet("Alex");\n`,
+  typescript: `\ntype Params = {\n\tname: string;\n}\n\nfunction greet(data: Params) {\n\tconsole.log("Hello, " + data.name + "!");\n}\n\ngreet({ name: "Alex" });\n`,
+  python: `\ndef greet(name):\n\tprint("Hello, " + name + "!")\n\ngreet("Alex")\n`,
+  java: `\npublic class HelloWorld {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello World");\n\t}\n}\n`,
+  csharp:
+    'using System;\n\nnamespace HelloWorld\n{\n\tclass Hello { \n\t\tstatic void Main(string[] args) {\n\t\t\tConsole.WriteLine("Hello World in C#");\n\t\t}\n\t}\n}\n',
+  php: "<?php\n\n$name = 'Alex';\necho $name;\n",
+};
+
+export const PROBLEM_STATEMENTS = [
+  {
+    id: 1,
+    title: "Reverse a String",
+    description:
+      "Write a function `reverseString(s)` that takes a string `s` and returns the string reversed.",
+    testCases: [
+      { input: '"hello"', expectedOutput: '"olleh"' },
+      { input: '"world"', expectedOutput: '"dlrow"' },
+      { input: '"racecar"', expectedOutput: '"racecar"' },
+      { input: '"OpenAI"', expectedOutput: '"IAnepO"' },
+    ],
+  },
+  {
+    id: 2,
+    title: "Find the Factorial of a Number",
+    description:
+      "Write a function `factorial(n)` that takes a number `n` and returns the factorial of `n`. The factorial of a number `n` is the product of all positive integers less than or equal to `n`.",
+    testCases: [
+      { input: "5", expectedOutput: "120" },
+      { input: "7", expectedOutput: "5040" },
+      { input: "0", expectedOutput: "1" },
+      { input: "1", expectedOutput: "1" },
+    ],
+  },
+  {
+    id: 3,
+    title: "Check if a Number is Prime",
+    description:
+      "Write a function `isPrime(n)` that takes a number `n` and returns `true` if `n` is a prime number, otherwise returns `false`. A prime number is a number greater than 1 that has no divisors other than 1 and itself.",
+    testCases: [
+      { input: "5", expectedOutput: "true" },
+      { input: "10", expectedOutput: "false" },
+      { input: "13", expectedOutput: "true" },
+      { input: "1", expectedOutput: "false" },
+    ],
+  },
+  {
+    id: 4,
+    title: "Fibonacci Sequence",
+    description:
+      "Write a function `fibonacci(n)` that takes a number `n` and returns the `n`th Fibonacci number. The Fibonacci sequence starts with 0, 1, 1, 2, 3, 5, 8, 13, ..., where each number is the sum of the previous two.",
+    testCases: [
+      { input: "5", expectedOutput: "5" },
+      { input: "7", expectedOutput: "13" },
+      { input: "0", expectedOutput: "0" },
+      { input: "1", expectedOutput: "1" },
+    ],
+  },
+  {
+    id: 5,
+    title: "Palindrome Checker",
+    description:
+      "Write a function `isPalindrome(s)` that takes a string `s` and returns `true` if the string is a palindrome (reads the same forwards and backwards), otherwise returns `false`.",
+    testCases: [
+      { input: '"madam"', expectedOutput: "true" },
+      { input: '"racecar"', expectedOutput: "true" },
+      { input: '"hello"', expectedOutput: "false" },
+      { input: '"OpenAI"', expectedOutput: "false" },
+    ],
+  },
+  {
+    id: 6,
+    title: "Sum of Array Elements",
+    description:
+      "Write a function `sumArray(arr)` that takes an array `arr` of numbers and returns the sum of all the elements in the array.",
+    testCases: [
+      { input: "[1, 2, 3, 4]", expectedOutput: "10" },
+      { input: "[5, 5, 5, 5]", expectedOutput: "20" },
+      { input: "[0, 0, 0, 0]", expectedOutput: "0" },
+      { input: "[1, 1, 1, 1]", expectedOutput: "4" },
+    ],
+  },
+  {
+    id: 7,
+    title: "Count Vowels in a String",
+    description:
+      "Write a function `countVowels(s)` that takes a string `s` and returns the number of vowels (a, e, i, o, u) in the string.",
+    testCases: [
+      { input: '"hello"', expectedOutput: "2" },
+      { input: '"world"', expectedOutput: "1" },
+      { input: '"aeiou"', expectedOutput: "5" },
+      { input: '"OpenAI"', expectedOutput: "3" },
+    ],
+  },
+  {
+    id: 8,
+    title: "Find the Largest Number in an Array",
+    description:
+      "Write a function `findLargest(arr)` that takes an array `arr` and returns the largest number in the array.",
+    testCases: [
+      { input: "[1, 2, 3, 4]", expectedOutput: "4" },
+      { input: "[5, 2, 7, 1]", expectedOutput: "7" },
+      { input: "[0, 0, 0, 0]", expectedOutput: "0" },
+      { input: "[-5, -2, -7, -1]", expectedOutput: "-1" },
+    ],
+  },
+];
+
+
+
+......api.js................................
+import axios from "axios";
+import { LANGUAGE_VERSIONS } from "./Componentes/constants";
+
+const API = axios.create({
+  baseURL: "https://emkc.org/api/v2/piston",
+});
+
+export const executeCode = async (language, sourceCode, input = "") => {
+  const response = await API.post("/execute", {
+    language: language,
+    version: LANGUAGE_VERSIONS[language],
+    files: [
+      {
+        content: sourceCode,
+      },
+    ],
+    stdin: input, // Send input for the test case
+  });
+  return response.data;
+};

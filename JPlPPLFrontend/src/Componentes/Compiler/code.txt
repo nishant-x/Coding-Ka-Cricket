@@ -1,0 +1,317 @@
+import { useRef, useState } from "react";
+import Languages from './languages';
+import { CODE_SNIPPETS, PROBLEM_STATEMENTS } from "../constants";
+import Output from "./Output";
+import { Editor } from "@monaco-editor/react";
+
+const CodeEditor = () => {
+  const editorRef = useRef();
+  const [value, setValue] = useState("");
+  const [language, setLanguage] = useState("javascript");
+  const [problem, setProblem] = useState(PROBLEM_STATEMENTS[0]);
+
+  const onMount = (editor) => {
+    editorRef.current = editor;
+    editor.focus();
+  };
+
+  const onSelectLanguage = (language) => {
+    setLanguage(language);
+    setValue(CODE_SNIPPETS[language]);
+  };
+
+  return (
+    <>
+      <Languages language={language} onSelect={onSelectLanguage} />
+      <div>
+        <h2>{problem.title}</h2>
+        <p>{problem.description}</p>
+        <div>
+          {problem.testCases.map((testCase, index) => (
+            <div key={index}>
+              <h4>Test Case {index + 1}</h4>
+              <p>Input: {testCase.input}</p>
+              <p>Expected Output: {testCase.expectedOutput}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <Editor
+        options={{ minimap: { enabled: false } }}
+        height="50vh"
+        width="50vw"
+        theme="vs-dark"
+        language={language}
+        defaultValue={CODE_SNIPPETS[language]}
+        onMount={onMount}
+        value={value}
+        onChange={(value) => setValue(value)}
+      />
+      <div
+        style={{
+          padding: '10px',
+          border: '2px silver solid',
+          width: '100%',
+          backgroundColor: '#000',
+          color: 'white'
+        }}
+      >
+        <Output editorRef={editorRef} language={language} problem={problem} />
+      </div>
+    </>
+  );
+};
+
+export default CodeEditor;
+
+
+import React, { useState } from 'react';
+import axios from 'axios';
+import { LANGUAGE_VERSIONS } from '../constants';
+
+// Helper function to handle API requests with error handling
+const executeCodeWithRetry = async (language, code) => {
+  const apiUrl = 'https://emkc.org/api/v2/piston/execute';
+  let attempt = 0;
+  const maxRetries = 1;
+
+  while (attempt < maxRetries) {
+    try {
+      const response = await axios.post(apiUrl, {
+        language,
+        version: LANGUAGE_VERSIONS[language], // Use LANGUAGE_VERSIONS for versioning
+        files: [{ content: code }],
+        stdin: '', // No standard input needed for execution
+        args: [], // No arguments needed for execution
+        compile_timeout: 1000,
+        run_timeout: 3000,
+      });
+
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 429) {
+        console.log(`Rate limit hit. Retrying in 1 second... (Attempt ${attempt}/${maxRetries})`);
+        attempt++;
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      } else {
+        throw error; // Rethrow other errors
+      }
+    }
+  }
+
+  throw new Error('API rate limit exceeded. Please try again later.');
+};
+
+const Output = ({ problem, language, editorRef }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [testResults, setTestResults] = useState([]);
+
+  const runCode = async () => {
+    const sourceCode = editorRef.current.getValue();
+    if (!sourceCode) return; // Handle empty code
+
+    setIsLoading(true);
+    setTestResults([]); // Reset results before running
+
+    try {
+      const responses = await Promise.all(
+        problem.testCases.map(async (testCase) => {
+          const modifiedCode = injectTestCaseInput(sourceCode, testCase.input, language);
+
+          try {
+            const result = await executeCodeWithRetry(language, modifiedCode);
+
+            // Ensure result.output is defined before trimming
+            const userOutput = result.output ? result.output.trim() : '';
+            const isCorrect = userOutput === testCase.expectedOutput;
+
+            return {
+              testCase: testCase.input,
+              expectedOutput: testCase.expectedOutput,
+              userOutput,
+              passed: isCorrect,
+            };
+          } catch (error) {
+            console.error(`Error running test case: ${testCase.input}`, error);
+            return {
+              testCase: testCase.input,
+              expectedOutput: testCase.expectedOutput,
+              userOutput: 'Error',
+              passed: false,
+            };
+          }
+        })
+      );
+
+      setTestResults(responses);
+    } catch (error) {
+      console.error(error);
+      alert(`An error occurred: ${error.message || "Unable to run code"}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Function to inject test case input dynamically
+  const injectTestCaseInput = (code, input, language) => {
+    switch (language) {
+      case 'javascript':
+      case 'typescript':
+        return code.replace(/<TEST_CASE_INPUT>/, input);
+
+      case 'python':
+        // Example: Assuming input is used in a function call
+        return code.replace(/<TEST_CASE_INPUT>/, `'${input}'`); 
+
+      case 'java':
+        // Example: Assuming input is used in a function call
+        return code.replace(/<TEST_CASE_INPUT>/, `"${input}"`); 
+
+      case 'csharp':
+        // Example: Assuming input is used in a function call
+        return code.replace(/<TEST_CASE_INPUT>/, `"${input}"`); 
+
+      case 'php':
+        // Example: Assuming input is used in a variable assignment
+        return code.replace(/<TEST_CASE_INPUT>/, `'${input}'`); 
+
+      default:
+        console.warn(`Unsupported language: ${language}`);
+        return code; // Return original code if language is not supported
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={runCode} disabled={isLoading}>
+        {isLoading ? 'Running...' : 'Run Code'}
+      </button>
+
+      {isLoading && <p>Loading...</p>}
+
+      {testResults.length > 0 && (
+        <ul>
+          {testResults.map((result, index) => (
+            <li key={index}>
+              <strong>Test Case {index + 1}</strong>
+              <div>Input: {result.testCase}</div>
+              <div>Expected Output: {result.expectedOutput}</div>
+              <div>User Output: {result.userOutput}</div>
+              <div style={{ color: result.passed ? 'green' : 'red' }}>
+                {result.passed ? 'Passed' : 'Failed'}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+export default Output;
+
+
+
+import React from 'react';
+import { CODE_SNIPPETS ,LANGUAGE_VERSIONS} from "../constants";
+
+
+const ACTIVE_COLOR = "blue"; // Simplified color for readability
+
+const LanguageSelector = ({ language, onSelect }) => {
+  return (
+    <div style={{ marginLeft: '10px', marginBottom: '15px' }}>
+      <p style={{ fontSize: '18px', marginBottom: '5px' }}>Language:</p>
+      <select
+        value={language}
+        onChange={(e) => onSelect(e.target.value)}
+        style={{
+          backgroundColor: '#110c1b',
+          color: 'white',
+          padding: '5px 10px',
+          borderRadius: '5px',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: '16px',
+          marginBottom: '5px',
+          display: 'block',
+        }}
+      >
+        {Object.entries(LANGUAGE_VERSIONS).map(([lang, version]) => (
+          <option key={lang} style={{ backgroundColor: lang === language ? '#222' : 'transparent', color: lang === language ? ACTIVE_COLOR : 'white' }} value={lang}>
+            {lang} (v{version})
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+export default LanguageSelector;
+
+export const LANGUAGE_VERSIONS = {
+    javascript: "18.15.0",
+    typescript: "5.0.3",
+    python: "3.10.0",
+    java: "15.0.2",
+    csharp: "6.12.0",
+    php: "8.2.3",
+  };
+  
+  export const CODE_SNIPPETS = {
+    javascript: `\nfunction greet(name) {\n\tconsole.log("Hello, " + name + "!");\n}\n\ngreet("Alex");\n`,
+    typescript: `\ntype Params = {\n\tname: string;\n}\n\nfunction greet(data: Params) {\n\tconsole.log("Hello, " + data.name + "!");\n}\n\ngreet({ name: "Alex" });\n`,
+    python: `\ndef greet(name):\n\tprint("Hello, " + name + "!")\n\ngreet("Alex")\n`,
+    java: `\npublic class HelloWorld {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello World");\n\t}\n}\n`,
+    csharp:
+      'using System;\n\nnamespace HelloWorld\n{\n\tclass Hello { \n\t\tstatic void Main(string[] args) {\n\t\t\tConsole.WriteLine("Hello World in C#");\n\t\t}\n\t}\n}\n',
+    php: "<?php\n\n$name = 'Alex';\necho $name;\n",
+  };
+
+  export const PROBLEM_STATEMENTS = [
+    {
+      id: 1,
+      title: "Reverse a String",
+      description: "Write a function `reverseString(s)` that takes a string `s` and returns the string reversed.",
+      testCases: [
+        { input: '"hello"', expectedOutput: '"olleh"' },
+        { input: '"world"', expectedOutput: '"dlrow"' },
+        { input: '"racecar"', expectedOutput: '"racecar"' },
+        { input: '"OpenAI"', expectedOutput: '"IAnepO"' },
+      ],
+    },
+  ];
+  
+  
+  
+
+
+  
+  import axios from "axios";
+import { LANGUAGE_VERSIONS } from "./Componentes/constants";
+
+const API = axios.create({
+  baseURL: "https://emkc.org/api/v2/piston",
+});
+
+export const executeCode = async (language, sourceCode) => {
+  const response = await API.post("/execute", {
+    language,
+    version: LANGUAGE_VERSIONS[language],
+    files: [{ content: sourceCode }],
+  });
+  return response.data;
+};
+
+
+
+
+check this 
+update in this code To automatically check the test cases in a compiler environment, we can create a self-contained function that handles both the execution of the program and the comparison of the expected results. The following approach ensures that when the code runs, it automatically evaluates and reports the results for all test cases without any manual intervention.
+
+To automatically check the test cases in the compiler environment and pass the test case inputs to the user's code, you need to modify your implementation to:
+
+Dynamically inject the test case inputs into the user's code.
+Execute the user's code for each test case.
+Compare the actual output against the expected output and report the results.

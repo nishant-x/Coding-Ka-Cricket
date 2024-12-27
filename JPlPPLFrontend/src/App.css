@@ -1,0 +1,24 @@
+.MainHeader {
+  margin-bottom: 1px;
+}
+.MainSlider{
+  margin-bottom: 2px;
+}
+.MainFooter{
+  margin-top: 5px;
+}
+ 
+.MainCards{
+  margin-top: 2rem;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+-o-user-select: none;
+user-select: none;
+}

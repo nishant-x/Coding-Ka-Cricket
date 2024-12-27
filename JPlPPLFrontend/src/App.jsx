@@ -1,0 +1,51 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./Componentes/Navbar/Navbar";
+import Homepage from "./Componentes/Homepage";
+import ContactUs from "./Componentes/ContactUs/ContactUs";
+import Footer from "./Componentes/Footers/Footer";
+import Regiter from "./Componentes/RegisterForm/Register";
+import Cursor from "./Componentes/Cursor/Cursor";
+import './Componentes/Cursor/Cursor.css';
+// import Compiler from "./Componentes/Compiler/CodeEditor";
+import Addqueform from "./Componentes/Admin/Addque/Addqueform";
+import AllQuestions from "./Componentes/Admin/ViewQue/AllQuestions";
+import Contestlogin from "./Componentes/Contest/Contestlogin/Contestlogin";
+import ContestHomepage from "./Componentes/Contest/ContestHome/ContestHomepage";
+import AdminLogin from "./Componentes/Admin/Adminlogin/Adminlogin";
+import AdminHomepage from "./Componentes/Admin/Adminhome/Adminhomepage";
+
+
+const App = () => {
+  return (
+    <>
+      {/* <Compiler /> */}
+      {/* <ContestLogin /> */}
+
+      <Router>
+        <Navbar />
+        <Cursor />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/register" element={<Regiter />} />
+          <Route path="/contestlogin" element={<Contestlogin/>} />
+          <Route path="/contesthomepage" element={<ContestHomepage/>} />
+          <Route path="/add-question" element={<Addqueform/>} />
+          <Route path="/allquestions" element={<AllQuestions/>} />
+          <Route path="/adminlogin" element={<AdminLogin/>} />
+          <Route path="/adminhomepage" element={<AdminHomepage/>} />
+          
+        </Routes>
+      <Footer/>
+      </Router>
+      
+
+
+    </>
+  );
+};
+
+export default App;
+
+

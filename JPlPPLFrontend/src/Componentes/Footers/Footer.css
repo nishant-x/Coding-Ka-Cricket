@@ -1,0 +1,115 @@
+.footer {
+  
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #101215;
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #dee2e6; /* Subtle border */
+  background-image: url('../../assets/footer.png'); /* Add your image */
+  background-repeat: no-repeat; /* Avoid repeating */
+  background-position: center; /* Center the image */
+  background-size: cover; /* Cover the entire footer */
+  background-blend-mode: overlay; /* Blend with background color */
+  padding-bottom: 100px;
+  padding-top: 40px;
+  
+}
+.footer-head{
+  margin-bottom: 20px;
+}
+.list-con{
+  padding-bottom: 5px;
+}
+
+.footer-section {
+  flex: 1 1 200px;
+  margin: 10px;
+  color: #343a40; /* Dark text for readability */
+}
+
+.footer-section h3 {
+  font-size: 22px;
+  color: #d2d7dc; /* Slightly muted dark for headings */
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin: 5px 0;
+}
+
+
+.footer-section ul li a {
+  color: #d2d7dc; /* Light black default color */
+  text-decoration: none; /* Remove default underline */
+  position: relative; /* Positioning for pseudo-element */
+  transition: color 0.4s ease-in-out; /* Smooth color change */
+}
+
+.footer-section ul li a::after {
+  content: ""; /* Pseudo-element for underline */
+  position: absolute;
+  left: 50%; /* Start at the center */
+  bottom: -2px; /* Position underline below the text */
+  width: 0; /* Start with no underline */
+  height: 2px; /* Thickness of the underline */
+  background-color: cadetblue; /* Blue underline */
+  transition: width 0.4s ease-in-out, left 0.4s ease-in-out; /* Smooth underline animation */
+}
+
+.footer-section ul li a:hover {
+  color: cadetblue; /* Change text color to blue */
+}
+
+.footer-section ul li a:hover::after {
+  width: 100%; /* Expand underline to full width */
+  left: 0; /* Align underline to start from the beginning */
+}
+
+.footer-section p {
+  margin: 5px 0;
+  color: #d2d7dc; /* Muted text for contact details */
+}
+.footer-section p a{
+  color: #d2d7dc; /* Muted text for contact details */
+}
+ .footer-section p a:hover{
+  color: #0d74e3; /* Muted text for contact details */
+}
+
+.footer-section .social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.footer-section .icon {
+  color: #d2d7dc;
+  text-decoration: none;
+  padding: 8px;
+  border: 1px solid #13161a;
+  border-radius: 50%; /* Circular icons */
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.footer-section .icon:hover {
+  background-color: #007bff;
+  color: white;
+  border-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+  .footer-section {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}

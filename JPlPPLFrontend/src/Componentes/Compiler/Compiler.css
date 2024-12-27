@@ -1,0 +1,171 @@
+/* Styles for CodeEditor Component */
+.codeeditor_container {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .codeeditor_editorSection {
+    width: 50%;
+  }
+  
+  .codeeditor_languageSelector {
+    margin-bottom: 10px;
+  }
+  
+  .codeeditor_editor {
+    height: 100vh;
+  }
+  
+  .codeeditor_outputSection {
+    width: 50%;
+    padding: 10px;
+  }
+  
+  .codeeditor_problemStatement {
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .codeeditor_buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .codeeditor_runButton,
+  .codeeditor_testButton {
+    padding: 8px 16px;
+    border: 1px solid;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .codeeditor_runButton {
+    border-color: #38a169;
+    background-color: #38a169;
+    color: #fff;
+  }
+  
+  .codeeditor_runButton:disabled {
+    background-color: #2f855a;
+  }
+  
+  .codeeditor_testButton {
+    border-color: #3182ce;
+    background-color: #3182ce;
+    color: #fff;
+  }
+  
+  .codeeditor_output {
+    height: 40vh;
+    width: 25vw;
+    padding: 10px;
+    font-family: monospace;
+    border: 1px solid #333;
+    border-radius: 4px;
+    overflow-y: auto;
+  }
+  
+  .codeeditor_output_error {
+    color: #e53e3e;
+    border-color: #e53e3e;
+  }
+  
+  /* Test case results */
+  .codeeditor_testResults {
+    margin-top: 20px;
+  }
+  
+  .codeeditor_testResults h3 {
+    margin-bottom: 10px;
+  }
+  
+  .codeeditor_testCase {
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .codeeditor_testPassed {
+    color: green;
+  }
+  
+  .codeeditor_testFailed {
+    color: red;
+  }
+  
+  /* Styles for LanguageSelector Component */
+  .languages_container {
+    margin-left: 10px;
+    padding: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .languages_button {
+    padding: 8px 16px;
+    background-color: #2b6cb0;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .languages_dropdown {
+    background-color: #110c1b;
+    position: absolute;
+    border-radius: 4px;
+    margin-top: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .languages_dropdownItem {
+    padding: 8px 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ccc;
+    background-color: transparent;
+  }
+  
+  .languages_dropdownItem.active {
+    color: #3182ce;
+    background-color: #1a202c;
+  }
+  
+  .languages_dropdownItem span:last-child {
+    font-size: 12px;
+    color: #a0aec0;
+  }
+  
+  /* Styles for Output Component */
+  .output_problemStatement {
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .output_testCase {
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .output_testResults {
+    margin-top: 20px;
+  }
+  
+  .output_testPassed {
+    color: green;
+  }
+  
+  .output_testFailed {
+    color: red;
+  }
+  

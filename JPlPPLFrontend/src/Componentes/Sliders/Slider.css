@@ -1,0 +1,107 @@
+/* General header styles */
+.header {
+    position: relative;
+    height:550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .header-content {
+    text-align: center;
+    z-index: 2; /* Make sure the content is on top of the background */
+  }
+  
+  .header-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Play Now button */
+  .play-now-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background-color: tomato;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    animation: pulse 1s infinite;
+  }
+  /* Arrow navigation */
+  .bdarrow {
+     position: absolute;
+    top: 50%;
+    font-size: 2rem;
+    color: rgba(204, 194, 194, 0.478);
+    cursor: pointer;
+    padding: 10px;
+    /* background: rgba(0, 0, 0, 0.5); */
+    border-radius: 50%;
+    z-index: 3; 
+    transition: background 0.3s ease; 
+  }
+  
+  .left-arrow {
+    left: 5px;
+    transform: translateY(-50%);
+  }
+  
+  .right-arrow {
+    right: 5px;
+    transform: translateY(-50%);
+  }
+  
+  .arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  /* Dot navigation */
+  /* Dot navigation */
+  .dot-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 3; /* Ensure dots are above background */
+  }
+  
+  .dot {
+    height: 15px;
+    width: 15px;
+    background-color: rgba(255, 255, 255, 0.5); /* Default color */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .dot:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* Hover color */
+  }
+  
+  .dot.active {
+    background-color: #ff5c35; /* Active color */
+  }
+  
+  /* Adjust the styles to make sure the active state is visually distinct */
+  
+  /* Button animation */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+ 
+  

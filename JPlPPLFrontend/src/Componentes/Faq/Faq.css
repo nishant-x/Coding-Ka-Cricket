@@ -1,0 +1,131 @@
+/* Faq.css */
+.FAQ {
+  padding: 2rem;
+  background-color: #f9f9f9; /* Light background color */
+  color: #333; /* Dark text for readability */
+  font-family: 'Arial', sans-serif;
+}
+
+
+.FQA_heading h1{
+  text-align: center;
+}
+.FQA_heading h1::after {
+  content: 'FQA';
+  top: 26px;
+  color: #232323a9;
+  left: -50px;
+  font-size: xxx-large;
+  position: relative;
+  /* z-index: -1; */
+}
+.FQA_heading{
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.FAQ_heading h3{
+left: 20px;
+}
+
+
+/* Style for each details summary */
+details {
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+details:hover {
+  border-color: #0073e6; /* Highlight on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+details summary {
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  list-style: none;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Separate text and toggle sign */
+  position: relative;
+}
+
+details summary:hover {
+  background-color: #f1f1f1; /* Slight highlight on hover */
+}
+
+details[open] summary {
+  background-color: #e6f4ff; /* Highlight for open details */
+  border-bottom: 1px solid #ddd;
+}
+
+details p {
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Add smooth animation for details open/close */
+details[open] p {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Toggle icon styling */
+details summary::after {
+  content: "+"; /* Default icon */
+  font-size: 1.2rem;
+  color: #0073e6;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+details[open] summary::after {
+  content: "-"; /* Change to "-" when open */
+  color: #ff4d4d; /* Red for the open state */
+  transform: rotate(180deg);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .FAQ {
+    padding: 1rem;
+  }
+
+  .FAQ h1 {
+    font-size: 1.8rem;
+  }
+
+  details summary {
+    font-size: 1rem;
+  }
+
+  details p {
+    font-size: 0.9rem;
+  }
+}
+
+ul li {
+  list-style: none;
+}

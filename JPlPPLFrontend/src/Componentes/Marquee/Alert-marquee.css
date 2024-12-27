@@ -1,0 +1,23 @@
+.Alert-News {
+    background-color: #b0b6c142; /* Bright red to grab attention */
+    color: #8d2b3e; /* White text for high contrast */
+    padding: 10px 15px; /* Padding to make it compact */
+    border-radius: 5px; /* Rounded corners for a sleek look */
+    font-size: 30px; /* Smaller font size for compact design */
+    font-weight: bold; /* Make the text stand out */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border: none; /* Slightly darker red border */
+    text-align: center; /* Center-align content */
+  }
+  
+  .Alert-News marquee {
+    font-family: 'Arial', sans-serif; /* Clean and professional font */
+    font-size: 14px; /* Consistent font size */
+    line-height: 1.5; /* Improve readability */
+  }
+  
+  .Alert-News:hover {
+    background-color: #fceaee; /* Slightly darker red on hover */
+    cursor: pointer; /* Pointer cursor to indicate interactivity */
+  }
+  
