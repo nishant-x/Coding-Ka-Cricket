@@ -1,39 +1,38 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // For navigation
+import { useNavigate } from 'react-router-dom';
 import './Adminlogin.css';
 
-const AdminLogin = () => {
-  const navigate = useNavigate(); // Initialize navigation
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(''); // Password field will store the enrollment number
+// Mock JSON data for admin credentials
+const adminData = [
+  {
+    email: "jhadenishant@gmail.com",
+    password: "Nishant@1234"
+  },
+  {
+    email: "moderator@example.com",
+    password: "securePassword456"
+  }
+];
 
-  const handleSubmit = async (e) => {
+const AdminLogin = () => {
+  const navigate = useNavigate(); // For navigation
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      // Send a POST request with the user's credentials
-      const response = await fetch('http://localhost:5000/adminlogin', { // Fixed URL
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          enrollment: password, // Ensure the property matches backend expectation
-        }),
-      });
+    // Check credentials against JSON data
+    const admin = adminData.find(
+      (user) => user.email === email && user.password === password
+    );
 
-      const data = await response.json();
-      if (response.ok) {
-        // If credentials are valid, navigate to the ContestHomepage page
-        navigate('/adminhomepage', { state: { userId: data.userId } });
-      } else {
-        // Show an error message if validation fails
-        alert(data.error || 'Invalid credentials. Please try again.');
-        navigate('/adminlogin')
-      }
-    } catch (error) {
-      alert('Server error. Please try again later.');
+    if (admin) {
+      // Navigate to /allquestions if credentials match
+      navigate('/allquestions');
+    } else {
+      // Show error message if credentials are invalid
+      alert('Invalid credentials. Please try again.');
     }
   };
 
@@ -47,22 +46,20 @@ const AdminLogin = () => {
             className="admin-form-input"
             type="email"
             id="email"
-            name="email"
             placeholder="Enter Your Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)} // Update email state
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
           <label className="admin-form-label" htmlFor="password">Password:</label>
           <input
             className="admin-form-input"
-            type="text"
+            type="password"
             id="password"
-            name="password"
             placeholder="Enter Your Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)} // Update password state
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
 
