@@ -1,4 +1,7 @@
 /* AllQuestions.css */
+.allquestions_all_questions_container{
+  margin-bottom: 10rem;
+}
 .allquestions_loader_container {
   display: flex;
   justify-content: center;
