@@ -97,7 +97,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 20px;
-  align-self: center; /* Center align the button */
+ 
 }
 
 .contesthome-attempt-quiz-btn:hover {
@@ -194,3 +194,33 @@
     transform: translateY(0);
   }
 }
+
+.countdown-timer {
+  margin-top: 7rem;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: cadetblue; /* Set the background color to cadetblue */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.contesthome-end-test-btn {
+  width: 20%;
+  background-color: rgba(218, 41, 59, 0.74);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: auto  20px auto auto;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.contesthome-end-test-btn:hover {
+  background-color: #4b8b8b; /* Slightly darker shade on hover */
+}
+

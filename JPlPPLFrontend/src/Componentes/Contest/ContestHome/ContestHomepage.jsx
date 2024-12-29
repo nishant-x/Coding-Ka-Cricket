@@ -9,6 +9,7 @@ const ContestHomepage = () => {
 
   const [problems, setProblems] = useState([]); // Declare state to hold problems
   const [loading, setLoading] = useState(true); // Loading state for fetching problems
+  const [timeLeft, setTimeLeft] = useState(7200); // Time left in seconds (2 hours)
   const navigate = useNavigate(); // Initialize navigate function
 
   useEffect(() => {
@@ -25,7 +26,29 @@ const ContestHomepage = () => {
         console.error("Error fetching data:", error);
         setLoading(false); // Set loading to false even if there's an error
       });
-  }, [user]);
+
+    // Set a timer for 2 hours (7200000 milliseconds)
+    const timer = setTimeout(() => {
+      alert("Time's up! Redirecting to the homepage.");
+      navigate('/home'); // Navigate to homepage after time is up
+    }, 7200000); // 2 hours in milliseconds
+
+    // Countdown timer every second
+    const countdown = setInterval(() => {
+      setTimeLeft(prevTime => {
+        if (prevTime <= 1) {
+          clearInterval(countdown); // Stop countdown when time is up
+        }
+        return prevTime - 1;
+      });
+    }, 1000); // Update every second
+
+    // Cleanup the timers if the component is unmounted or the user state changes
+    return () => {
+      clearTimeout(timer);
+      clearInterval(countdown);
+    };
+  }, [user, navigate]);
 
   const userDetails = {
     name: user?.name,
@@ -41,12 +64,27 @@ const ContestHomepage = () => {
     navigate('/contestquiz', { state: { user: userDetails } }); // Pass user data to the contestquiz page
   };
 
+  const handleEndTest = () => {
+    alert("Test ended! Redirecting to the homepage.");
+    navigate('/home'); // Redirect to homepage when the test ends
+  };
+
+  const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
   if (loading) {
     return <div>Loading...</div>; // Display loading message
   }
 
   return (
     <div className="contesthome-problem-stat-container">
+      {/* Countdown Timer Display */}
+      <div className="countdown-timer">{formatTime(timeLeft)}</div>
+
       {/* Heading */}
       <h1 className="contesthome-page-heading">Problem Statement</h1>
 
@@ -61,6 +99,9 @@ const ContestHomepage = () => {
           ))}
           <button className="contesthome-attempt-quiz-btn" onClick={handleAttemptQuiz}>
             Attempt Quiz
+          </button>
+          <button className="contesthome-end-test-btn" onClick={handleEndTest}>
+            End Test
           </button>
         </div>
 
