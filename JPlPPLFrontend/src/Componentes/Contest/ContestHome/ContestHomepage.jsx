@@ -69,7 +69,7 @@ const ContestHomepage = () => {
 
         {/* User Details Section (Right Side) */}
         <div className="contesthome-user-details">
-          <h2>User Details</h2>
+          <h2>Student Details</h2>
           <ul>
             <li><strong>Name:</strong> {userDetails.name}</li>
             <li><strong>Enrollment:</strong> {userDetails.enrollment}</li>

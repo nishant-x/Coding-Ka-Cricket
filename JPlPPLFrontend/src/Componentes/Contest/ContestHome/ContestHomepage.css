@@ -1,8 +1,8 @@
 /* Full-page container */
 .contesthome-problem-stat-container {
-  padding: 40px;
+  padding-top: 25px;
   background-color: #f9f9f9;
-  min-height: 100vh; /* Full page height */
+  min-height: 90vh; /* Full page height */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,35 +115,82 @@
 /* Right side for User Details (Centered from Top) */
 .contesthome-user-details {
   flex: 1;
-  padding-left: 20px;
+  padding-left: 30px;
   background-color: #ffffff; /* White background for user details */
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  padding: 25px 30px; /* Increased padding for a more spacious feel */
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* Align the content from the top */
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
 
-.contesthome-user-details h1 {
-  color: cadetblue;
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
+/* Title styling for the user details header */
+.contesthome-user-details h2 {
+  color: cadetblue; /* Darker color for text */
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  letter-spacing: 1px; /* Slight letter spacing */
+  text-transform: uppercase; /* Capitalize the header */
+  border-bottom: 2px solid #b8babc; /* Soft border at the bottom */
+  padding-bottom: 10px;
 }
 
+/* List styling for user details */
 .contesthome-user-details ul {
   list-style-type: none;
   padding: 0;
+  
 }
 
+/* Individual list item styling */
 .contesthome-user-details li {
-  margin-bottom: 10px;
-  font-size: 21px;
-  color: #333;
-  transition: color 0.3s ease; /* Smooth color change on hover */
+  margin-bottom: 15px; /* Spacing between each detail */
+  font-size: 20px;
+  font-weight: 500;
+  color: #555; /* Lighter shade of gray for text */
+  display: flex;
+  justify-content: space-between; /* Space between label and value */
+  align-items: center;
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
+  padding: 8px 15px; /* Padding for a comfortable layout */
+  border-radius: 8px; /* Rounded corners for each list item */
 }
 
 .contesthome-user-details li:hover {
-  color: #4682b4; /* Button color on hover for text */
+  background-color: #f1f1f1; /* Light background on hover */
+  color: #4682b4; /* Change text color on hover */
+  transform: translateX(10px); /* Slide effect when hovered */
+}
+
+/* Styling for the label text */
+.contesthome-user-details li strong {
+  color: #333; /* Darker color for the labels */
+  font-weight: 600; /* Slightly bolder for labels */
+}
+
+/* Interactive hover effect for the entire section */
+.contesthome-user-details:hover {
+  transform: scale(1.02); /* Slightly enlarge the container on hover */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15); /* Increase the shadow for more focus */
+}
+
+/* Add a subtle animation to the user details section */
+.contesthome-user-details {
+  animation: fadeIn 1s ease-out;
+}
+
+/* Animation for fading in the user details */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
