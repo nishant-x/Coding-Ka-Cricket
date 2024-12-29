@@ -1,6 +1,7 @@
 /* AllQuestions.css */
 .allquestions_all_questions_container{
-  margin-bottom: 10rem;
+ margin-top: 8rem;
+  margin-bottom: 5rem;
 }
 .allquestions_loader_container {
   display: flex;
@@ -69,4 +70,35 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.allquestions_addquestionformbtn,
+.allquestions_addquizformbtn {
+  display: flex;
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.allquestions_addquestionformbtn button,
+.allquestions_addquizformbtn button {
+  background-color: cadetblue;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.allquestions_addquestionformbtn button:hover,
+.allquestions_addquizformbtn button:hover {
+  background-color: rgb(78, 125, 126);
+  transform: scale(1.05);
+}
+
+.allquestions_addquestionformbtn button:active,
+.allquestions_addquizformbtn button:active {
+  background-color: #004085;
+  transform: scale(1);
 }

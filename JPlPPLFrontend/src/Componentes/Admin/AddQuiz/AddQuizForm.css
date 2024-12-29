@@ -1,0 +1,96 @@
+.addquiz-form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .addquiz-form-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: cadetblue;
+  }
+  
+  .addquiz-form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .addquiz-form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .addquiz-form-input:focus {
+    border-color: cadetblue;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+  }
+  
+  .addquiz-form-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: cadetblue;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .addquiz-form-submit:hover {
+    background-color: #45a049;
+  }
+  
+  .addquiz-questionadd-btn {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 13px;
+    background-color: #3b79e4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .addquiz-questionadd-btn:hover {
+    background-color: #4ba39c;
+  }
+  
+  .addquiz-question-group {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .addquiz-remove-btn {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .addquiz-remove-btn:hover {
+    color: #e60000;
+    transform: scale(1.2);
+  }
+  
+  .addquiz-submit-container {
+    display: flex;
+    justify-content: center;
+  }
+  

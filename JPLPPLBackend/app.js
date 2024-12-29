@@ -8,6 +8,8 @@ const connect = require('./db/conn'); // MongoDB connection
 const Registration = require('./models/Registration');
 const ProblemStatement = require('./models/Addqueform.js');
 
+
+
 const app = express();
 
 // Enable CORS for frontend requests
@@ -160,6 +162,9 @@ app.post('/adminlogin', async (req, res) => {
     res.status(500).json({ error: 'Server error. Please try again later.' });
   }
 });
+
+
+
 
 // Start the server
 app.listen(5000, () => {

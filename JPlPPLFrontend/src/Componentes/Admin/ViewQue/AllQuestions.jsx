@@ -60,6 +60,18 @@ const Allquestions = () => {
           </div>
         ))}
       </div>
+
+      <div className="allquestions_addquestionformbtn">
+        <button onClick={() => window.location.href = "/add-question"}>
+          Add New Problem
+        </button>
+      </div>
+      <div className="allquestions_addquizformbtn">
+      <button onClick={() => window.location.href = "/addquiz"}>
+          Add New Quiz
+        </button>
+      </div>
+
     </div>
   );
 };
