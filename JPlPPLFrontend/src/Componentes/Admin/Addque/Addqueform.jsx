@@ -51,7 +51,7 @@ const Addqueform = () => {
       if (response.ok) {
         toast.success("Question added successfully!"); // Success notification
         setLoading(false); // Stop loading after successful submission
-        window.location.reload(); // Refresh the page after successful submission
+        window.location = '/allquestions'; // Refresh the page after successful submission
       } else {
         setLoading(false); // Stop loading on error
         toast.error("Error adding question! Please try again."); // Error notification

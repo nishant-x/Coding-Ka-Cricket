@@ -32,6 +32,8 @@ const Allquestions = () => {
   };
 
   return (
+    <>
+    
     <div className="allquestions_all_questions_container">
       <h1 className="allquestions_page_title">All Problem Statements</h1>
 
@@ -66,13 +68,46 @@ const Allquestions = () => {
           Add New Problem
         </button>
       </div>
+    </div>   
+    <div className="allquestions_all_questions_container">
+      <h1 className="allquestions_page_title">All Quizezes</h1>
+
+      {/* Show loader when loading */}
+      {loading && (
+        <div className="allquestions_loader_container">
+          <div className="allquestions_spinner"></div>
+        </div>
+      )}
+
+      <div className="allquestions_problem_cards">
+        {problems.map((problem) => (
+          <div key={problem._id} className="allquestions_Quecard">
+            <h3 className="allquestions_card_title">Title: {problem.title}</h3>
+            <p className="allquestions_card_description">
+              Description: {problem.description}
+            </p>
+            <div className="allquestions_card_actions">
+              <button
+                className="allquestions_remove_btn"
+                onClick={() => removeProblem(problem._id)}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
       <div className="allquestions_addquizformbtn">
       <button onClick={() => window.location.href = "/addquiz"}>
           Add New Quiz
         </button>
       </div>
+    </div>  
 
-    </div>
+      
+
+    
+    </>
   );
 };
 
