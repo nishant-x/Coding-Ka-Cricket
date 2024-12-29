@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ContestHomepage.css';
 
@@ -9,6 +9,7 @@ const ContestHomepage = () => {
 
   const [problems, setProblems] = useState([]); // Declare state to hold problems
   const [loading, setLoading] = useState(true); // Loading state for fetching problems
+  const navigate = useNavigate(); // Initialize navigate function
 
   useEffect(() => {
     if (!user) return; // Stop fetching if user is not defined
@@ -36,31 +37,38 @@ const ContestHomepage = () => {
     participation: user?.league,
   };
 
+  const handleAttemptQuiz = () => {
+    navigate('/contestquiz', { state: { user: userDetails } }); // Pass user data to the contestquiz page
+  };
+
   if (loading) {
     return <div>Loading...</div>; // Display loading message
   }
 
   return (
-    <div className="problem-stat-container">
+    <div className="contesthome-problem-stat-container">
       {/* Heading */}
-      <h1 className="page-heading">Problem Statement</h1>
+      <h1 className="contesthome-page-heading">Problem Statement</h1>
 
-      <div className="content-container">
+      <div className="contesthome-content-container">
         {/* Problem Statements Section (Left Side) */}
-        <div className="problem-statements">
+        <div className="contesthome-problem-statements">
           {problems.map((problem) => (
-            <div key={problem._id} className="problem-item">
-              <div className="problem-text">{problem.title}</div>
-              <button className="compile-button">{'>'}</button>
+            <div key={problem._id} className="contesthome-problem-item">
+              <div className="contesthome-problem-text">{problem.title}</div>
+              <button className="contesthome-compile-button">{'>'}</button>
             </div>
           ))}
+          <button className="contesthome-attempt-quiz-btn" onClick={handleAttemptQuiz}>
+            Attempt Quiz
+          </button>
         </div>
 
         {/* Partition */}
-        <div className="partition"></div>
+        <div className="contesthome-partition"></div>
 
         {/* User Details Section (Right Side) */}
-        <div className="user-details">
+        <div className="contesthome-user-details">
           <h2>User Details</h2>
           <ul>
             <li><strong>Name:</strong> {userDetails.name}</li>
@@ -72,6 +80,7 @@ const ContestHomepage = () => {
             <li><strong>Participation League:</strong> {userDetails.participation}</li>
           </ul>
         </div>
+        
       </div>
     </div>
   );

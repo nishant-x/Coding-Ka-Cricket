@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import "./ContestQuize.css";
+import "./ContestQuiz.css";
 import { data } from '../../../assets/API/data';
 
 const ContestQuize = () => {
@@ -57,7 +57,7 @@ const ContestQuize = () => {
 
     return (
         <div className='contestquize-container'>
-            <h1>Quiz App</h1>
+            <h1 className='contest-quiz-heading'>Quiz</h1>
             <hr />
             {result ? <></> : <>
                 <h2>{index + 1}. {question.question}</h2>
@@ -67,12 +67,12 @@ const ContestQuize = () => {
                     <li ref={option3} onClick={(e) => { checkAns(e, 3) }}>{question.option3}</li>
                     <li ref={option4} onClick={(e) => { checkAns(e, 4) }}>{question.option4}</li>
                 </ul>
-                <button onClick={next}>Next</button>
+                <button className='contestquiz-btn' onClick={next}>Next</button>
                 <div className="contestquize-index">{index + 1} of {data.length} questions</div>
             </>}
             {result ? <>
                 <h1 id='contestquize-score'>You scored {score} out of {data.length}</h1>
-                <button onClick={reset}>Reset</button>
+                <button className='contestquiz-btn' onClick={reset}>Reset</button>
             </> : <></>}
         </div>
     );

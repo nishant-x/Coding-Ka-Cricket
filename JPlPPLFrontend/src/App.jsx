@@ -13,7 +13,7 @@ import ContestHomepage from "./Componentes/Contest/ContestHome/ContestHomepage";
 import AdminLogin from "./Componentes/Admin/Adminlogin/Adminlogin";
 import AdminHomepage from "./Componentes/Admin/Adminhome/Adminhomepage";
 import Allquestions from "./Componentes/Admin/ViewQue/AllQuestions";
-import ContestQuize from "./Componentes/Contest/ContestQuize/ContestQuize";
+import ContestQuiz from "./Componentes/Contest/ContestQuiz/ContestQuiz";
 import ContestLogin from "./Componentes/Contest/ContestLogin/Contestlogin";
 import AddQuizForm from "./Componentes/Admin/AddQuiz/AddQuizForm";
 
@@ -38,7 +38,7 @@ const App = () => {
           <Route path="/allquestions" element={<Allquestions/>} />
           <Route path="/adminlogin" element={<AdminLogin/>} />
           <Route path="/adminhomepage" element={<AdminHomepage/>} />
-          <Route path="/contestquize" element={<ContestQuize/>} />
+          <Route path="/contestquiz" element={<ContestQuiz/>} />
         </Routes>
       <Footer/>
       </Router>
