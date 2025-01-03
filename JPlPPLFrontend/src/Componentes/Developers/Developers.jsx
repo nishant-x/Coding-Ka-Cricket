@@ -1,6 +1,6 @@
 import { FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa';
 import React from 'react';
-import './Coder.css';
+import './Developers.css';
 import Piyuhsimage from '../../assets/coders/piyush.png';
 import Krishimage from '../../assets/coders/Crish.png';
 import rajimage from '../../assets/coders/raj.png';
@@ -40,7 +40,7 @@ const images = [
         }
     },
     {
-        name: 'Nishant Jhadi',
+        name: 'Nishant Jhade',
         image: nishant,
         role: 'Frontend Developer',
         socialMedia: {

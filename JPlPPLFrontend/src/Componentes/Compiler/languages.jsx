@@ -1,4 +1,4 @@
-import './compiler.css';
+import './Compiler.css';
 import { useState } from "react";
 import { LANGUAGE_VERSIONS } from "../constants";
 

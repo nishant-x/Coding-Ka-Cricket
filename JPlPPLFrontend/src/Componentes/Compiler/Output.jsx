@@ -1,4 +1,4 @@
-import './compiler.css';
+import './Compiler.css';
 import { useState } from "react";
 import { executeCode } from "../../api";
 import { PROBLEM_STATEMENTS } from "../constants";

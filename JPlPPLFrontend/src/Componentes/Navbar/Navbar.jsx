@@ -23,9 +23,9 @@ const Navbar = () => {
           <li className="dropdown">
             <a href="#">Guidelines</a>
             <ul className="dropdown-menu">
-              <li><Link to="/instruction">Instruction</Link></li>
-              <li><Link to="/consent-letter">Consent Letter</Link></li>
-              <li><Link to="/how-to-apply">How to Apply</Link></li>
+              <li><Link to="#">Instruction</Link></li>
+              <li><Link to="#">Consent Letter</Link></li>
+              <li><Link to="#">How to Apply</Link></li>
             </ul>
           </li>
           <li className="dropdown">

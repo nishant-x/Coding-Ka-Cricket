@@ -7,7 +7,7 @@ import Timeline from './Timelines/Timeline.jsx';
 import ProfileCard from './Card/ProfileCard.jsx';
 import Faq from './Faq/Faq.jsx';
 import Mainpage from './mainpage/Mainpage.jsx';
-import Coder from './Coders/Coder.jsx';
+import Developers from './Developers/Developers.jsx';
 import '../App.css'
 
 const Homepage = () => {
@@ -39,7 +39,7 @@ const Homepage = () => {
       </div>
       
       <div className="MainCoders">
-        <Coder />
+        <Developers />
       </div>
     </>
   );
