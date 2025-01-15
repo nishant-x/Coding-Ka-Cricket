@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const connect = require('./db/conn'); // MongoDB connection
 const Registration = require('./models/Registration');
 const ProblemStatement = require('./models/Addqueform.js');
-
+const QuizData = require('./models/Addquizform.js');
 
 
 const app = express();
@@ -159,6 +159,60 @@ app.post('/adminlogin', async (req, res) => {
   } catch (err) {
     console.error('Server error during login:', err);
     res.status(500).json({ error: 'Server error. Please try again later.' });
+  }
+});
+
+// Adding Quiz in database
+app.post('/addquiz', async (req, res) => {
+  try {
+    const quizData = req.body;
+
+    // Create a new quiz document
+    const newQuiz = new QuizData({
+      // title: quizData.title,
+      selectedLeague: quizData.selectedLeague,
+      questions: quizData.questions,
+    });
+
+    // Save to database
+    await newQuiz.save();
+
+    // Respond to the client
+    res.status(201).json({
+      success: true,
+      message: 'Quiz added successfully!',
+      data: newQuiz,
+    });
+  } catch (error) {
+    console.error('Error adding quiz:', error);
+
+    // Respond with an error message
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while adding the quiz.',
+      error: error.message,
+    });
+  }
+});
+
+// Express route for getting quiz data based on league
+app.get('/getquiz/:league', async (req, res) => {
+  const league = req.params.league;
+  console.log("League received:", league);  // Log the received league value
+
+  try {
+    // Querying for the 'selectedLeague' field instead of 'league'
+    const quizData = await QuizData.find({ selectedLeague: league }); 
+    console.log("Quiz data found:", quizData);  // Log the fetched quiz data
+
+    if (quizData.length > 0) {
+      res.json({ success: true, quiz: quizData[0].questions });
+    } else {
+      res.status(404).json({ success: false, message: 'Quiz data not found for this league.' });
+    }
+  } catch (error) {
+    console.error("Error fetching quiz data:", error);
+    res.status(500).json({ success: false, message: 'Error fetching quiz data', error });
   }
 });
 

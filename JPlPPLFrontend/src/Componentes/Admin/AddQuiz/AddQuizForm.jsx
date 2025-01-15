@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
-import ClipLoader from "react-spinners/ClipLoader";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./AddQuizForm.css";
 
 const AddQuizForm = () => {
-  const [title, setTitle] = useState("");  // State for the quiz title
+  // const [title, setTitle] = useState("");  // State for the quiz title
   const [selectedLeague, setSelectedLeague] = useState("");  // State for the selected league (PPL or JPL)
   const [questions, setQuestions] = useState([
     {
@@ -17,9 +16,9 @@ const AddQuizForm = () => {
   ]);
 
   // Handle changes in title field
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
+  // const handleTitleChange = (e) => {
+  //   setTitle(e.target.value);
+  // };
 
   // Handle changes in league dropdown
   const handleLeagueChange = (e) => {
@@ -54,13 +53,37 @@ const AddQuizForm = () => {
     setQuestions(updatedQuestions);
   };
 
-  // Handle form submission (no backend involved now)
-  const handleSubmit = (e) => {
+  // Handle form submission (send data to the backend)
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    toast.success("Quiz added successfully!");
-    console.log("Quiz Title:", title);  // Log quiz title
-    console.log("Selected League:", selectedLeague);  // Log selected league
-    console.log("Quiz Data:", questions);  // Log quiz questions
+    
+    const quizData = {
+      // title,
+      selectedLeague,
+      questions,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/addquiz", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quizData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error("Error adding quiz.");
+        console.error(data.errors);
+      }
+    } catch (error) {
+      toast.error("Server error.");
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -69,21 +92,39 @@ const AddQuizForm = () => {
 
       <form className="addquiz-form-add-form" onSubmit={handleSubmit}>
         {/* Title Input */}
-        <label className="addquiz-form-label" htmlFor="quiz-title">
+        {/* <label className="addquiz-form-label" htmlFor="quiz-title">
           Quiz Title:
         </label>
         <select
           className="addquiz-form-input"
-          type="text"
           id="quiz-title"
           value={title}
           onChange={handleTitleChange}
-          placeholder="Enter quiz title"
           required
         >
           <option value="">Select Title</option>
           <option value="PPL">Python Premier League (PPL)</option>
           <option value="JPL">Java Premier League (JPL)</option>
+        </select> */}
+
+        {/* League Input */}
+        <label className="addquiz-form-label" htmlFor="league">
+          League:
+        </label>
+        <select
+          className="addquiz-form-input"
+          id="league"
+          value={selectedLeague}
+          onChange={handleLeagueChange}
+          required
+        >
+          <option value="">Select League</option>
+          <option value="Python Premier League (PPL)">
+            Python Premier League (PPL)
+          </option>
+          <option value="Java Premier League (JPL)">
+            Java Premier League (JPL)
+          </option>
         </select>
 
         {questions.map((quiz, index) => (

@@ -123,9 +123,9 @@ const Register = () => {
 
     const getLeague = () => {
         if (['CSE - AIML', 'CSE - IoT', 'CSE - Cyber Security', 'CSE - AIDL'].includes(branch)) {
-            return 'PPL (Python Premier League)';
+            return 'Python Premier League (PPL)';
         }
-        return 'JPL (Java Premier League)';
+        return 'Java Premier League (JPL)';
     };
 
     return (

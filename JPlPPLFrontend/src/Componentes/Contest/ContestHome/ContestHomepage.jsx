@@ -66,7 +66,7 @@ const ContestHomepage = () => {
 
   const handleEndTest = () => {
     alert("Test ended! Redirecting to the homepage.");
-    navigate('/home'); // Redirect to homepage when the test ends
+    navigate('/'); // Redirect to homepage when the test ends
   };
 
   const formatTime = (seconds) => {
