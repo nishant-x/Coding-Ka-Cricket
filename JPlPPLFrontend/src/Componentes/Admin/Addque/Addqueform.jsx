@@ -8,6 +8,12 @@ import "./Addqueform.css"; // Import the CSS file
 const Addqueform = () => {
   const [testCases, setTestCases] = useState([{ input: "", expectedOutput: "" }]);
   const [loading, setLoading] = useState(false); // Track loading state
+  const [selectedLeague, setSelectedLeague] = useState(""); // Track selected league
+
+  // Handle league selection
+  const handleLeagueChange = (e) => {
+    setSelectedLeague(e.target.value);
+  };
 
   // Handle changes for input and expected output
   const handleTestCaseChange = (index, field, value) => {
@@ -33,6 +39,7 @@ const Addqueform = () => {
     setLoading(true); // Start loading when form is submitted
 
     const questionData = {
+      league: selectedLeague,
       question: e.target.question.value,
       description: e.target.description.value,
       testCases,
@@ -51,10 +58,10 @@ const Addqueform = () => {
       if (response.ok) {
         toast.success("Question added successfully!"); // Success notification
         setLoading(false); // Stop loading after successful submission
-        window.location = '/allquestions'; // Refresh the page after successful submission
+        window.location = "/allquestions"; // Redirect to the questions page
       } else {
         setLoading(false); // Stop loading on error
-        toast.error("Error adding question! Please try again."); // Error notification
+        toast.error(data.message || "Error adding question! Please try again."); // Error notification
       }
     } catch (err) {
       setLoading(false); // Stop loading on error
@@ -67,6 +74,25 @@ const Addqueform = () => {
       <h2 className="addque-form-title">Add Questions</h2>
 
       <form className="addque-form-add-form" onSubmit={handleSubmit}>
+        <label className="addque-form-label" htmlFor="league">
+          League:
+        </label>
+        <select
+          className="addque-form-input"
+          id="league"
+          value={selectedLeague}
+          onChange={handleLeagueChange}
+          required
+        >
+          <option value="">Select League</option>
+          <option value="Python Premier League (PPL)">
+            Python Premier League (PPL)
+          </option>
+          <option value="Java Premier League (JPL)">
+            Java Premier League (JPL)
+          </option>
+        </select>
+
         <label className="addque-form-label" htmlFor="question">
           Question Title:
         </label>
@@ -137,7 +163,7 @@ const Addqueform = () => {
         </div>
       </form>
 
-      {/* Corrected ToastContainer */}
+      {/* Toast notification container */}
       <ToastContainer />
     </div>
   );

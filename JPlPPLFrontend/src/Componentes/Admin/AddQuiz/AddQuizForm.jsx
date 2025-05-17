@@ -76,7 +76,9 @@ const AddQuizForm = () => {
 
       if (data.success) {
         toast.success(data.message);
-      } else {
+        window.location.href = "/allquestions";  // Navigate to /allquestions route
+      }
+      else {
         toast.error("Error adding quiz.");
         console.error(data.errors);
       }
@@ -91,22 +93,7 @@ const AddQuizForm = () => {
       <h2 className="addquiz-form-title">Add Quiz</h2>
 
       <form className="addquiz-form-add-form" onSubmit={handleSubmit}>
-        {/* Title Input */}
-        {/* <label className="addquiz-form-label" htmlFor="quiz-title">
-          Quiz Title:
-        </label>
-        <select
-          className="addquiz-form-input"
-          id="quiz-title"
-          value={title}
-          onChange={handleTitleChange}
-          required
-        >
-          <option value="">Select Title</option>
-          <option value="PPL">Python Premier League (PPL)</option>
-          <option value="JPL">Java Premier League (JPL)</option>
-        </select> */}
-
+        
         {/* League Input */}
         <label className="addquiz-form-label" htmlFor="league">
           League:

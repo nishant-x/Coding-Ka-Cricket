@@ -64,16 +64,28 @@
 }
 
 .contestquize-correct {
-    background: rgb(21, 216, 122);
-    border-color: green;
+    /* background: rgb(21, 216, 122);
+    border-color: green; */
+    background: rgb(130 190 194);
+    border-color: rgb(130 190 194);
 }
 
 .contestquize-wrong {
-    background: rgb(195, 81, 81);
-    border-color: red;
+    /* background: rgb(195, 81, 81);
+    border-color: red; */
+    background: rgb(130 190 194);
+    border-color: rgb(130 190 194);
 }
 
 #contestquize-score {
     font-size: 50px; /* Reduced font size */
     color: rgb(250, 0, 0);
 }
+
+.contestquize-selected {
+    background: rgba(255, 255, 153, 0.4); /* Pale Yellow */
+    border-color: #FFD700; /* Gold */
+}
+
+
+

@@ -67,17 +67,25 @@ app.post('/register', upload.single('screenshot'), async (req, res) => {
 
 // POST route for adding new problem statement
 app.post('/add-question', async (req, res) => {
-  const { question, description, testCases } = req.body; // Changed 'title' to 'question'
+  const { league, question, description, testCases } = req.body; // Include 'league'
 
-  const newProblem = new ProblemStatement({ title: question, description, testCases }); // Map 'question' to 'title'
+  // Create a new problem instance
+  const newProblem = new ProblemStatement({
+    league, // Map 'league' field
+    title: question, // Map 'question' to 'title'
+    description,
+    testCases,
+  });
 
   try {
-    await newProblem.save();
+    await newProblem.save(); // Save the problem to the database
     res.status(201).json({ message: 'Problem added successfully' });
   } catch (err) {
+    console.error(err); // Log the error for debugging
     res.status(400).json({ error: 'Failed to add problem' });
   }
 });
+
 
 // GET route for fetching all problem statements
 app.get('/allquestions', async (req, res) => {
@@ -216,6 +224,36 @@ app.get('/getquiz/:league', async (req, res) => {
   }
 });
 
+
+// Route to fetch all quizzes
+app.get('/allquizzes', async (req, res) => {
+  try {
+    const quizzes = await QuizData.find();
+    res.status(200).json(quizzes);
+  } catch (error) {
+    console.error('Error fetching quizzes:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Route to delete a quiz by ID and league
+app.delete('/delete-quiz/:id', async (req, res) => {
+  const { id } = req.params;
+  const { league } = req.body;
+
+  try {
+    const quiz = await QuizData.findOneAndDelete({ _id: id, selectedLeague: league });
+
+    if (!quiz) {
+      return res.status(404).json({ message: 'Quiz not found or league mismatch' });
+    }
+
+    res.status(200).json({ message: 'Quiz deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting quiz:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 
 

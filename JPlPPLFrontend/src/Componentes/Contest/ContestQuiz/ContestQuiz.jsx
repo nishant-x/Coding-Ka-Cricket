@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';  // To get the user details passed from the previous page
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './ContestQuiz.css';
 
 const ContestQuize = () => {
     const location = useLocation();
-    const { user } = location.state || {};  // Retrieve user details passed from the previous page
+    const { user } = location.state || {};
 
     const [index, setIndex] = useState(0);
-    const [question, setQuestion] = useState(null);  // Initialize as null, will be set once data is fetched
+    const [question, setQuestion] = useState(null);
     const [lock, setLock] = useState(false);
     const [score, setScore] = useState(0);
     const [result, setResult] = useState(false);
-    const [quizData, setQuizData] = useState([]);  // To store the fetched quiz data
-    const [loading, setLoading] = useState(true);  // To manage loading state while fetching data
+    const [quizData, setQuizData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const option1 = useRef(null);
     const option2 = useRef(null);
@@ -23,25 +23,21 @@ const ContestQuize = () => {
     const option_arr = [option1, option2, option3, option4];
 
     useEffect(() => {
-        if (!user) return;  // If no user data, stop execution
+        if (!user) return;
 
-        // Log user participation to debug
-        console.log('User participation:', user.participation);
-
-        // Fetch quiz data based on the user's participation (league)
         const fetchQuizData = async () => {
             try {
-              const league = encodeURIComponent(user.participation);  // Ensure the league is properly encoded
-              const response = await axios.get(`http://localhost:5000/getquiz/${league}`);
-              const data = response.data.quiz;
-              setQuizData(data);  // Set quiz data
-              setQuestion(data[0]);  // Set the first question from the fetched data
-              setLoading(false);  // Set loading to false once data is fetched
+                const league = encodeURIComponent(user.participation);
+                const response = await axios.get(`http://localhost:5000/getquiz/${league}`);
+                const data = response.data.quiz;
+                setQuizData(data);
+                setQuestion(data[0]);
+                setLoading(false);
             } catch (error) {
-              console.error("Error fetching quiz data:", error);
-              setLoading(false);  // Set loading to false if an error occurs
+                console.error("Error fetching quiz data:", error);
+                setLoading(false);
             }
-          };
+        };
 
         fetchQuizData();
     }, [user]);
@@ -53,31 +49,26 @@ const ContestQuize = () => {
     }, [index, quizData]);
 
     const checkAns = (e, ans) => {
-        if (lock === false && question) {  // Ensure question exists
+        if (!lock && question) {
+            e.target.classList.add("contestquize-selected"); // Add the selected class
+            setLock(true);
             if (question.correctOptionIndex === ans) {
-                e.target.classList.add("contestquize-correct");
-                setLock(true);
                 setScore((prev) => prev + 1);
-            } else {
-                e.target.classList.add("contestquize-wrong");
-                setLock(true);
-                option_arr[question.correctOptionIndex - 1].current.classList.add("contestquize-correct");
             }
         }
     };
 
     const next = () => {
-        if (lock === true) {
+        if (lock) {
             if (index === quizData.length - 1) {
                 setResult(true);
                 return;
             }
-            setIndex(prevIndex => prevIndex + 1);
+            setIndex((prevIndex) => prevIndex + 1);
             setLock(false);
 
             option_arr.forEach((option) => {
-                option.current.classList.remove("contestquize-wrong");
-                option.current.classList.remove("contestquize-correct");
+                option.current.classList.remove("contestquize-selected");
             });
         }
     };
@@ -91,11 +82,11 @@ const ContestQuize = () => {
     };
 
     if (loading) {
-        return <div>Loading quiz...</div>;  // Display loading message while fetching data
+        return <div>Loading quiz...</div>;
     }
 
     if (quizData.length === 0) {
-        return <div>No quiz data available</div>;  // Handle the case when no quiz data is found
+        return <div>No quiz data available</div>;
     }
 
     return (

@@ -8,6 +8,7 @@ const testCaseSchema = new mongoose.Schema({
 
 // Problem statement schema definition
 const problemStatementSchema = new mongoose.Schema({
+  league: { type: String, required: true }, // New field for league
   title: { type: String, required: true },
   description: { type: String, required: true },
   testCases: [testCaseSchema], // Array of test case objects
