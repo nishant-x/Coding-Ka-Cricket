@@ -129,125 +129,159 @@ const Register = () => {
     };
 
     return (
-        <div className="registration-fullRegister">
-            <div className="registration-form-container">
-                <h2>Registration Form</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="registration-form-group">
-                        <label htmlFor="name">Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            className={errors.name ? 'registration-error-border' : ''}
-                        />
-                        {errors.name && <span className="registration-error">{errors.name}</span>}
+        <div className="registration-container">
+            {/* Left Side - Content */}
+            <div className="registration-content">
+                <div className="registration-header">
+                    <h1>Register for</h1>
+                    <h1 className="registration-main-title">Coding ka Cricket 2k25</h1>
+                    <p className="registration-subtitle">The ultimate coding competition where programming meets sports spirit!</p>
+                    
+                    <div className="registration-highlights">
+                        <div className="highlight-item">
+                            <span className="highlight-icon">🏆</span>
+                            <span>Exciting prizes for winners</span>
+                        </div>
+                        <div className="highlight-item">
+                            <span className="highlight-icon">📅</span>
+                            <span>Coming soon</span>
+                        </div>
+                        <div className="highlight-item">
+                            <span className="highlight-icon">📍</span>
+                            <span>SISTec Campus</span>
+                        </div>
                     </div>
-                    <div className="registration-form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            className={errors.email ? 'registration-error-border' : ''}
-                        />
-                        {errors.email && <span className="registration-error">{errors.email}</span>}
-                    </div>
-                    <div className="registration-form-group">
-                        <label htmlFor="enrollment">Enrollment Number</label>
-                        <input
-                            type="text"
-                            id="enrollment"
-                            name="enrollment"
-                            className={errors.enrollment ? 'registration-error-border' : ''}
-                        />
-                        {errors.enrollment && <span className="registration-error">{errors.enrollment}</span>}
-                    </div>
-                    <div className="registration-form-group">
-                        <label htmlFor="college">College</label>
-                        <select
-                            id="college"
-                            value={college}
-                            onChange={handleCollegeChange}
-                            className={errors.college ? 'registration-error-border' : ''}
-                            required
-                        >
-                            <option value="">Select College</option>
-                            <option value="SISTec-GN">SISTec-GN</option>
-                            <option value="SISTec-R">SISTec-R</option>
-                            <option value="SISTec-E">SISTec-E</option>
-                        </select>
-                    </div>
-                    {college && (
+                </div>
+            </div>
+
+            {/* Right Side - Form */}
+            <div className="registration-form-wrapper">
+                <div className="registration-form-container">
+                    <h2>Registration Form</h2>
+                    <form onSubmit={handleSubmit}>
                         <div className="registration-form-group">
-                            <label htmlFor="branch">Branch</label>
+                            <label htmlFor="name">Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                className={errors.name ? 'registration-error-border' : ''}
+                                placeholder="Enter your full name"
+                            />
+                            {errors.name && <span className="registration-error">{errors.name}</span>}
+                        </div>
+                        <div className="registration-form-group">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                className={errors.email ? 'registration-error-border' : ''}
+                                placeholder="Enter your email address"
+                            />
+                            {errors.email && <span className="registration-error">{errors.email}</span>}
+                        </div>
+                        <div className="registration-form-group">
+                            <label htmlFor="enrollment">Enrollment Number</label>
+                            <input
+                                type="text"
+                                id="enrollment"
+                                name="enrollment"
+                                className={errors.enrollment ? 'registration-error-border' : ''}
+                                placeholder="12-digit enrollment number"
+                            />
+                            {errors.enrollment && <span className="registration-error">{errors.enrollment}</span>}
+                        </div>
+                        <div className="registration-form-group">
+                            <label htmlFor="college">College</label>
                             <select
-                                id="branch"
-                                value={branch}
-                                onChange={handleBranchChange}
-                                className={errors.branch ? 'registration-error-border' : ''}
+                                id="college"
+                                value={college}
+                                onChange={handleCollegeChange}
+                                className={errors.college ? 'registration-error-border' : ''}
                                 required
                             >
-                                <option value="">Select Branch</option>
-                                {branchesByCollege[college].map((branch) => (
-                                    <option key={branch} value={branch}>
-                                        {branch}
-                                    </option>
-                                ))}
+                                <option value="">Select College</option>
+                                <option value="SISTec-GN">SISTec-GN</option>
+                                <option value="SISTec-R">SISTec-R</option>
+                                <option value="SISTec-E">SISTec-E</option>
                             </select>
                         </div>
-                    )}
-                    <div className="registration-form-group">
-                        <label htmlFor="year">Year</label>
-                        <select id="year" required>
-                            <option value="">Select Year</option>
-                            <option value="1st Year">1st Year</option>
-                            <option value="2nd Year">2nd Year</option>
-                            <option value="3rd Year">3rd Year</option>
-                        </select>
-                    </div>
-                    {branch && (
+                        {college && (
+                            <div className="registration-form-group">
+                                <label htmlFor="branch">Branch</label>
+                                <select
+                                    id="branch"
+                                    value={branch}
+                                    onChange={handleBranchChange}
+                                    className={errors.branch ? 'registration-error-border' : ''}
+                                    required
+                                >
+                                    <option value="">Select Branch</option>
+                                    {branchesByCollege[college].map((branch) => (
+                                        <option key={branch} value={branch}>
+                                            {branch}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
                         <div className="registration-form-group">
-                            <label htmlFor="section">Section</label>
-                            <select id="section" required>
-                                {[...Array(sectionCount)].map((_, i) => (
-                                    <option key={i + 1} value={`Section ${i + 1}`}>
-                                        Section {i + 1}
-                                    </option>
-                                ))}
+                            <label htmlFor="year">Year</label>
+                            <select id="year" required>
+                                <option value="">Select Year</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
                             </select>
                         </div>
-                    )}
-                    {branch && (
+                        {branch && (
+                            <div className="registration-form-group">
+                                <label htmlFor="section">Section</label>
+                                <select id="section" required>
+                                    {[...Array(sectionCount)].map((_, i) => (
+                                        <option key={i + 1} value={`Section ${i + 1}`}>
+                                            Section {i + 1}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
+                        {branch && (
+                            <div className="registration-form-group">
+                                <label htmlFor="league">League</label>
+                                <input type="text" id="league" value={getLeague()} readOnly />
+                            </div>
+                        )}
                         <div className="registration-form-group">
-                            <label htmlFor="league">League</label>
-                            <input type="text" id="league" value={getLeague()} readOnly />
+                            <label htmlFor="transaction">Transaction ID</label>
+                            <input
+                                type="text"
+                                id="transaction"
+                                name="transaction"
+                                className={errors.transaction ? 'registration-error-border' : ''}
+                                placeholder="Enter transaction ID"
+                            />
+                            {errors.transaction && <span className="registration-error">{errors.transaction}</span>}
                         </div>
-                    )}
-                    <div className="registration-form-group">
-                        <label htmlFor="transaction">Transaction ID</label>
-                        <input
-                            type="text"
-                            id="transaction"
-                            name="transaction"
-                            className={errors.transaction ? 'registration-error-border' : ''}
-                        />
-                        {errors.transaction && <span className="registration-error">{errors.transaction}</span>}
-                    </div>
-                    <div className="registration-form-group">
-                        <label htmlFor="screenshot">Screenshot of Payment</label>
-                        <input
-                            type="file"
-                            id="screenshot"
-                            name="screenshot"
-                            onChange={handleScreenshotChange}
-                            className={errors.screenshot ? 'registration-error-border' : ''}
-                            required
-                        />
-                        {errors.screenshot && <span className="registration-error">{errors.screenshot}</span>}
-                    </div>
-                    <button type="submit" className='registration-btn-submit'>Submit</button>
-                </form>
+                        <div className="registration-form-group">
+                            <label htmlFor="screenshot">Screenshot of Payment</label>
+                            <input
+                                type="file"
+                                id="screenshot"
+                                name="screenshot"
+                                onChange={handleScreenshotChange}
+                                className={errors.screenshot ? 'registration-error-border' : ''}
+                                accept="image/*"
+                                required
+                            />
+                            {errors.screenshot && <span className="registration-error">{errors.screenshot}</span>}
+                        </div>
+                        <button type="submit" className="registration-btn-submit">
+                            Register Now
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     );
