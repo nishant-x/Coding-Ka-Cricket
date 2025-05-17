@@ -9,7 +9,7 @@
   pointer-events: none;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 15px rgb(14, 186, 192);
-  z-index: 9999;
+  z-index: 9999999;
 }
 *{
 
