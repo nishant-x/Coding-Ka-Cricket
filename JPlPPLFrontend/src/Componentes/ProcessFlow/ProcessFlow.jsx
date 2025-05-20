@@ -1,24 +1,22 @@
-
 import React from "react";
 import "./ProcessFlow.css";
 import { FaRegIdBadge } from "react-icons/fa";
 import { BiSolidCricketBall } from "react-icons/bi";
 import { RiTeamFill } from "react-icons/ri";
 import { MdSportsCricket } from "react-icons/md";
-import { GiTrophy } from "react-icons/gi";
-
+import { GiTrophy, GiLaurelsTrophy } from "react-icons/gi";
 
 const ProcessFlow = () => {
   const steps = [
     {
       id: 1,
-      title: "Register",
+      title: "Registration",
       description: "Sign up to secure your spot in the competition.",
       icon: <FaRegIdBadge />,
     },
     {
       id: 2,
-      title: "Super Over Round",
+      title: "Trial Over",
       description: "Prove your skills in a rapid Q&A to advance.",
       icon: <BiSolidCricketBall />,
     },
@@ -30,23 +28,28 @@ const ProcessFlow = () => {
     },
     {
       id: 4,
-      title: "Knockout Round",
-      description: "Compete to solve modules and reach the finals.",
+      title: "Qualifier Round",
+      description: "Compete to solve modules and reach the semi-finals.",
       icon: <MdSportsCricket />,
     },
     {
       id: 5,
-      title: "Final",
+      title: "Semi-Final",
       description: "Battle for the championship with top teams.",
       icon: <GiTrophy />,
     },
+    {
+      id: 6,
+      title: "Final",
+      description: "Battle for the championship with top 2 teams.",
+      icon: <GiLaurelsTrophy />,
+    }
   ];
-
 
   return (
     <div className="process-flow-container" id="processflow">
       <div className="Process_heading">
-        <h1 className="Process-head"> Process flow </h1>
+        <h1 className="Process-head"> Process Flow </h1>
         <h3>Here is our ProcessFlow</h3>
       </div>
 
@@ -64,12 +67,10 @@ const ProcessFlow = () => {
               </div>
               <p className="step-description">{step.description}</p>
             </div>
-
           </div>
-        ))
-        }
+        ))}
       </div>
-    </div >
+    </div>
   );
 };
 

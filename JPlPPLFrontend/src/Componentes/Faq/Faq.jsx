@@ -69,21 +69,26 @@ const Faq = () => {
       <motion.details variants={itemVariants}>
         <summary>What is the format of the competition?</summary>
         <p>
-          The competition consists of three rounds:
+          The competition consists of four rounds:
         </p>
         <ul>
           <li>
-            <strong>Super Over Round</strong>: 6 individual questions will be
-            asked, and the top two players from each group will be selected to
+            <strong>Trial Over</strong>: 6 individual MCQ questions will be
+            asked, and the top eleven players from each group will be selected to
             form random teams for the next round.
           </li>
           <li>
-            <strong>Knockout Match</strong>: Teams will compete against each
-            other, solving assigned modules. The top two teams will advance
-            to the final round.
+            <strong>Qualifier Round</strong>: Teams will compete against each
+            other, solving assigned modules. The top teams will advance
+            to the semi-final round.
           </li>
           <li>
-            <strong>Final Round</strong>: The top two teams from Round 2 will
+            <strong>Semi Final Round</strong>: Teams will compete against each
+            other, solving assigned modules. The top 2 teams will advance
+            to the semi-final round.
+          </li>
+          <li>
+            <strong>Final Round</strong>: The top two teams will
             compete on a level-up problem statement. The team with the
             highest score will win the Premier League.
           </li>
@@ -94,13 +99,13 @@ const Faq = () => {
         <summary>How are teams formed?</summary>
         <p>
           In Round 1, individual players will answer questions. Based on their
-          performance, two players from each group will be selected to form
+          performance, eleven players from each group will be selected to form
           random teams for the next round.
         </p>
       </motion.details>
 
       <motion.details variants={itemVariants}>
-        <summary>What happens in the Knockout Match round?</summary>
+        <summary>What happens in the Qualifier round?</summary>
         <p>
           Teams will receive modules and work together to provide solutions.
           The top two teams based on their performance will advance to the
@@ -120,7 +125,7 @@ const Faq = () => {
       <motion.details variants={itemVariants}>
         <summary>Is there a registration fee for the competition?</summary>
         <p>
-          There is a 35 rupee per person fee just for basic facilities that we
+          There is a 20 rupee per person fee just for basic facilities that we
           will provide from our end.
         </p>
       </motion.details>

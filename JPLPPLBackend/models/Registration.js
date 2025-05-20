@@ -1,4 +1,3 @@
-// models/Registration.js
 const mongoose = require('mongoose');
 
 const registrationSchema = new mongoose.Schema({
@@ -11,7 +10,11 @@ const registrationSchema = new mongoose.Schema({
   section: { type: String, required: true },
   league: { type: String, required: true },
   transaction: { type: String, required: true },
-  screenshot: { type: String, required: true }, // Save screenshot path in DB
+  screenshot: { type: String, required: true }, 
+  quizScore: { type: Number, default: null },
+  timeToSolveMCQ: { type: Number, default: null }
+}, { 
+  timestamps: true 
 });
 
 const Registration = mongoose.model('Registration', registrationSchema);

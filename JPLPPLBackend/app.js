@@ -14,10 +14,29 @@ const ProblemStatement = require('./models/Addqueform.js');
 const QuizData = require('./models/Addquizform.js');
 const ACTIONS = require('./Actions');
 
+
+const RegistrationRoute = require('./Router/registrationRoutes.js')
+
 const app = express();
 
 // Enable CORS for frontend requests
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000"
+];
+
+// CORS Middleware
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+
 
 // Middleware to parse JSON and form data
 app.use(express.json());
@@ -115,6 +134,10 @@ const languageConfig = {
   r: { versionIndex: "3" },
 };
 
+
+
+app.use('/api/registration' , RegistrationRoute)
+
 app.post("/compile", async (req, res) => {
   const { code, language } = req.body;
 
@@ -153,7 +176,7 @@ app.post('/register', upload.single('screenshot'), async (req, res) => {
   const screenshot = req.file;
 
   if (!screenshot) {
-    return res.status(400).json({ error: 'Screenshot is required' });
+    return res.status(400).json({  error: 'Screenshot is required' });
   }
 
   try {

@@ -104,7 +104,7 @@ const Register = () => {
         formData.append('screenshot', screenshot);
 
         try {
-            const response = await fetch('http://localhost:5000/register', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/registration`, {
                 method: 'POST',
                 body: formData,
             });
@@ -117,6 +117,7 @@ const Register = () => {
                 alert(data.error || 'Something went wrong.');
             }
         } catch (error) {
+            console.error(error);
             alert('Server error. Please try again later.');
         }
     };
@@ -148,7 +149,7 @@ const Register = () => {
                         </div>
                         <div className="highlight-item">
                             <span className="highlight-icon">📍</span>
-                            <span>SISTec Campus</span>
+                            <span>SISTec-R Campus, Ratibad, Bhopal - 462044, Madhya Pradesh, India</span>
                         </div>
                     </div>
                 </div>
@@ -230,23 +231,26 @@ const Register = () => {
                             <label htmlFor="year">Year</label>
                             <select id="year" required>
                                 <option value="">Select Year</option>
-                                <option value="1st Year">1st Year</option>
+                                {/* <option value="1st Year">1st Year</option> */}
                                 <option value="2nd Year">2nd Year</option>
-                                <option value="3rd Year">3rd Year</option>
+                                {/* <option value="3rd Year">3rd Year</option> */}
                             </select>
                         </div>
-                        {branch && (
-                            <div className="registration-form-group">
-                                <label htmlFor="section">Section</label>
-                                <select id="section" required>
-                                    {[...Array(sectionCount)].map((_, i) => (
-                                        <option key={i + 1} value={`Section ${i + 1}`}>
-                                            Section {i + 1}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        )}
+                   {branch && (
+    <div className="registration-form-group">
+        <label htmlFor="section">Section</label>
+        <select id="section" required>
+            {[...Array(sectionCount)].map((_, i) => {
+                const sectionLetter = String.fromCharCode(65 + i); // 65 is ASCII for 'A'
+                return (
+                    <option key={i + 1} value={`Section ${sectionLetter}`}>
+                        Section {sectionLetter}
+                    </option>
+                );
+            })}
+        </select>
+    </div>
+)}
                         {branch && (
                             <div className="registration-form-group">
                                 <label htmlFor="league">League</label>

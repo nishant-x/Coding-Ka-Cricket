@@ -10,13 +10,12 @@
     position: fixed; 
     top: 0;
     left: 0;
-    font-size: 16px;
-    width: 100%; /* Ensure it spans the entire width */
-    z-index: 999999; /* Ensure it stays above other elements */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
- 
+    width: 100%; 
+    z-index: 999999;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Logo */
 .logo img {
     width: 5rem;
     height: 5rem;
@@ -24,6 +23,7 @@
     margin-bottom: 1px;
 }
 
+/* Nav menu */
 .nav-menu {
     display: flex;
     list-style: none;
@@ -39,19 +39,19 @@
     transition: color 0.3s ease;
 }
 
-/* Hover effect for Links */
+/* Hover effect */
 .nav-menu a:hover,
 .nav-menu .dropdown a:hover {
-    color: cadetblue; /* Light blue hover */
+    color: cadetblue;
 }
 
-/* Underline animation for Links */
+/* Underline animation */
 .nav-menu a::after,
 .nav-menu .dropdown a::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 25%; 
+    left: 25%;
     width: 50%;
     height: 2px;
     background-color: cadetblue;
@@ -61,9 +61,10 @@
 
 .nav-menu a:hover::after,
 .nav-menu .dropdown a:hover::after {
-    transform: scaleX(1); /* Animate underline */
+    transform: scaleX(1);
 }
 
+/* Dropdown */
 .dropdown {
     position: relative;
 }
@@ -95,26 +96,15 @@
 }
 
 .dropdown-menu a:hover {
-    background-color: #f0f8ff; /* Light hover background */
+    background-color: #f0f8ff;
 }
 
 .dropdown:hover .dropdown-menu {
     display: block;
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* Register Button */
-.nav-buttons .register-btn{
+.nav-buttons .register-btn {
     background-color: cadetblue;
     color: white;
     padding: 10px 16px;
@@ -129,7 +119,7 @@
     transform: scale(1.05);
 }
 
-/* Hamburger Menu */
+/* Hamburger Menu for mobile */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -144,13 +134,14 @@
     border-radius: 5px;
 }
 
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .nav-menu {
         display: none;
         flex-direction: column;
         background-color: #ffffff;
         position: absolute;
-        top: 60px;
+        top: 70px;
         right: 20px;
         width: 200px;
         border-radius: 4px;
@@ -167,7 +158,19 @@
     }
 }
 
-/* Add margin to content below the navbar to prevent overlap */
+/* Slide down animation */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add margin to content to avoid being hidden behind navbar */
 body {
     margin-top: 108px;
 }

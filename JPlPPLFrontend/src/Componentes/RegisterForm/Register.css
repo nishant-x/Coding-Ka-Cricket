@@ -18,6 +18,7 @@
   min-height: 100vh;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg);
+  overflow: hidden;
 }
 
 /* ===== Left Side - Hero Content ===== */

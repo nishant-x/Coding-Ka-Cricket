@@ -1,12 +1,12 @@
-// conn.js
 const mongoose = require('mongoose');
+require('dotenv').config(); 
 
-// Make a connection with MongoDB
-let connect = mongoose.connect('mongodb://127.0.0.1:27017/StudentRegistrationData')
-    .then(() => {
-        console.log('Connected to MongoDB');
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+mongoose.connect(process.env.MONGOOSE_URL)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+  });
 
+module.exports = mongoose.connection;

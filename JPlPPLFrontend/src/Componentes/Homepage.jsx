@@ -22,9 +22,9 @@ const Homepage = () => {
         <IntroText />
       </div>
 
-      <div className="MainTimeline">
+      {/* <div className="MainTimeline">
         <Timeline />
-      </div>
+      </div> */}
 
       <div className="MainFlow">
         <ProcessFlow />

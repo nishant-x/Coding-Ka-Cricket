@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Handle registration form data
-router.post('/register', upload.single('screenshot'), async (req, res) => {
+router.post('/', upload.single('screenshot'), async (req, res) => {
   const { name, email, enrollment, college, branch, year, section, league, transaction } = req.body;
   const screenshot = req.file;
   if (!screenshot) return res.status(400).json({ error: 'Screenshot is required' });
