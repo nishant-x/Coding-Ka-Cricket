@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import payment from '../../assets/paymentQR/paymentQr.jpg';
 import './Register.css';
 
 const Register = () => {
@@ -8,6 +9,7 @@ const Register = () => {
     const [sectionCount, setSectionCount] = useState(1);
     const [errors, setErrors] = useState({});
     const [screenshot, setScreenshot] = useState(null);
+    const [year, setYear] = useState('');
     const navigate = useNavigate();
 
     const branchesByCollege = {
@@ -33,6 +35,10 @@ const Register = () => {
         } else {
             setSectionCount(1);
         }
+    };
+
+    const handleYearChange = (e) => {
+        setYear(e.target.value);
     };
 
     const handleScreenshotChange = (e) => {
@@ -97,7 +103,7 @@ const Register = () => {
         formData.append('enrollment', document.getElementById('enrollment').value);
         formData.append('college', college);
         formData.append('branch', branch);
-        formData.append('year', document.getElementById('year').value);
+        formData.append('year', year);
         formData.append('section', document.getElementById('section').value);
         formData.append('league', getLeague());
         formData.append('transaction', document.getElementById('transaction').value);
@@ -130,6 +136,7 @@ const Register = () => {
     };
 
     return (
+        <div className="ckc-registration">
         <div className="registration-container">
             {/* Left Side - Content */}
             <div className="registration-content">
@@ -146,7 +153,6 @@ const Register = () => {
                         <div className="highlight-item">
                             <span className="highlight-icon">📅</span>
                             <span>30/05/2025 - JPL <br />31/05/2025 - PPL</span>
-                            
                         </div>
                         <div className="highlight-item">
                             <span className="highlight-icon">📍</span>
@@ -230,28 +236,41 @@ const Register = () => {
                         )}
                         <div className="registration-form-group">
                             <label htmlFor="year">Year</label>
-                            <select id="year" required>
+                            <select 
+                                id="year" 
+                                value={year}
+                                onChange={handleYearChange}
+                                required
+                            >
                                 <option value="">Select Year</option>
-                                {/* <option value="1st Year">1st Year</option> */}
                                 <option value="2nd Year">2nd Year</option>
-                                {/* <option value="3rd Year">3rd Year</option> */}
                             </select>
                         </div>
-                   {branch && (
-    <div className="registration-form-group">
-        <label htmlFor="section">Section</label>
-        <select id="section" required>
-            {[...Array(sectionCount)].map((_, i) => {
-                const sectionLetter = String.fromCharCode(65 + i); // 65 is ASCII for 'A'
-                return (
-                    <option key={i + 1} value={`Section ${sectionLetter}`}>
-                        Section {sectionLetter}
-                    </option>
-                );
-            })}
-        </select>
-    </div>
-)}
+
+                        {/* Payment QR Code - Only shown when year is selected */}
+                        {year && (
+                            <div className="payment-qr-container">
+                                <p>Please make the payment of ₹100 to complete your registration</p>
+                                <img src={payment} alt="Payment QR Code" className="payment-qr-image" />
+                                <p>Scan this QR code to make payment</p>
+                            </div>
+                        )}
+
+                        {branch && (
+                            <div className="registration-form-group">
+                                <label htmlFor="section">Section</label>
+                                <select id="section" required>
+                                    {[...Array(sectionCount)].map((_, i) => {
+                                        const sectionLetter = String.fromCharCode(65 + i);
+                                        return (
+                                            <option key={i + 1} value={`Section ${sectionLetter}`}>
+                                                Section {sectionLetter}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                        )}
                         {branch && (
                             <div className="registration-form-group">
                                 <label htmlFor="league">League</label>
@@ -288,6 +307,7 @@ const Register = () => {
                     </form>
                 </div>
             </div>
+        </div>
         </div>
     );
 };
