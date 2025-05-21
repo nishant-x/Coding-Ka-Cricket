@@ -2,6 +2,7 @@ import React from "react";
 import "./Homepage.css";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import fullvideo from "../../assets/HOMEVIDEO.mp4";
+import { Link } from "react-router-dom";
 
 const Homepage = () => {
   return (
@@ -9,7 +10,7 @@ const Homepage = () => {
       <div className="tophome">
         <video
           src={fullvideo}
-        //   controls
+          //   controls
           autoPlay
           muted
           loop
@@ -26,7 +27,7 @@ const Homepage = () => {
             <p className="home-card__text">
               Compete in 3 exciting rounds & showcase your Python skills!
             </p>
-            <a href="#" className="home-card__link">
+            <Link to="/register" className="home-card__link">
               <span>Get Started</span>
               <svg
                 fill="none"
@@ -40,7 +41,7 @@ const Homepage = () => {
                   d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
           <div className="home-card__extra">
             <h4>
@@ -58,8 +59,10 @@ const Homepage = () => {
             <p className="home-card__text">
               Prove your Java skills and claim the top spot!
             </p>
-            <a href="#" className="home-card__link">
+
+            <Link to="/register" className="home-card__link">
               <span>Join Now</span>
+
               <svg
                 fill="none"
                 viewBox="0 0 24 24"
@@ -72,7 +75,7 @@ const Homepage = () => {
                   d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
           <div className="home-card__extra">
             <h4>

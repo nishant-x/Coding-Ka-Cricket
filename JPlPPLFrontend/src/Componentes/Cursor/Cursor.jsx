@@ -1,63 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
-import "./Cursor.css"; 
+import React, { useEffect, useRef } from "react";
+import "./Cursor.css";
+// import ballImage from "./ball.png"; 
+
 const Cursor = () => {
   const cursorRef = useRef(null);
-  const [trail, setTrail] = useState([]);
 
   useEffect(() => {
-    // Track mouse position
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e;
-      setTrail((prevTrail) => [
-        ...prevTrail,
-        { x: clientX, y: clientY },
-      ]);
+      const cursor = cursorRef.current;
+      if (cursor) {
+        cursor.style.left = `${clientX}px`;
+        cursor.style.top = `${clientY}px`;
+      }
     };
 
-    // Add mousemove event listener
     window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  useEffect(() => {
-    // Remove oldest trail point when there are too many (adjust this value)
-    if (trail.length > 20) { // Increase this number for more tails
-      setTrail((prevTrail) => prevTrail.slice(1));
-    }
-  }, [trail]);
-
-  useEffect(() => {
-    // Animate cursor trail using GSAP
-    if (trail.length > 0) {
-      gsap.to(cursorRef.current, {
-        x: trail[trail.length - 1].x - 15, 
-        y: trail[trail.length - 1].y - 15,
-        duration: 0.3,
-        ease: "power3.out"
-      });
-    }
-  }, [trail]);
-
-  return (
-    <>
-      <div className="cursor" ref={cursorRef}></div>
-      {trail.map((point, index) => (
-        <div
-          key={index}
-          className="trail"
-          style={{
-            left: point.x - 10 + "px",
-            top: point.y - 10 + "px",
-            opacity: 1 - index / trail.length, // Make older trails fade out
-            transform: `scale(${1 - index / trail.length})`, // Optional: Shrink older tails
-          }}
-        ></div>
-      ))}
-    </>
-  );
+  return <img ref={cursorRef} src='https://pngfre.com/wp-content/uploads/Cricket-1-1-1024x1024.png' alt="cursor" className="custom-cursor" />;
 };
 
 export default Cursor;

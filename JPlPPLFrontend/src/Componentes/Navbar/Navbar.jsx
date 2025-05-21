@@ -32,8 +32,8 @@ const Navbar = () => {
               <li><a href="/#faq">FQA</a> </li>
             </ul>
           </li>
-          <li><Link to="/contestlogin">Join Contest</Link></li>
-          <li><Link to="/adminlogin">Admin Login</Link></li>
+          {/* <li><Link to="/contestlogin">Join Contest</Link></li> */}
+          {/* <li><Link to="/adminlogin">Admin Login</Link></li> */}
           <li><Link to="/contact">Contact Us</Link></li>
         </ul>
         <div className="nav-buttons">
