@@ -1,7 +1,7 @@
 import React from "react";
 import "./Homepage.css";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import fullvideo from "../../assets/lv_0_20250521123934.mp4";
+import fullvideo from "../../assets/HOMEVIDEO.mp4";
 
 const Homepage = () => {
   return (
