@@ -23,8 +23,8 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
-  "https://coding-ka-cricket.vercel.app/",
-  "https://coding-ka-cricket-81k2r8vbr-nishant-jhades-projects.vercel.app/"
+  "https://coding-ka-cricket.vercel.app",
+  "https://coding-ka-cricket-81k2r8vbr-nishant-jhades-projects.vercel.app"
 ];
 
 // CORS Middleware
