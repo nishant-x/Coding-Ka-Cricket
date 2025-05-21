@@ -12,7 +12,7 @@ import EditorPage from "./CodeEditor/EditorPage";
 import Home from "./CodeEditor/Home";
 import Addqueform from "./Componentes/Admin/Addque/Addqueform";
 import AddQuizForm from "./Componentes/Admin/AddQuiz/AddQuizForm";
-import AdminHomepage from "./Componentes/Admin/Adminhome/Adminhomepage";
+import AdminHomepage from "./Componentes/Admin/AdminHome/Adminhomepage";
 import AdminLogin from "./Componentes/Admin/Adminlogin/Adminlogin";
 import Allquestions from "./Componentes/Admin/ViewQue/AllQuestions";
 import ContestHomepage from "./Componentes/Contest/ContestHome/ContestHomepage";
