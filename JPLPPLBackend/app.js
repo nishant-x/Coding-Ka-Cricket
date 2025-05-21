@@ -23,7 +23,8 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
-  "https://coding-ka-cricket.vercel.app/"
+  "https://coding-ka-cricket.vercel.app/",
+  "https://coding-ka-cricket-81k2r8vbr-nishant-jhades-projects.vercel.app/"
 ];
 
 // CORS Middleware
@@ -52,7 +53,8 @@ const io = new Server(server, {
     origin: [
   "http://localhost:5173",
   "http://localhost:3000",
-  "https://coding-ka-cricket.vercel.app/"
+  "https://coding-ka-cricket.vercel.app/",
+  "https://coding-ka-cricket-81k2r8vbr-nishant-jhades-projects.vercel.app/"
 ], // Replace with your frontend URL
     methods: ["GET", "POST"],
   },
