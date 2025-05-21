@@ -31,7 +31,7 @@ const ProfileCard = () => {
       section: "chief_patron",
     },
     {
-      name: "Dr. Manish Billore",
+      name: "Dr. Abhishek Choubey",
       title: "Principal",
       bio: "Dedicated to academic excellence and student development with over two decades of leadership.",
       imgSrc: principal,
