@@ -27,11 +27,17 @@ body {
   z-index: 1;
   align-items: center;
 }
+.home-video {
+    width: 100%;
+    /* max-width: 850px; */
+    /* margin-top: 20px; */
+    border-radius: 8px;
+}
 
 .homemain::before {
   content: "";
   position: absolute;
-  bottom: -25%;
+  bottom: -6%;
   left: 50%;
   transform: translateX(-50%);
   width: 130%;
@@ -48,7 +54,7 @@ body {
   flex-wrap: wrap;
   padding: 20px;
 }
-
+/* Base styles remain the same */
 .home-card {
   width: 320px;
   height: 370px;
@@ -64,6 +70,70 @@ body {
   color: #f0f0f0;
 }
 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .home-card {
+    width: 280px;
+    height: 330px;
+  }
+  
+  .home-card__content {
+    padding: 20px 15px;
+  }
+  
+  .home-card:hover .home-card__content {
+    padding: 40px 30px;
+  }
+  
+  .home-card__title {
+    font-size: 1.3rem;
+    margin-bottom: 0.8em;
+  }
+  
+  .home-card__text {
+    font-size: 0.8rem;
+    margin-bottom: 1.2em;
+  }
+  
+  .home-card__extra {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-card {
+    width: 250px;
+    height: 300px;
+  }
+  
+  .home-card__content {
+    padding: 15px 10px;
+  }
+  
+  .home-card:hover .home-card__content {
+    padding: 30px 20px;
+  }
+  
+  .home-card__title {
+    font-size: 1.1rem;
+    margin-bottom: 0.6em;
+  }
+  
+  .home-card__text {
+    font-size: 0.75rem;
+    margin-bottom: 1em;
+  }
+  
+  .home-card__extra {
+    font-size: 1rem;
+  }
+  
+  .home-card__link {
+    font-size: 0.75rem;
+  }
+}
+
+/* The rest of your existing styles remain unchanged */
 .java-card {
   background-image: url("https://wallpapercave.com/wp/wp7250277.jpg");
   background-size: contain;
@@ -175,7 +245,6 @@ body {
   transform: scale(1.2);
   transition: transform 0.35s ease-in-out;
 }
-
 /* -------------------- */
 /* ✅ Responsive Fixes  */
 /* -------------------- */
@@ -186,14 +255,10 @@ body {
     padding: 10px;
   }
 
-  .home-card {
-    width: 90%;
-    height: 400px;
-  }
 
   .homemain::before {
     width: 180%; /* 🔧 reduce stretch on mobile */
     height: 20vh;
-    bottom: -10%;
+    /* bottom: -10%; */
   }
 }

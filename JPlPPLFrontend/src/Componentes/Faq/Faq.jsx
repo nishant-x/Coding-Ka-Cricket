@@ -32,7 +32,7 @@ const Faq = () => {
     >
       <div className="FQA_heading">
       <motion.h1 variants={itemVariants}>FAQs</motion.h1>
-      <h3>Here is our FQA</h3>
+      <h3>Here is our FAQs</h3>
       </div>
         
 
@@ -113,14 +113,14 @@ const Faq = () => {
         </p>
       </motion.details>
 
-      <motion.details variants={itemVariants}>
+      {/* <motion.details variants={itemVariants}>
         <summary>Can I participate in both JPL and PPL?</summary>
         <p>
           No, participants must choose between JPL (Java) and PPL (Python). You
           can only participate in one competition based on your preferred
           programming language.
         </p>
-      </motion.details>
+      </motion.details> */}
 
       <motion.details variants={itemVariants}>
         <summary>Is there a registration fee for the competition?</summary>
@@ -130,14 +130,14 @@ const Faq = () => {
         </p>
       </motion.details>
 
-      <motion.details variants={itemVariants}>
+      {/* <motion.details variants={itemVariants}>
         <summary>What are the system requirements for the competition?</summary>
         <p>
           Participants will need a stable internet connection and a computer
           that can run Java or Python. Specific system requirements will be
           provided before the competition.
         </p>
-      </motion.details>
+      </motion.details> */}
     </motion.section>
   );
 };

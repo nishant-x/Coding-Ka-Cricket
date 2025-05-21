@@ -19,7 +19,7 @@ const images = [
         }
     },
     {
-        name: 'Raj Kumar Lodhi',
+        name: 'RajKumar Lodhi',
         image: rajimage,
         role: 'Frontend Developer',
         socialMedia: {
