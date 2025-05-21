@@ -209,7 +209,7 @@
 
 
 
-.card-titles h1::after {
+/* .card-titles h1::after {
   content: "Ours Patrons";
   top: 25px;
   color: #232323a9;
@@ -217,7 +217,7 @@
   font-size: xxx-large;
   position: relative;
   z-index: -1;
-}
+} */
 .card-titles{
   display: flex;
   /* justify-content: center; */

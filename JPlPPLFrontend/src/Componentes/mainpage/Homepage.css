@@ -12,7 +12,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #5f9ea0;
+  background-color: #01666f;
   justify-content: space-between;
   color: #f0f0f0;
   font-family: "Fira Sans", sans-serif;
@@ -28,10 +28,8 @@ body {
   align-items: center;
 }
 .home-video {
-    width: 100%;
-    /* max-width: 850px; */
-    /* margin-top: 20px; */
-    border-radius: 8px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(1, 102, 111, 0.6); 
 }
 
 .homemain::before {

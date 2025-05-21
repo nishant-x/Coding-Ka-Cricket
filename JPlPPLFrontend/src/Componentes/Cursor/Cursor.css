@@ -1,34 +1,14 @@
-.cursor {
-  top: 0;
-  left: 0   ;
-  position: fixed;
-  width: 30px;
-  height: 30px;
-  background-color: rgba(8, 114, 118, 0.377); 
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 15px rgb(14, 186, 192);
-  z-index: 9999999;
-}
-*{
-
+/* Hide default cursor */
+body {
   cursor: none;
 }
 
-.trail {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: rgb(6, 81, 84);
-  border-radius: 50%;
+/* Style for custom cursor */
+.custom-cursor {
+  position: fixed;
+  width: 30px;   /* Adjust size as needed */
+  height: 30px;
   pointer-events: none;
-  box-shadow: 0 0 15px cadetblue;
-  animation: fade-out 1s forwards;
-}
-
-@keyframes fade-out {
-  to {
-    opacity: 2;
-  }
+  transform: translate(-50%, -50%);
+  z-index: 9999;
 }
