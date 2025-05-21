@@ -250,7 +250,7 @@ const Register = () => {
                         {/* Payment QR Code - Only shown when year is selected */}
                         {year && (
                             <div className="payment-qr-container">
-                                <p>Please make the payment of ₹100 to complete your registration</p>
+                                <p>Please make the payment of ₹20 to complete your registration</p>
                                 <img src={payment} alt="Payment QR Code" className="payment-qr-image" />
                                 <p>Scan this QR code to make payment</p>
                             </div>
