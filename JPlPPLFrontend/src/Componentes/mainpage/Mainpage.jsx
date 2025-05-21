@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 
 const Homepage = () => {
   return (
-    <div className="homemain">
-      <div className="tophome">
+    <div className="homemain" >
+      <div className="tophome" id="top">
         <video
           src={fullvideo}
           //   controls

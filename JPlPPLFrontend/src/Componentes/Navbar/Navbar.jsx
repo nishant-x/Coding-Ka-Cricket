@@ -26,10 +26,8 @@ const Navbar = () => {
           <li className="dropdown">
             <a href="#">Explore</a>
             <ul className="dropdown-menu">
-              <li><a href="/#intro">About</a> </li>
-              <li><a href="/#aboutevent">Timeline</a> </li>
               <li><a href="/#processflow">Process Flow</a></li>
-              <li><a href="/#faq">FQA</a> </li>
+              <li><a href="/#faq">FAQ's</a> </li>
             </ul>
           </li>
           {/* <li><Link to="/contestlogin">Join Contest</Link></li> */}
