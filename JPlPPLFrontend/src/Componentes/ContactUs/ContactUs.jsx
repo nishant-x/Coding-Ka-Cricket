@@ -19,7 +19,7 @@ const ContactUs = () => {
             <div>
               <h3>+91 7879261234</h3>
               <h3>+91 9827666677</h3>
-              <h3>+91 9584471159</h3>
+              <h3>+91 9049415191</h3>
             </div>
           </div>
           <div className="contactus-box">
@@ -40,7 +40,7 @@ const ContactUs = () => {
             <div>
               <h3>rohitbansal@sistec.ac.in</h3>
               <h3>himanshuyadav@sistec.ac.in</h3>
-              <h3>amitsahu@sistec.ac.in</h3>
+              <h3>priyankabhatele@sistec.ac.in</h3>
             </div>
           </div>
         </div>

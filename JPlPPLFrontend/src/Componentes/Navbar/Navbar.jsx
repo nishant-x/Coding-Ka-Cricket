@@ -21,12 +21,7 @@ const Navbar = () => {
         <ul className={`nav-menu ${isMenuActive ? "active" : ""}`}>
           <li><Link to="/">Home</Link></li>
           <li className="dropdown">
-            <a href="#">Guidelines</a>
-            <ul className="dropdown-menu">
-              <li><Link to="#">Instruction</Link></li>
-              <li><Link to="#">Consent Letter</Link></li>
-              <li><Link to="#">How to Apply</Link></li>
-            </ul>
+            <Link to="/guideline">Guidelines</Link>
           </li>
           <li className="dropdown">
             <a href="#">Explore</a>

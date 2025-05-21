@@ -145,7 +145,8 @@ const Register = () => {
                         </div>
                         <div className="highlight-item">
                             <span className="highlight-icon">📅</span>
-                            <span>Coming soon</span>
+                            <span>30/05/2025 - JPL <br />31/05/2025 - PPL</span>
+                            
                         </div>
                         <div className="highlight-item">
                             <span className="highlight-icon">📍</span>

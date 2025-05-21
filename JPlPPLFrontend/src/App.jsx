@@ -18,6 +18,7 @@ import Allquestions from "./Componentes/Admin/ViewQue/AllQuestions";
 import ContestHomepage from "./Componentes/Contest/ContestHome/ContestHomepage";
 import ContestLogin from "./Componentes/Contest/ContestLogin/Contestlogin";
 import ContestQuiz from "./Componentes/Contest/ContestQuiz/ContestQuiz";
+import Guideline from "./Componentes/Guidelines/guideline";
 
 const App = () => {
   return (
@@ -42,7 +43,7 @@ const App = () => {
           <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/adminhomepage" element={<AdminHomepage />} />
           <Route path="/contestquiz" element={<ContestQuiz />} />
-
+          <Route path="/guideline" element={<Guideline />} />
           {/* New Route for  */}
           <Route path="/code/" element={<Home />} />
           <Route path="/editor/:roomId" element={<EditorPage />} />
