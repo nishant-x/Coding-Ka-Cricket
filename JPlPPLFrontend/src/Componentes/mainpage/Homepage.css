@@ -1,15 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;600&display=swap");
 
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden; /* 🔒 Prevents horizontal scroll */
+}
+
 .homemain {
-  width: 100vw;
-  height: 100vh;
+  width: 100%; /* ✅ changed from 100vw to 100% */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #5f9ea0; /* Homepage background color */
+  background-color: #5f9ea0;
   justify-content: space-between;
-  color: #f0f0f0; /* Default text color for the homepage */
+  color: #f0f0f0;
   font-family: "Fira Sans", sans-serif;
   margin-bottom: 6%;
+  position: relative;
+  /* overflow-x: hidden; */
 }
 
 .tophome {
@@ -18,6 +27,7 @@
   z-index: 1;
   align-items: center;
 }
+
 .homemain::before {
   content: "";
   position: absolute;
@@ -35,7 +45,8 @@
   justify-content: space-evenly;
   align-items: center;
   gap: 50px;
-  height: 50%;
+  flex-wrap: wrap;
+  padding: 20px;
 }
 
 .home-card {
@@ -44,23 +55,24 @@
   position: relative;
   overflow: hidden;
   border-radius: 10px;
-  background-color: #4b8f8c; /* Darker teal background for the card */
+  background-color: #4b8f8c;
   background-image: url("https://w0.peakpx.com/wallpaper/142/758/HD-wallpaper-python-logo-white-silk-texture-python-emblem-programming-language-python-silk-background.jpg");
   background-size: contain;
   background-position: top center;
   background-repeat: no-repeat;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  color: #f0f0f0; /* Light text color for the card */
+  color: #f0f0f0;
 }
-.java-card{
+
+.java-card {
   background-image: url("https://wallpapercave.com/wp/wp7250277.jpg");
-  background-size: contain; 
+  background-size: contain;
   background-position: top;
   background-repeat: no-repeat;
 }
 
 .home-card:hover .home-card__content {
-  background-color: #9db7b0; /* Lighter green background on hover */
+  background-color: #9db7b0;
   transform: translateY(-100%);
   padding: 50px 60px;
   transition: transform 0.35s ease-in-out, background-color 0.35s;
@@ -81,8 +93,7 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #3e746c; /* Complementary shade of green for the content */
-  /* text-align: center; */
+  background-color: #3e746c;
   padding: 30px 20px;
   transition: transform 0.35s ease-in-out, background-color 0.35s;
   z-index: 1;
@@ -91,17 +102,17 @@
 .home-card__title {
   font-size: 1.5rem;
   margin-bottom: 1em;
-  color: #f0f0f0; /* Title color */
+  color: #f0f0f0;
 }
 
 .home-card__title span {
-  color: #facd39; /* Highlighted color for the title */
+  color: #facd39;
 }
 
 .home-card__text {
   font-size: 0.875rem;
   margin-bottom: 1.5em;
-  color: #f0f0f0; /* Text color */
+  color: #f0f0f0;
 }
 
 .home-card__link {
@@ -112,7 +123,7 @@
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  color: #f0f0f0; /* Lighter link color to contrast against the dark background */
+  color: #f0f0f0;
   font-size: 0.875rem;
   opacity: 0;
   transition: all 0.35s ease-in-out;
@@ -133,8 +144,8 @@
   bottom: 0;
   width: 100%;
   height: 50%;
-  background-color: #3e746c; /* Same shade as the content background */
-  color: #dee8c2; /* Light color for extra content */
+  background-color: #3e746c;
+  color: #dee8c2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -150,7 +161,7 @@
 }
 
 .home-card__extra span {
-  color: #ffcf36; /* Highlight color for extra text */
+  color: #ffcf36;
 }
 
 .home-card img {
@@ -163,4 +174,26 @@
   z-index: -1;
   transform: scale(1.2);
   transition: transform 0.35s ease-in-out;
+}
+
+/* -------------------- */
+/* ✅ Responsive Fixes  */
+/* -------------------- */
+@media (max-width: 768px) {
+  .bottomhome {
+    flex-direction: column;
+    gap: 30px;
+    padding: 10px;
+  }
+
+  .home-card {
+    width: 90%;
+    height: 400px;
+  }
+
+  .homemain::before {
+    width: 180%; /* 🔧 reduce stretch on mobile */
+    height: 20vh;
+    bottom: -10%;
+  }
 }
