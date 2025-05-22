@@ -25,7 +25,7 @@ const ContestQuiz = () => {
         const fetchQuizData = async () => {
             try {
                 const league = encodeURIComponent(user.participation);
-                const response = await axios.get(`http://localhost:5000/getquiz/${league}`);
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/getquiz/${league}`);
                 const data = response.data.quiz;
                 setQuizData(data);
                 setQuestion(data[0]);
@@ -120,7 +120,7 @@ const next = () => {
             setResult(true);
 
             // Send updated score to backend
-            axios.post('http://localhost:5000/submit-quiz-score', {
+            axios.post(`${import.meta.env.VITE_BACKEND_URL}/submit-quiz-score`, {
                 enrollment: user.enrollment,
                 score: parseFloat(newScore.toFixed(2))
             })

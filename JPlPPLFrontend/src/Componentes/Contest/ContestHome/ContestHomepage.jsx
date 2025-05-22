@@ -17,7 +17,7 @@ const ContestHomepage = () => {
 
     // Fetch problems data
     axios
-      .get(`http://localhost:5000/contesthomepage`) // Correct template literal usage
+      .get(`${import.meta.env.VITE_BACKEND_URL}/contesthomepage`) // Correct template literal usage
       .then(response => {
         setProblems(response.data); // Set fetched problems
         setLoading(false); // Set loading to false

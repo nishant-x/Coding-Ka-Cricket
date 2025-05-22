@@ -12,7 +12,7 @@ const ContestLogin = () => {
 
     try {
       // Send a POST request with the user's credentials
-      const response = await fetch('http://localhost:5000/contestlogin', { // Fixed URL
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/contestlogin`, { // Fixed URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
