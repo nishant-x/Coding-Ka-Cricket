@@ -19,6 +19,7 @@ import ContestHomepage from "./Componentes/Contest/ContestHome/ContestHomepage";
 import ContestLogin from "./Componentes/Contest/ContestLogin/Contestlogin";
 import ContestQuiz from "./Componentes/Contest/ContestQuiz/ContestQuiz";
 import Guideline from "./Componentes/Guidelines/guideline";
+import ParticipantsList from "./Componentes/Admin/Viewparticipant/viewparticipant";
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="/adminhomepage" element={<AdminHomepage />} />
           <Route path="/contestquiz" element={<ContestQuiz />} />
           <Route path="/guideline" element={<Guideline />} />
+          <Route path="/Participants" element={<ParticipantsList />} />
           {/* New Route for  */}
           <Route path="/code/" element={<Home />} />
           <Route path="/editor/:roomId" element={<EditorPage />} />

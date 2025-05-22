@@ -15,9 +15,19 @@ const upload = multer({ storage });
 router.post('/', upload.single('screenshot'), async (req, res) => {
   const { name, email, enrollment, college, branch, year, section, league, transaction } = req.body;
   const screenshot = req.file;
-  if (!screenshot) return res.status(400).json({ error: 'Screenshot is required' });
+
+  if (!screenshot) {
+    return res.status(400).json({ error: 'Screenshot is required' });
+  }
 
   try {
+    // ✅ Check if email already exists
+    const existingUser = await Registration.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ error: 'Email already registered' }); // 409 = Conflict
+    }
+
+    // Save new user if email not found
     const newRegistration = new Registration({
       name,
       email,
@@ -30,11 +40,24 @@ router.post('/', upload.single('screenshot'), async (req, res) => {
       transaction,
       screenshot: screenshot.path,
     });
+
     await newRegistration.save();
     res.status(200).json({ message: 'Registration successful' });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error. Please try again later.' });
+  }
+});
+
+
+
+router.get('/', async (req, res) => {
+  try {
+    const participants = await Registration.find();
+    res.status(200).json(participants);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch participants' });
   }
 });
 

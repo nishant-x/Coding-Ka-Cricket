@@ -43,7 +43,7 @@ app.use(cors({
 // Middleware to parse JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use('/api/participants', RegistrationRoute);
 // Create HTTP server from Express app
 const server = http.createServer(app);
 
