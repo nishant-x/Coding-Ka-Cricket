@@ -66,7 +66,67 @@ const CardSlider = () => {
         },
     ];
 
-    // ... (keep all your existing functions and effects)
+       const nextSlide = () => {
+        setCurrentIndex(prev => (prev + 1) % cards.length);
+    };
+
+    const prevSlide = () => {
+        setCurrentIndex(prev => (prev - 1 + cards.length) % cards.length);
+    };
+
+    const goToSlide = (index) => {
+        setCurrentIndex(index);
+    };
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        if (isMobile) {
+            intervalRef.current = setInterval(nextSlide, 3000);
+            return () => {
+                if (intervalRef.current) clearInterval(intervalRef.current);
+            };
+        }
+    }, [isMobile, currentIndex]); // Added currentIndex to dependencies
+
+    const handleMouseEnter = () => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+
+    const handleMouseLeave = () => {
+        if (isMobile) {
+            intervalRef.current = setInterval(nextSlide, 3000);
+        }
+    };
+
+    // Calculate visible cards for mobile view
+    const getVisibleCards = () => {
+        if (!isMobile) return cards;
+
+        const visible = [];
+        // Show previous, current, and next cards
+        for (let i = -1; i <= 1; i++) {
+            const index = (currentIndex + i + cards.length) % cards.length;
+            visible.push({
+                ...cards[index],
+                style: {
+                    transform: i === 0 ? 'scale(1)' : 'scale(0.85)',
+                    opacity: i === 0 ? 1 : 0.7,
+                    zIndex: i === 0 ? 2 : 1,
+                    flex: i === 0 ? '0 0 60%' : '0 0 20%' // Center card takes 60%, side cards 20%
+                }
+            });
+        }
+        return visible;
+    };
+
 
     return (
         <div className={`cardSlider ${isMobile ? 'cardSlider--mobile' : ''}`}>
