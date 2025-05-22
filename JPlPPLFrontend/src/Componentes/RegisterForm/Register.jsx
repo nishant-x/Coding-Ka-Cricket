@@ -285,6 +285,7 @@ const Register = () => {
                                 name="transaction"
                                 className={errors.transaction ? 'registration-error-border' : ''}
                                 placeholder="Enter transaction ID"
+                                required
                             />
                             {errors.transaction && <span className="registration-error">{errors.transaction}</span>}
                         </div>
