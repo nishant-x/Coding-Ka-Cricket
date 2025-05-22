@@ -1,91 +1,131 @@
-.contestquize-container {
-    width: 500px;  /* Reduced width */
-    height: 570px; /* Reduced height */
-    margin: auto;
-    margin-bottom: 3rem;
-    margin-top: 8rem;
-    background: rgb(255, 253, 253);
-    color: rgb(0, 0, 0);
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Reduced gap */
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Added shadow */
-    padding: 30px 40px; /* Reduced padding */
+.contestquiz-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.contest-quiz-heading
-{
-    color: cadetblue;
+.contestquiz-heading {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
 }
 
-.contestquize-container hr {
-    background: #707070;
+.contestquiz-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #3498db, transparent);
+    margin: 1.5rem 0;
 }
 
-.contestquize-container h2 {
-    font-size: 24px; /* Reduced font size */
-    font-weight: 600;
+.contestquiz-question-container {
+    margin-bottom: 2rem;
 }
 
-.contestquize-container ul li {
+.contestquiz-question {
+    color: #34495e;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.contestquiz-instructions {
+    color: #7f8c8d;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+.contestquiz-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contestquiz-option {
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.8rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    height: 60px; /* Reduced height */
-    padding-left: 12px; /* Reduced padding */
-    border: solid grey;
-    border-radius: 15px; /* Slightly smaller border radius */
-    margin-bottom: 15px; /* Reduced margin */
-    font-size: 18px; /* Reduced font size */
+    border: 1px solid #dfe6e9;
+}
+
+.contestquiz-option:hover {
+    background-color: #e8f4fc;
+    border-color: #3498db;
+}
+
+.contestquiz-selected {
+    background-color: #d1e7ff;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+}
+
+.contestquiz-checkbox {
+    margin-right: 1rem;
+    width: 1.2rem;
+    height: 1.2rem;
     cursor: pointer;
 }
 
-.contestquize-container .contestquiz-btn {
-    margin: 10px 5px 4px 186px;
+.contestquiz-option-text {
+    flex: 1;
+}
+
+.contestquiz-controls {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    height: 50px; /* Reduced height */
-    width: 130px; /* Reduced width */
-    background: cadetblue;
-    border-radius: 10px;
+    margin-top: 2rem;
+}
+
+.contestquiz-btn {
+    padding: 0.8rem 2rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .contestquiz-btn:hover {
-    background: rgb(129, 230, 179);
-    cursor: pointer;
+    background-color: #2980b9;
 }
 
-.contestquize-container .contestquize-index {
-    display: flex;
-    justify-content: center;
-    font-size: 16px; /* Reduced font size */
-    color: rgb(41, 89, 100);
+.contestquiz-btn:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
 }
 
-.contestquize-correct {
-    /* background: rgb(21, 216, 122);
-    border-color: green; */
-    background: rgb(130 190 194);
-    border-color: rgb(130 190 194);
+.contestquiz-progress {
+    color: #7f8c8d;
+    font-size: 0.9rem;
 }
 
-.contestquize-wrong {
-    /* background: rgb(195, 81, 81);
-    border-color: red; */
-    background: rgb(130 190 194);
-    border-color: rgb(130 190 194);
+.contestquiz-result {
+    text-align: center;
+    padding: 2rem;
 }
 
-#contestquize-score {
-    font-size: 50px; /* Reduced font size */
-    color: rgb(250, 0, 0);
+.contestquiz-score {
+    color: #2ecc71;
+    font-size: 2rem;
+    margin-bottom: 2rem;
 }
 
-.contestquize-selected {
-    background: rgba(255, 255, 153, 0.4); /* Pale Yellow */
-    border-color: #FFD700; /* Gold */
+.contestquiz-loading,
+.contestquiz-no-data {
+    text-align: center;
+    padding: 2rem;
+    color: #34495e;
+    font-size: 1.2rem;
 }
-
-
-

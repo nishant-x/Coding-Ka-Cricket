@@ -50,7 +50,7 @@ const ProcessFlow = () => {
     <div className="process-flow-container" id="processflow">
       <div className="Process_heading">
         <h1 className="Process-head"> Process Flow </h1>
-        <h3>Here is our ProcessFlow</h3>
+        {/* <h3>Here is our ProcessFlow</h3> */}
       </div>
 
       <div className="Processing_steps_collection">

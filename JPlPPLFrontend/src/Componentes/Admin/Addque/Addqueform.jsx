@@ -46,7 +46,7 @@ const Addqueform = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/add-question", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/add-question`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

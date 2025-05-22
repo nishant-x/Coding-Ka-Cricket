@@ -22,7 +22,9 @@ const app = express();
 // Enable CORS for frontend requests
 const allowedOrigins = [
   "http://localhost:5173",
-  "http://localhost:3000"
+  "http://localhost:3000",
+  "https://coding-ka-cricket.vercel.app",
+  "https://coding-ka-cricket-81k2r8vbr-nishant-jhades-projects.vercel.app"
 ];
 
 // CORS Middleware
@@ -41,14 +43,19 @@ app.use(cors({
 // Middleware to parse JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use('/api/participants', RegistrationRoute);
 // Create HTTP server from Express app
 const server = http.createServer(app);
 
 // Setup Socket.IO server with CORS config
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000", // Replace with your frontend URL
+    origin: [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://coding-ka-cricket.vercel.app/",
+  "https://coding-ka-cricket-81k2r8vbr-nishant-jhades-projects.vercel.app/"
+], // Replace with your frontend URL
     methods: ["GET", "POST"],
   },
 });
@@ -300,9 +307,81 @@ app.post('/addquiz', async (req, res) => {
   try {
     const quizData = req.body;
 
+    // Validate input
+    if (!quizData.selectedLeague || !quizData.questions || quizData.questions.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing required fields'
+      });
+    }
+
+    // Validate each question
+    for (const [index, question] of quizData.questions.entries()) {
+      // Validate question text
+      if (!question.question?.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: `Question ${index + 1} text is required`
+        });
+      }
+
+      // Filter out empty options
+      const validOptions = question.options.filter(opt => opt?.trim() !== "");
+      
+      // Validate options count
+      if (validOptions.length < 2) {
+        return res.status(400).json({
+          success: false,
+          message: `Question ${index + 1} needs at least 2 valid options`
+        });
+      }
+
+      // Validate correct indices
+      if (!question.correctOptionIndices || question.correctOptionIndices.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Question ${index + 1} must have at least one correct answer`
+        });
+      }
+
+      // Validate correct indices based on question type
+      const isMultiple = question.isMultipleSelect;
+      if (!isMultiple && question.correctOptionIndices.length !== 1) {
+        return res.status(400).json({
+          success: false,
+          message: `Question ${index + 1} is single-select but has multiple correct answers`
+        });
+      }
+
+      // Validate all indices are within range of valid options
+      for (const correctIndex of question.correctOptionIndices) {
+        if (correctIndex < 0 || correctIndex >= 6) {
+          return res.status(400).json({
+            success: false,
+            message: `Question ${index + 1} has invalid correct answer index`
+          });
+        }
+      }
+
+      // Validate credit points
+      if (!question.creditPoints || question.creditPoints < 1) {
+        return res.status(400).json({
+          success: false,
+          message: `Question ${index + 1} must have at least 1 credit point`
+        });
+      }
+    }
+
+    // Create and save new quiz document
     const newQuiz = new QuizData({
       selectedLeague: quizData.selectedLeague,
-      questions: quizData.questions,
+      questions: quizData.questions.map(q => ({
+        question: q.question,
+        options: q.options.filter(opt => opt?.trim() !== ""),
+        isMultipleSelect: q.isMultipleSelect,
+        correctOptionIndices: q.correctOptionIndices,
+        creditPoints: q.creditPoints
+      }))
     });
 
     await newQuiz.save();
@@ -313,7 +392,16 @@ app.post('/addquiz', async (req, res) => {
       data: newQuiz,
     });
   } catch (error) {
-    console.error(error);
+    console.error('Error adding quiz:', error);
+
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation error',
+        error: error.message
+      });
+    }
+
     res.status(500).json({
       success: false,
       message: 'An error occurred while adding the quiz.',

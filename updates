@@ -1,2 +1,5 @@
 quize backend and frontend
 addque code and its model and its backed route added league name`
+to run in localhost
+npm run dev -- --host
+

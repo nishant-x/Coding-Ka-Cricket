@@ -9,19 +9,19 @@ const Footer = () => {
       <div className="footer-section">
         <h3 className='footer-head'>Home</h3>
         <ul >
-          <li className='list-con'><Link to="#">Guidelines</Link></li>
-          <li className='list-con'><Link to="/explore">Explore</Link></li>
-          <li className='list-con'><Link to="/about">About</Link></li>
+          <li className='list-con'><Link to="/guideline">Guidelines</Link></li>
+          <li className='list-con'><Link to="/contact">Explore</Link></li>
+          <li className='list-con'><Link to="/contact">About</Link></li>
           <li className='list-con'><Link to="/contact">Contact Us</Link></li>
         </ul>
       </div>
       <div className="footer-section">
         <h3 className='footer-head'>Participants</h3>
         <ul>
-          <li className='list-con'><Link to="/instructions">Instructions</Link></li>
-          <li className='list-con'><Link to="/apply">How to Apply</Link></li>
+          <li className='list-con'><Link to="/guideline">Instructions</Link></li>
+          <li className='list-con'><Link to="/guideline">How to Apply</Link></li>
           <li className='list-con'><Link to="/result">Result</Link></li>
-          <li className='list-con'><Link to="/faqs">FAQs</Link></li>
+          <li className='list-con'><a href="/#faq">FAQ's</a> </li>
         </ul>
       </div>
       <div className="footer-section">

@@ -66,6 +66,9 @@ canvas {
     max-width: 100%;
     margin-bottom: 20px;
   }
+  .IntroText-left{
+    margin-left: 0;
+  }
 
   .IntroText-part {
     font-size: 1.5rem;

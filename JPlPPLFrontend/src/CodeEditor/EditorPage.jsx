@@ -29,7 +29,7 @@ function EditorPage() {
   const runCode = async () => {
     setIsCompiling(true);
     try {
-      const response = await axios.post("http://localhost:5000/compile", {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/compile`, {
         language: selectedLanguage,
         code: codeRef.current,
       });

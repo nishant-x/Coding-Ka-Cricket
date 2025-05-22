@@ -1,176 +1,182 @@
+/* Global Fix */
+body {
+  margin-top: 108px;
+  overflow-x: hidden; /* ✅ Prevent horizontal scroll */
+}
+
 /* Navbar */
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 20px 20px 1px 20px;
-    background-color: #ffffff; 
-    color: #333; 
-    border-bottom: 1px solid #ddd; 
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%; 
-    z-index: 999999;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px 20px 1px 20px;
+  background-color: #ffffff;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999999;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 /* Logo */
 .logo img {
-    width: 5rem;
-    height: 5rem;
-    margin-top: 2px;
-    margin-bottom: 1px;
+  width: 5rem;
+  margin-top: 2px;
+  margin-bottom: 1px;
 }
 
 /* Nav menu */
 .nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 20px;
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  box-sizing: border-box;
 }
 
 .nav-menu a,
 .nav-menu .dropdown a {
-    color: #333;
-    text-decoration: none;
-    padding: 8px 12px;
-    position: relative;
-    transition: color 0.3s ease;
+  color: #333;
+  text-decoration: none;
+  padding: 8px 12px;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
 /* Hover effect */
 .nav-menu a:hover,
 .nav-menu .dropdown a:hover {
-    color: cadetblue;
+  color: cadetblue;
 }
 
 /* Underline animation */
 .nav-menu a::after,
 .nav-menu .dropdown a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 25%;
-    width: 50%;
-    height: 2px;
-    background-color: cadetblue;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 2px;
+  background-color: cadetblue;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
 .nav-menu a:hover::after,
 .nav-menu .dropdown a:hover::after {
-    transform: scaleX(1);
+  transform: scaleX(1);
 }
 
 /* Dropdown */
 .dropdown {
-    position: relative;
+  position: relative;
 }
 
 .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #ffffff;
-    list-style: none;
-    padding: 16px;
-    border-radius: 4px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    animation: slideDown 0.3s ease forwards;
-    z-index: 100;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  list-style: none;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease forwards;
+  z-index: 100;
+  min-width: 160px;
 }
 
 .dropdown-menu li {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 
 .dropdown-menu a {
-    color: #333;
-    padding: 8px 12px;
-    display: block;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+  color: #333;
+  padding: 8px 12px;
+  display: block;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
 .dropdown-menu a:hover {
-    background-color: #f0f8ff;
+  background-color: #f0f8ff;
 }
 
 .dropdown:hover .dropdown-menu {
-    display: block;
+  display: block;
 }
 
 /* Register Button */
 .nav-buttons .register-btn {
-    background-color: cadetblue;
-    color: white;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+  background-color: cadetblue;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap;
 }
 
 .nav-buttons .register-btn:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 /* Hamburger Menu for mobile */
 .hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    gap: 5px;
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
 }
 
 .hamburger span {
-    background-color: #333;
-    height: 3px;
-    width: 25px;
-    border-radius: 5px;
+  background-color: #333;
+  height: 3px;
+  width: 25px;
+  border-radius: 5px;
 }
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
-    .nav-menu {
-        display: none;
-        flex-direction: column;
-        background-color: #ffffff;
-        position: absolute;
-        top: 70px;
-        right: 20px;
-        width: 200px;
-        border-radius: 4px;
-        padding: 10px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    }
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    background-color: #ffffff;
+    position: absolute;
+    top: 70px;
+    left: 0; /* ✅ Fix overflow by aligning to left */
+    width: 100%; /* ✅ Use full width instead of fixed 200px */
+    border-radius: 0;
+    padding: 10px 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+.logo img{
+    width: 3rem;
+}
+  .nav-menu.active {
+    display: flex;
+  }
 
-    .nav-menu.active {
-        display: flex;
-    }
-
-    .hamburger {
-        display: flex;
-    }
+  .hamburger {
+    display: flex;
+  }
 }
 
 /* Slide down animation */
 @keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Add margin to content to avoid being hidden behind navbar */
-body {
-    margin-top: 108px;
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

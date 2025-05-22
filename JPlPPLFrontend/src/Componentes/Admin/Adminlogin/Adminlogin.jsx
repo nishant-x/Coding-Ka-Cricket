@@ -29,7 +29,7 @@ const AdminLogin = () => {
 
     if (admin) {
       // Navigate to /allquestions if credentials match
-      navigate('/allquestions');
+      navigate('/adminhomepage');
     } else {
       // Show error message if credentials are invalid
       alert('Invalid credentials. Please try again.');

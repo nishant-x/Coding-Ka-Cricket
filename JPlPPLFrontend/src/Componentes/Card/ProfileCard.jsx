@@ -11,7 +11,7 @@ import manishImage from "../../assets/Facaltyimg/Drmanishbillore.jpg";
 import ajitImage from "../../assets/Facaltyimg/Ajitshrivastav.jpg";
 import prachiImage from "../../assets/Facaltyimg/priyankabhatele.jpg";
 import arvindImage from "../../assets/Facaltyimg/arvindjain.jpg";
-
+import principal from "../../assets/Facaltyimg/principal.jpg";
 const ProfileCard = () => {
   const profiles = [
     {
@@ -31,10 +31,10 @@ const ProfileCard = () => {
       section: "chief_patron",
     },
     {
-      name: "Dr. Manish Billore",
+      name: "Dr. Abhishek Choubey",
       title: "Principal",
       bio: "Dedicated to academic excellence and student development with over two decades of leadership.",
-      imgSrc: manishImage,
+      imgSrc: principal,
       badges: ["fas fa-graduation-cap", "fas fa-chalkboard-teacher"],
       section: "patron",
     },

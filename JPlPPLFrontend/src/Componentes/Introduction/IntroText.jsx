@@ -5,7 +5,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Link } from "react-router-dom"; // Import Link for navigation
 
 const IntroText = () => {
-  const text = "Welcome to the Coding Ka Cricket!".split(" ");
+  const text = "Welcome to the Coding Ka Cricket🏏".split(" ");
   const details = "Get ready for an exciting and competitive journey. Challenge your coding abilities. Showcase your creativity and problem-solving skills! The Java Premier League and Python Premier League are two thrilling competitions designed to challenge your coding abilities, creativity, and problem-solving prowess.";
 
   return (

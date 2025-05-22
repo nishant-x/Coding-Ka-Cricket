@@ -12,12 +12,14 @@ import EditorPage from "./CodeEditor/EditorPage";
 import Home from "./CodeEditor/Home";
 import Addqueform from "./Componentes/Admin/Addque/Addqueform";
 import AddQuizForm from "./Componentes/Admin/AddQuiz/AddQuizForm";
-import AdminHomepage from "./Componentes/Admin/Adminhome/Adminhomepage";
+import AdminHomepage from "./Componentes/Admin/AdminHome/Adminhomepage";
 import AdminLogin from "./Componentes/Admin/Adminlogin/Adminlogin";
 import Allquestions from "./Componentes/Admin/ViewQue/AllQuestions";
 import ContestHomepage from "./Componentes/Contest/ContestHome/ContestHomepage";
 import ContestLogin from "./Componentes/Contest/ContestLogin/Contestlogin";
 import ContestQuiz from "./Componentes/Contest/ContestQuiz/ContestQuiz";
+import Guideline from "./Componentes/Guidelines/guideline";
+import ParticipantsList from "./Componentes/Admin/Viewparticipant/viewparticipant";
 
 const App = () => {
   return (
@@ -42,7 +44,8 @@ const App = () => {
           <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/adminhomepage" element={<AdminHomepage />} />
           <Route path="/contestquiz" element={<ContestQuiz />} />
-
+          <Route path="/guideline" element={<Guideline />} />
+          <Route path="/Participants" element={<ParticipantsList />} />
           {/* New Route for  */}
           <Route path="/code/" element={<Home />} />
           <Route path="/editor/:roomId" element={<EditorPage />} />
