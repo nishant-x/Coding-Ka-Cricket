@@ -6,7 +6,7 @@ export default function ParticipantsList() {
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/participants')
+    axios.get('http://VITE_BACKEND_URL/api/participants')
       .then(res => setParticipants(res.data))
       .catch(err => console.error('Error fetching data:', err));
   }, []);
