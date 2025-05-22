@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaLinkedin, FaInstagram, FaGithub } from 'react-icons/fa';
 import './Developerslider.css';
 import PiyushImage from '../../assets/coders/piyush.png';
-import KrishImage from '../../assets/coders/Crish.png';
+import KrishImage from '../../assets/coders/krish.jpg';
 import RajImage from '../../assets/coders/raj.png';
-import NishantImage from '../../assets/coders/nishant.png';
+import NishantImage from '../../assets/coders/nishant.jpg';
 
 const Card = ({ name, date, imageUrl, linkedinUrl, instagramUrl, githubUrl }) => {
     return (
