@@ -10,6 +10,7 @@ const Register = () => {
     const [errors, setErrors] = useState({});
     const [screenshot, setScreenshot] = useState(null);
     const [year, setYear] = useState('');
+    const [league, setLeague] = useState('');
     const navigate = useNavigate();
 
     const branchesByCollege = {
@@ -17,6 +18,11 @@ const Register = () => {
         'SISTec-R': ['CSE', 'CSE - AIML'],
         'SISTec-E': ['CSE', 'CSE - IoT'],
     };
+
+    const leagues = [
+        'Java Premier League (JPL)',
+        'Python Premier League (PPL)'
+    ];
 
     const handleCollegeChange = (e) => {
         setCollege(e.target.value);
@@ -39,6 +45,10 @@ const Register = () => {
 
     const handleYearChange = (e) => {
         setYear(e.target.value);
+    };
+
+    const handleLeagueChange = (e) => {
+        setLeague(e.target.value);
     };
 
     const handleScreenshotChange = (e) => {
@@ -86,6 +96,10 @@ const Register = () => {
             newErrors.screenshot = 'Screenshot of payment is required';
         }
 
+        if (!league) {
+            newErrors.league = 'Please select a league';
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -105,7 +119,7 @@ const Register = () => {
         formData.append('branch', branch);
         formData.append('year', year);
         formData.append('section', document.getElementById('section').value);
-        formData.append('league', getLeague());
+        formData.append('league', league);
         formData.append('transaction', document.getElementById('transaction').value);
         formData.append('screenshot', screenshot);
 
@@ -126,13 +140,6 @@ const Register = () => {
             console.error(error);
             alert('Server error. Please try again later.');
         }
-    };
-
-    const getLeague = () => {
-        if (['CSE - AIML', 'CSE - IoT', 'CSE - Cyber Security', 'CSE - AIDL'].includes(branch)) {
-            return 'Python Premier League (PPL)';
-        }
-        return 'Java Premier League (JPL)';
     };
 
     return (
@@ -271,12 +278,24 @@ const Register = () => {
                                 </select>
                             </div>
                         )}
-                        {branch && (
-                            <div className="registration-form-group">
-                                <label htmlFor="league">League</label>
-                                <input type="text" id="league" value={getLeague()} readOnly />
-                            </div>
-                        )}
+                        <div className="registration-form-group">
+                            <label htmlFor="league">League</label>
+                            <select
+                                id="league"
+                                value={league}
+                                onChange={handleLeagueChange}
+                                className={errors.league ? 'registration-error-border' : ''}
+                                required
+                            >
+                                <option value="">Select League</option>
+                                {leagues.map((leagueOption) => (
+                                    <option key={leagueOption} value={leagueOption}>
+                                        {leagueOption}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.league && <span className="registration-error">{errors.league}</span>}
+                        </div>
                         <div className="registration-form-group">
                             <label htmlFor="transaction">Transaction ID</label>
                             <input
