@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const registrationSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true ,unique: true},
+  phone:{type: Number, required: true},
   enrollment: { type: String, required: true, length: 12 },
   college: { type: String, required: true },
   branch: { type: String, required: true },

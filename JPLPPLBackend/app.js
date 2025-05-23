@@ -23,6 +23,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
+  "http://172.16.3.44:5173",
   "https://coding-ka-cricket.vercel.app",
   "https://coding-ka-cricket-81k2r8vbr-nishant-jhades-projects.vercel.app"
 ];
@@ -179,7 +180,7 @@ const upload = multer({ storage: storage });
 
 // Registration form POST route
 app.post('/register', upload.single('screenshot'), async (req, res) => {
-  const { name, email, enrollment, college, branch, year, section, league, transaction } = req.body;
+  const { name, email, enrollment, contact, college, branch, year, section, league, transaction } = req.body;
   const screenshot = req.file;
 
   if (!screenshot) {
@@ -191,6 +192,7 @@ app.post('/register', upload.single('screenshot'), async (req, res) => {
       name,
       email,
       enrollment,
+      contact,
       college,
       branch,
       year,

@@ -13,7 +13,7 @@ const upload = multer({ storage });
 
 // Handle registration form data
 router.post('/', upload.single('screenshot'), async (req, res) => {
-  const { name, email, enrollment, college, branch, year, section, league, transaction } = req.body;
+  const { name, email, enrollment, phone, college, branch, year, section, league, transaction } = req.body;
   const screenshot = req.file;
 
   if (!screenshot) {
@@ -32,6 +32,7 @@ router.post('/', upload.single('screenshot'), async (req, res) => {
       name,
       email,
       enrollment,
+      phone,
       college,
       branch,
       year,
