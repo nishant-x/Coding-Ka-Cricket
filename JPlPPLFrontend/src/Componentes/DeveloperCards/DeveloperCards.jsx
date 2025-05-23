@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaLinkedin, FaInstagram, FaGithub } from 'react-icons/fa';
 import './Developerslider.css';
-import PiyushImage from '../../assets/coders/piyush.png';
+import PiyushImage from '../../assets/coders/piyush.jpg';
 import KrishImage from '../../assets/coders/krish.jpg';
 import RajImage from '../../assets/coders/raj.png';
 import NishantImage from '../../assets/coders/nishant.jpg';
@@ -32,6 +32,7 @@ const CardSlider = () => {
     const intervalRef = useRef(null);
 
     const cards = [
+        
         {
             name: "Piyush Jain",
             date: "MERN Developer",
@@ -41,20 +42,20 @@ const CardSlider = () => {
             githubUrl:"https://github.com/p4p-iyush"
         },
         {
-            name: "Krish Signhai",
-            date: "MERN Developer",
-            imageUrl: KrishImage,
-            linkedinUrl: "https://www.linkedin.com/in/krish-singhai",
-            instagramUrl: "https://www.instagram.com/krish_singhai_",
-            githubUrl: "https://github.com/Krishsinghai"
-        },
-        {
             name: "RajKumar Lodhi",
             date: "UI/UX Designer",
             imageUrl: RajImage,
             linkedinUrl: "https://www.linkedin.com/in/rajkumar-lodhi-90181b339/",
             instagramUrl: "https://www.instagram.com/ll._.raj_.ll/",
             githubUrl:"https://github.com/rajxxlodhi"
+        },
+        {
+            name: "Krish Signhai",
+            date: "MERN Developer",
+            imageUrl: KrishImage,
+            linkedinUrl: "https://www.linkedin.com/in/krish-singhai",
+            instagramUrl: "https://www.instagram.com/krish_singhai_",
+            githubUrl: "https://github.com/Krishsinghai"
         },
         {
             name: "Nishant Jhade",

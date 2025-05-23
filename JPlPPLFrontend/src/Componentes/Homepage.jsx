@@ -7,7 +7,7 @@ import Timeline from './Timelines/Timeline.jsx';
 import ProfileCard from './Card/ProfileCard.jsx';
 import Faq from './Faq/Faq.jsx';
 import Mainpage from './mainpage/Mainpage.jsx';
-import Developers from './Developers/Developers.jsx';
+// import Developers from './Developers/Developers.jsx';
 import DeeveloperSlider from './DeveloperCards/DeveloperCards.jsx'
 import '../App.css'
 
