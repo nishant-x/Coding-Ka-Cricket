@@ -57,7 +57,7 @@ const CardSlider = () => {
             githubUrl:"https://github.com/rajxxlodhi"
         },
         {
-            name: "Nishant Jhadi",
+            name: "Nishant Jhade",
             date: "MERN Developer",
             imageUrl: NishantImage,
             linkedinUrl: "https://www.linkedin.com/in/nishant-jhade-6b9a2b27b/",
