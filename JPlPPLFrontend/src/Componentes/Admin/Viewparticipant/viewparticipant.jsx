@@ -1,50 +1,93 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './viewparticipant.css'; // Optional: for styling
+import {
+  FaSearch, FaSort, FaSortUp, FaSortDown, FaUniversity, FaUserGraduate, FaEnvelope,
+  FaIdCard, FaCodeBranch, FaCalendarAlt, FaLayerGroup, FaTrophy, FaReceipt,
+  FaClock, FaImage, FaDownload, FaStar
+} from 'react-icons/fa';
+import './viewparticipant.css';
 
 export default function ParticipantsList() {
   const [participants, setParticipants] = useState([]);
+  const [filteredParticipants, setFilteredParticipants] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
   useEffect(() => {
-    fetchParticipants();
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/participants`)
+      .then(res => {
+        setParticipants(res.data);
+        setFilteredParticipants(res.data);
+      })
+      .catch(err => console.error('Error fetching data:', err));
   }, []);
 
-  const fetchParticipants = async () => {
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/participants`);
-      setParticipants(res.data);
-    } catch (err) {
-      console.error('Error fetching data:', err);
+  useEffect(() => {
+    const results = participants.filter(participant =>
+      Object.values(participant).some(
+        val => val && val.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+    setFilteredParticipants(results);
+  }, [searchTerm, participants]);
+
+  const requestSort = key => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
     }
+    setSortConfig({ key, direction });
+
+    const sortedData = [...filteredParticipants].sort((a, b) => {
+      // Handle null values for sorting
+      if (a[key] === null) return direction === 'asc' ? 1 : -1;
+      if (b[key] === null) return direction === 'asc' ? -1 : 1;
+      if (a[key] < b[key]) return direction === 'asc' ? -1 : 1;
+      if (a[key] > b[key]) return direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    setFilteredParticipants(sortedData);
+  };
+
+  const getSortIcon = key => {
+    if (sortConfig.key !== key) return <FaSort />;
+    return sortConfig.direction === 'asc' ? <FaSortUp /> : <FaSortDown />;
   };
 
   const downloadCSV = () => {
-    // CSV header
-    const headers = ['Name', 'Email', 'Enrollment', 'College', 'Branch', 'Year', 'Section', 'League', 'Transaction ID'];
-    
-    // CSV data rows
-    const csvRows = participants.map(participant => [
-      `"${participant.name}"`,
-      `"${participant.email}"`,
-      `"${participant.enrollment}"`,
-      `"${participant.college}"`,
-      `"${participant.branch}"`,
-      `"${participant.year}"`,
-      `"${participant.section}"`,
-      `"${participant.league}"`,
-      `"${participant.transaction}"`
-    ].join(','));
+    const headers = [
+      'S.No', 'Name', 'Email', 'Enrollment', 'College', 'Branch',
+      'Year', 'Section', 'League', 'Transaction', 'Quiz Score',
+      'Time to Solve MCQ'
+    ];
 
-    // Combine header and rows
-    const csvContent = [headers.join(','), ...csvRows].join('\n');
+    const csvContent = [
+      headers.join(','),
+      ...filteredParticipants.map((participant, index) => [
+        index + 1,
+        `"${participant.name}"`,
+        `"${participant.email}"`,
+        `"${participant.enrollment}"`,
+        `"${participant.college}"`,
+        `"${participant.branch}"`,
+        `"${participant.year}"`,
+        `"${participant.section}"`,
+        `"${participant.league}"`,
+        `"${participant.transaction}"`,
+        participant.quizScore || 'N/A',
+        participant.timeToSolveMCQ || 'N/A',
+      ].join(','))
+    ].join('\n');
 
-    // Create download link
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
     link.setAttribute('href', url);
-    link.setAttribute('download', 'participants_list.csv');
+    link.setAttribute('download', `participants_${new Date().toISOString().slice(0, 10)}.csv`);
     link.style.visibility = 'hidden';
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -53,41 +96,121 @@ export default function ParticipantsList() {
   return (
     <div className="participants-container">
       <div className="header-section">
-        <h2>Registered Participants</h2>
-        <button onClick={downloadCSV} className="download-button">
-          Download as CSV
-        </button>
+        <h2><FaUserGraduate /> Registered Participants</h2>
+        <div className="action-buttons">
+          <div className="search-box">
+            <FaSearch className="search-icon" />
+            <input
+              type="text"
+              placeholder="Search participants..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <button onClick={downloadCSV} className="download-btn">
+            <FaDownload /> Export CSV
+          </button>
+        </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Enrollment</th>
-            <th>College</th>
-            <th>Branch</th>
-            <th>Year</th>
-            <th>Section</th>
-            <th>League</th>
-            <th>Transaction</th>
-          </tr>
-        </thead>
-        <tbody>
-          {participants.map((p, index) => (
-            <tr key={index}>
-              <td>{p.name}</td>
-              <td>{p.email}</td>
-              <td>{p.enrollment}</td>
-              <td>{p.college}</td>
-              <td>{p.branch}</td>
-              <td>{p.year}</td>
-              <td>{p.section}</td>
-              <td>{p.league}</td>
-              <td>{p.transaction}</td>
+    <div className="stats-footer">
+        <p>Total Participants: {participants.length}</p>
+        <p>Showing: {filteredParticipants.length} records</p>
+      </div>
+      <div className="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th onClick={() => requestSort('name')}>
+                <div className="th-content">
+                  <FaUserGraduate /> Name {getSortIcon('name')}
+                </div>
+              </th>
+              <th onClick={() => requestSort('email')}>
+                <div className="th-content">
+                  <FaEnvelope /> Email {getSortIcon('email')}
+                </div>
+              </th>
+              <th onClick={() => requestSort('enrollment')}>
+                <div className="th-content">
+                  <FaIdCard /> Enrollment {getSortIcon('enrollment')}
+                </div>
+              </th>
+              <th onClick={() => requestSort('college')}>
+                <div className="th-content">
+                  <FaUniversity /> College {getSortIcon('college')}
+                </div>
+              </th>
+              <th onClick={() => requestSort('branch')}>
+                <div className="th-content">
+                  <FaCodeBranch /> Branch {getSortIcon('branch')}
+                </div>
+              </th>
+              <th onClick={() => requestSort('year')}>
+                <div className="th-content">
+                  <FaCalendarAlt /> Year {getSortIcon('year')}
+                </div>
+              </th>
+              <th onClick={() => requestSort('section')}>
+                <div className="th-content">
+                  <FaLayerGroup /> Section {getSortIcon('section')}
+                </div>
+              </th>
+              <th onClick={() => requestSort('league')}>
+                <div className="th-content">
+                  <FaTrophy /> League {getSortIcon('league')}
+                </div>
+              </th>
+              <th onClick={() => requestSort('transaction')}>
+                <div className="th-content">
+                  <FaReceipt /> Transaction {getSortIcon('transaction')}
+                </div>
+              </th>
+              <th onClick={() => requestSort('quizScore')}>
+                <div className="th-content">
+                  <FaStar /> Score {getSortIcon('quizScore')}
+                </div>
+              </th>
+              <th onClick={() => requestSort('timeToSolveMCQ')}>
+                <div className="th-content">
+                  <FaClock /> Time {getSortIcon('timeToSolveMCQ')}
+                </div>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredParticipants.length > 0 ? (
+              filteredParticipants.map((p, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{p.name}</td>
+                  <td><a href={`mailto:${p.email}`}>{p.email}</a></td>
+                  <td>{p.enrollment}</td>
+                  <td>{p.college}</td>
+                  <td>{p.branch}</td>
+                  <td>{p.year}</td>
+                  <td>{p.section}</td>
+                  <td>{p.league}</td>
+                  <td className="transaction-cell">{p.transaction}</td>
+                  <td>{p.quizScore ?? 'N/A'}</td>
+                  <td>{p.timeToSolveMCQ ?? 'N/A'}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="13" className="no-results">
+                  No participants found matching your search
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="stats-footer">
+        <p>Total Participants: {participants.length}</p>
+        <p>Showing: {filteredParticipants.length} records</p>
+      </div>
     </div>
   );
 }

@@ -1,72 +1,219 @@
-.participants-container {
-  padding: 20px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-table, th, td {
-  border: 1px solid #aaa;
-}
-
-th, td {
-  padding: 10px;
-  text-align: left;
-}
+/* ViewParticipants.css */
 
 .participants-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 2rem;
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
 }
 
 .header-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.download-button {
-  padding: 8px 16px;
-  background-color: #4CAF50;
+.header-section h2 {
+  color: cadetblue;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-box input {
+  padding: 0.5rem 1rem 0.5rem 2rem;
+  border-radius: 20px;
+  border: 1px solid #333;
+  background-color: #1e1e1e;
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+  min-width: 250px;
+}
+
+.search-box input:focus {
+  border-color: cadetblue;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.7rem;
+  color: #777;
+}
+
+.download-btn {
+  background-color: cadetblue;
   color: white;
   border: none;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
 }
 
-.download-button:hover {
-  background-color: #45a049;
+.download-btn:hover {
+  background-color: #5a52d6;
+  transform: translateY(-2px);
+}
+
+.table-responsive {
+  overflow-x: auto;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1rem;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: #2a2a2a;
+  color: cadetblue;
+  padding: 1rem;
+  text-align: left;
+  cursor: pointer;
+  user-select: none;
   position: sticky;
   top: 0;
 }
 
-tr:nth-child(even) {
-  background-color: #f9f9f9;
+th:first-child {
+  cursor: default;
 }
 
-tr:hover {
-  background-color: #f1f1f1;
+.th-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+th:hover {
+  background-color: #333;
+}
+
+td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #333;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background-color: #2a2a2a;
+}
+
+a {
+  color: cadetblue;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.transaction-cell {
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.screenshot-link {
+  background-color: #333;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.screenshot-link:hover {
+  background-color: cadetblue;
+  color: white;
+  text-decoration: none;
+}
+
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  color: #777;
+}
+
+.stats-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .table-responsive {
+    font-size: 0.9rem;
+  }
+  
+  th, td {
+    padding: 0.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .action-buttons {
+    width: 100%;
+  }
+  
+  .search-box {
+    width: 100%;
+  }
+  
+  .search-box input {
+    width: 100%;
+  }
+  
+  .download-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .participants-container {
+    padding: 1rem;
+  }
+  
+  .th-content {
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: flex-start;
+  }
 }
