@@ -230,6 +230,34 @@ app.post('/add-question', async (req, res) => {
   }
 });
 
+
+app.post('/submit-quiz-score', async (req, res) => {
+    try {
+        const { enrollment, score, timeToSolveMCQ } = req.body;
+        
+        const updatedRegistration = await Registration.findOneAndUpdate(
+            { enrollment: enrollment },
+            { 
+                quizScore: score,
+                timeToSolveMCQ: timeToSolveMCQ
+            },
+            { new: true }
+        );
+
+        if (!updatedRegistration) {
+            return res.status(404).json({ message: 'Registration not found' });
+        }
+
+        res.status(200).json({
+            message: 'Score and time updated successfully',
+            registration: updatedRegistration
+        });
+    } catch (error) {
+        console.error('Error updating quiz score:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 // Fetch all problem statements GET route
 app.get('/allquestions', async (req, res) => {
   try {
