@@ -38,7 +38,7 @@ const Register = () => {
         if (college === 'SISTec-GN' && selectedBranch === 'CSE') {
             setSectionCount(4);
         } else if (college === 'SISTec-R' && selectedBranch === 'CSE') {
-            setSectionCount(2);
+            setSectionCount(3);
         } else {
             setSectionCount(1);
         }
