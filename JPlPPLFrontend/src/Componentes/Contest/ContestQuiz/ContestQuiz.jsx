@@ -16,18 +16,18 @@ const ContestQuiz = () => {
     const [quizData, setQuizData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [maxSelections, setMaxSelections] = useState(1);
-    const [timeLeft, setTimeLeft] = useState(60); // 60 seconds per question
+    const [timeLeft, setTimeLeft] = useState(60);
     const [showMeme, setShowMeme] = useState(false);
     const [memeUrl, setMemeUrl] = useState('');
     const [quizFinished, setQuizFinished] = useState(false);
-    const [totalTimeTaken, setTotalTimeTaken] = useState(0); // Track total time taken
-    const [startTime, setStartTime] = useState(null); // Track when quiz started
+    const [totalTimeTaken, setTotalTimeTaken] = useState(0);
+    const [startTime, setStartTime] = useState(null);
+    const [questionResults, setQuestionResults] = useState([]);
 
     const optionRefs = useRef([]);
     const timerRef = useRef(null);
     const memeTimerRef = useRef(null);
 
-    // Meme URLs - you can add more or fetch from an API
     const memes = [
         "https://humornama.com/wp-content/uploads/2020/08/rasode-mein-kaun-tha-440x440.jpg",
         "https://quizizz.com/media/resource/gs/quizizz-media/quizzes/28cd881f-0902-44d6-839e-87b51a5b1239",
@@ -51,8 +51,8 @@ const ContestQuiz = () => {
                 setTotalPossibleScore(total);
                 
                 setLoading(false);
-                setStartTime(new Date()); // Record start time when quiz loads
-                startTimer(); // Start timer when quiz loads
+                setStartTime(new Date());
+                startTimer();
             } catch (error) {
                 console.error("Error fetching quiz data:", error);
                 setLoading(false);
@@ -73,9 +73,8 @@ const ContestQuiz = () => {
             setQuestion(currentQuestion);
             setSelectedOptions([]);
             setMaxSelections(currentQuestion.isMultipleSelect ? 
-                currentQuestion.correctOptionIndices.length : 1);
+                currentQuestion.options.length : 1); // Allow selecting all options for multiple select
             
-            // Reset timer for new question
             resetTimer();
         }
     }, [index, quizData]);
@@ -95,13 +94,13 @@ const ContestQuiz = () => {
 
     const resetTimer = () => {
         clearInterval(timerRef.current);
-        setTimeLeft(60); // Reset to 60 seconds
+        setTimeLeft(60);
         startTimer();
     };
 
     const handleTimeUp = () => {
         if (!quizFinished) {
-            next(); // Automatically move to next question when time's up
+            next();
         }
     };
 
@@ -111,7 +110,7 @@ const ContestQuiz = () => {
     };
 
     const showMemeScreen = () => {
-        if (index < quizData.length - 1) { // Don't show meme after last question
+        if (index < quizData.length - 1) {
             setShowMeme(true);
             setMemeUrl(getRandomMeme());
             
@@ -119,7 +118,7 @@ const ContestQuiz = () => {
                 setShowMeme(false);
                 setIndex(prevIndex => prevIndex + 1);
                 setSelectedOptions([]);
-            }, 2000); // Show meme for 2 seconds
+            }, 2000);
         } else {
             setIndex(prevIndex => prevIndex + 1);
         }
@@ -144,24 +143,71 @@ const ContestQuiz = () => {
             const currentQuestion = quizData[index];
             const correctIndices = currentQuestion.correctOptionIndices;
             const creditPoints = currentQuestion.creditPoints || 1;
+            const totalOptions = currentQuestion.options.length;
 
             let pointsEarned = 0;
+            let questionResult = {
+                question: currentQuestion.question,
+                maxPoints: creditPoints,
+                earnedPoints: 0,
+                isMultipleSelect: currentQuestion.isMultipleSelect,
+                correctOptions: correctIndices,
+                selectedOptions: [...selectedOptions],
+                optionDetails: []
+            };
+            
             if (currentQuestion.isMultipleSelect) {
-                const correctSelected = selectedOptions.filter(opt =>
-                    correctIndices.includes(opt)
-                ).length;
-                pointsEarned = (correctSelected / correctIndices.length) * creditPoints;
+                // Each option is worth equal share of total points
+                const pointsPerOption = creditPoints / totalOptions;
+                
+                // Check all options
+                for (let i = 0; i < totalOptions; i++) {
+                    const isCorrect = correctIndices.includes(i);
+                    const isSelected = selectedOptions.includes(i);
+                    let optionPoint = 0;
+                    
+                    // Award points for:
+                    // - Correct options that are selected (+1)
+                    // - Incorrect options that are not selected (+1)
+                    if ((isCorrect && isSelected) || (!isCorrect && !isSelected)) {
+                        optionPoint = pointsPerOption;
+                        pointsEarned += pointsPerOption;
+                    }
+                    
+                    questionResult.optionDetails.push({
+                        option: currentQuestion.options[i],
+                        isCorrect,
+                        isSelected,
+                        points: optionPoint
+                    });
+                }
+                
+                questionResult.earnedPoints = pointsEarned;
+                questionResult.pointsPerOption = pointsPerOption;
             } else {
+                // Single-select questions - all or nothing
                 if (selectedOptions.length === 1 && correctIndices.includes(selectedOptions[0])) {
                     pointsEarned = creditPoints;
+                }
+                questionResult.earnedPoints = pointsEarned;
+                
+                // Record option details for single-select
+                for (let i = 0; i < totalOptions; i++) {
+                    questionResult.optionDetails.push({
+                        option: currentQuestion.options[i],
+                        isCorrect: correctIndices.includes(i),
+                        isSelected: selectedOptions.includes(i),
+                        points: (selectedOptions.includes(i) && correctIndices.includes(i)) ? creditPoints : 0
+                    });
                 }
             }
 
             const newScore = score + pointsEarned;
+            setQuestionResults(prev => [...prev, questionResult]);
 
             if (index === quizData.length - 1) {
                 const endTime = new Date();
-                const timeTaken = Math.floor((endTime - startTime) / 1000); // Time in seconds
+                const timeTaken = Math.floor((endTime - startTime) / 1000);
                 setTotalTimeTaken(timeTaken);
                 setQuizFinished(true);
                 setScore(newScore);
@@ -180,7 +226,7 @@ const ContestQuiz = () => {
             }
 
             setScore(newScore);
-            showMemeScreen(); // Show meme before next question
+            showMemeScreen();
         }
     };
 
@@ -196,7 +242,8 @@ const ContestQuiz = () => {
         setQuizFinished(false);
         setTimeLeft(60);
         setTotalTimeTaken(0);
-        setStartTime(new Date()); // Reset start time
+        setQuestionResults([]);
+        setStartTime(new Date());
         startTimer();
     };
 
@@ -233,6 +280,35 @@ const ContestQuiz = () => {
                     <h2 className='contestquiz-time'>
                         Time taken: {Math.floor(totalTimeTaken / 60)} minutes {totalTimeTaken % 60} seconds
                     </h2>
+                    <div className='contestquiz-breakdown'>
+                        <h3>Question Breakdown:</h3>
+                        {questionResults.map((result, i) => (
+                            <div key={i} className='contestquiz-question-result'>
+                                <div className='contestquiz-question-text'>
+                                    <strong>Q{i+1}:</strong> {result.question}
+                                </div>
+                                <div className='contestquiz-points'>
+                                    Points: {result.earnedPoints.toFixed(1)}/{result.maxPoints}
+                                </div>
+                                {result.isMultipleSelect && (
+                                    <div className='contestquiz-option-details'>
+                                        <p>Scoring: Each option is worth {(result.maxPoints/result.correctOptions.length).toFixed(1)} points</p>
+                                        <ul>
+                                            {result.optionDetails.map((detail, idx) => (
+                                                <li key={idx} className={`contestquiz-option-result ${
+                                                    detail.isSelected ? "contestquiz-selected" : ""
+                                                } ${
+                                                    detail.isCorrect ? "contestquiz-correct" : "contestquiz-incorrect"
+                                                }`}>
+                                                    {detail.option} - {detail.points.toFixed(1)} point(s)
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                     <button className='contestquiz-btn' onClick={reset}>Reset</button>
                 </div>
             ) : (
@@ -243,7 +319,7 @@ const ContestQuiz = () => {
                         </h2>
                         <p className='contestquiz-instructions'>
                             {question?.isMultipleSelect ? 
-                                `(Select ${question.correctOptionIndices.length} correct answers - ${question.creditPoints} points)` : 
+                                `(Select all that apply - Each correct selection earns points, incorrect selections lose points)` : 
                                 `(Select one correct answer - ${question.creditPoints} points)`}
                         </p>
                         
@@ -254,9 +330,6 @@ const ContestQuiz = () => {
                                     ref={el => optionRefs.current[i] = el}
                                     className={`contestquiz-option ${
                                         selectedOptions.includes(i) ? "contestquiz-selected" : ""
-                                    } ${
-                                        result && question.correctOptionIndices.includes(i) ? 
-                                        "contestquiz-correct-answer" : ""
                                     }`}
                                     onClick={() => !result && handleOptionSelect(i)}
                                 >
