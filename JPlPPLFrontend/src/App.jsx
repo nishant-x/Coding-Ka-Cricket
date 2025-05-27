@@ -21,6 +21,8 @@ import ContestQuiz from "./Componentes/Contest/ContestQuiz/ContestQuiz";
 import Guideline from "./Componentes/Guidelines/guideline";
 import ParticipantsList from "./Componentes/Admin/Viewparticipant/viewparticipant";
 
+import Analytics from "./Componentes/Admin/Analytics/Analytics";
+
 const App = () => {
   return (
     <>
@@ -46,6 +48,7 @@ const App = () => {
           <Route path="/contestquiz" element={<ContestQuiz />} />
           <Route path="/guideline" element={<Guideline />} />
           <Route path="/Participants" element={<ParticipantsList />} />
+          <Route path="/analytics" element={<Analytics />} />
           {/* New Route for  */}
           <Route path="/code/" element={<Home />} />
           <Route path="/editor/:roomId" element={<EditorPage />} />
