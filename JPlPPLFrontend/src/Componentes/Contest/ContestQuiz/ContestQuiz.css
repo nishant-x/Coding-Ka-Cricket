@@ -129,3 +129,35 @@
     color: #34495e;
     font-size: 1.2rem;
 }
+
+.contestquiz-timer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.contestquiz-meme-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    text-align: center;
+}
+
+.contestquiz-meme {
+    max-width: 80%;
+    max-height: 60vh;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.contestquiz-meme-timer {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-top: 10px;
+}

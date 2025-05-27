@@ -26,7 +26,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   padding: 4rem;
   background-color: var(--ckc-bg);
   color: var(--ckc-text);
@@ -135,6 +135,7 @@
 }
 
 .ckc-registration .registration-form-group input[type="text"],
+.ckc-registration .registration-form-group input[type="tel"],
 .ckc-registration .registration-form-group input[type="email"],
 .ckc-registration .registration-form-group input[type="file"],
 .ckc-registration .registration-form-group select {
@@ -150,6 +151,7 @@
 
 .ckc-registration .registration-form-group input[type="text"]:focus,
 .ckc-registration .registration-form-group input[type="email"]:focus,
+.ckc-registration .registration-form-group input[type="tel"]:focus,
 .ckc-registration .registration-form-group select:focus {
   border-color: var(--ckc-primary);
   outline: none;

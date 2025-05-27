@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../../assets/sisteclogo.png";
+import Alertmarquee from "../Marquee/Alert-marquee";
 
 const Navbar = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -11,6 +12,7 @@ const Navbar = () => {
   };
 
   return (
+    <>
     <header className="navbarheader">
       <nav className="navbar">
         <div className="logo">
@@ -30,7 +32,7 @@ const Navbar = () => {
               <li><a href="/#faq">FAQ's</a> </li>
             </ul>
           </li>
-          <li><Link to="/contestlogin">Join Contest</Link></li>
+          {/* <li><Link to="/contestlogin">Join Contest</Link></li> */}
           {/* <li><Link to="/adminlogin">Admin Login</Link></li> */}
           <li><Link to="/contact">Contact Us</Link></li>
         </ul>
@@ -44,6 +46,8 @@ const Navbar = () => {
         </div>
       </nav>
     </header>
+      <Alertmarquee/>
+    </>
   );
 };
 

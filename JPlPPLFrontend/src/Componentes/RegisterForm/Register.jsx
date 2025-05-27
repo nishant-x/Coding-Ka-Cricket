@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import payment from '../../assets/paymentQR/paymentQr.jpg';
+import payment from '../../assets/paymentQR/newQRPushpendra.jpg';
 import './Register.css';
 
 const Register = () => {
@@ -38,7 +38,7 @@ const Register = () => {
         if (college === 'SISTec-GN' && selectedBranch === 'CSE') {
             setSectionCount(4);
         } else if (college === 'SISTec-R' && selectedBranch === 'CSE') {
-            setSectionCount(2);
+            setSectionCount(3);
         } else {
             setSectionCount(1);
         }
