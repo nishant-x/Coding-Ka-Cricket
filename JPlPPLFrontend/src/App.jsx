@@ -23,8 +23,9 @@ import Allquestions from "./Componentes/Admin/ViewQue/AllQuestions";
 import ParticipantsList from "./Componentes/Admin/Viewparticipant/viewparticipant";
 import ContestHomepage from "./Componentes/Contest/ContestHome/ContestHomepage";
 import ContestQuiz from "./Componentes/Contest/ContestQuiz/ContestQuiz";
-import Guideline from "./Componentes/Guidelines/guideline";
-import ParticipantsList from "./Componentes/Admin/Viewparticipant/viewparticipant";
+import Analytics from "./Componentes/Admin/Analytics/Analytics";
+import Home from "./CodeEditor/Home";
+import EditorPage from "./CodeEditor/EditorPage";
 
 const App = () => {
   return (
@@ -34,7 +35,7 @@ const App = () => {
       </div>
       <Router>
         <Navbar />
-        <Cursor />
+        {/* <Cursor /> */}
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Homepage />} />
@@ -43,16 +44,74 @@ const App = () => {
           <Route path="/guideline" element={<Guideline />} />
           <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/contestlogin" element={<ContestLogin />} />
-          <Route path="/contesthomepage" element={<ContestHomepage />} />
-          <Route path="/add-question" element={<Addqueform />} />
-          <Route path="/addquiz" element={<AddQuizForm />} />
-          <Route path="/allquestions" element={<Allquestions />} />
-          <Route path="/adminlogin" element={<AdminLogin />} />
-          <Route path="/adminhomepage" element={<AdminHomepage />} />
-          <Route path="/contestquiz" element={<ContestQuiz />} />
-          <Route path="/guideline" element={<Guideline />} />
-          <Route path="/Participants" element={<ParticipantsList />} />
-          {/* New Route for  */}
+
+          {/* Admin Protected Routes */}
+          <Route 
+            path="/adminhomepage" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']} redirectTo="/adminlogin">
+                <AdminHomepage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/allquestions" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <Allquestions />
+              </ProtectedRoute>
+            } 
+          />
+          <Route
+           path="/analytics" 
+           element={
+           <ProtectedRoute allowedRoles={['admin']}>
+                <Analytics />
+            </ProtectedRoute>} />
+          <Route 
+            path="/add-question" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <Addqueform />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/addquiz" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AddQuizForm />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/Participants" 
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <ParticipantsList />
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Contest Protected Routes */}
+          <Route 
+            path="/contesthomepage" 
+            element={
+              <ProtectedRoute allowedRoles={['user']} redirectTo="/contestlogin">
+                <ContestHomepage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/contestquiz" 
+            element={
+              <ProtectedRoute allowedRoles={['user']}>
+                <ContestQuiz />
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Code Editor Routes */}
           <Route path="/code/" element={<Home />} />
           <Route path="/editor/:roomId" element={<EditorPage />} />
 
