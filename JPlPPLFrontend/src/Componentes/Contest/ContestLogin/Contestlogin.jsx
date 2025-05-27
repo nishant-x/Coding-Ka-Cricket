@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // For navigation
 import './Contestlogin.css';
+import { useAuth } from '../../../Context/AuthContext/AuthContext';
 
 const ContestLogin = () => {
   const navigate = useNavigate(); // Initialize navigation
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState(''); // Password field will store the enrollment number
+  const { setUserRole } = useAuth(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,12 +27,14 @@ const ContestLogin = () => {
 
       const data = await response.json();
       if (response.ok) {
-        // If credentials are valid, navigate to the ContestHomepage page
+        
+        setUserRole('user');
         navigate('/contesthomepage', { state: { user: data.user } });
       } else {
         // Show an error message if validation fails
         alert(data.error || 'Invalid credentials. Please try again.');
         navigate('/contestlogin')
+        setUserRole('guest');
       }
     } catch (error) {
       alert('Server error. Please try again later.');

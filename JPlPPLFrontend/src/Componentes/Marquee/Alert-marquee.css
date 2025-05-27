@@ -2,42 +2,39 @@
     background-color: rgb(245, 243, 243);
     color: #b8314c;
     padding: 0px 15px;
-    border-radius: 5px;
-    /* font-weight: bold; */
+    /* border-radius: 5px; */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: none;
     text-align: center;
     width: 100%;
     margin: 0 auto;
     overflow: hidden;
-    position: fixed;
-    z-index: 9999999;
-  }
-  
-  .Alert-News marquee {
+    /* position: fixed; */
+    /* top: 1; */
+    z-index: 999999; /* Lower than navbar's z-index */
+}
+
+/* Navbar should have higher z-index */
+.navbar {
+    position: relative;
+    z-index: 1000; /* Higher than alert */
+}
+
+/* Rest of your existing styles... */
+.Alert-News marquee {
     font-family: 'Arial', sans-serif;
-    font-size: clamp(8px, 1vw, 10px); /* Responsive font size */
+    font-size: clamp(8px, 1vw, 10px);
     line-height: 1.5;
     white-space: nowrap;
-  }
-  
-  .Alert-News marquee h3 {
-    margin: 0;
-    padding: 5px 0;
-    display: inline-block;
-  }
-  
-  .Alert-News:hover {
-    background-color: #fceaee;
-    cursor: pointer;
-  }
+}
 
-  /* Mobile responsiveness */
-  @media (max-width: 768px) {
+/* Mobile responsiveness */
+@media (max-width: 768px) {
     .Alert-News {
-      padding: 8px 10px;
+        padding: 8px 10px;
+        top: 50px; /* Adjust for mobile navbar height */
     }
     .Alert-News marquee {
-      font-size: clamp(10px, 3vw, 14px);
+        font-size: clamp(10px, 3vw, 14px);
     }
-  }
+}
