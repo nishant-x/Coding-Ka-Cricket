@@ -1,7 +1,3 @@
-/* Hide default cursor */
-body {
-  cursor: none;
-}
 
 /* Style for custom cursor */
 .custom-cursor {

@@ -180,3 +180,101 @@ body {
     transform: translateY(0);
   }
 }
+/* Marquee Notification Bar Styles */
+
+.marquee-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 30s linear infinite;
+  padding-left: 100%;
+}
+
+.announcement-item {
+  display: inline-block;
+  margin-right: 30px;
+  color: #fff;
+}
+
+.announcement-separator {
+  margin: 0 15px;
+  color: #7f8c8d;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Adjust body margin to account for marquee */
+body {
+  margin-top: 140px; /* Increased from 108px to accommodate marquee */
+}
+
+/* Make navbar appear below marquee */
+.navbar {
+  top: 30px; /* Height of the marquee bar */
+}
+
+/* Mobile responsive for marquee */
+@media (max-width: 768px) {
+  .marquee-bar {
+    font-size: 0.8rem;
+    padding: 6px 0;
+  }
+  
+  .marquee-content {
+    animation: marquee 20s linear infinite;
+  }
+  
+  .announcement-item {
+    margin-right: 20px;
+  }
+  
+  .announcement-separator {
+    margin: 0 10px;
+  }
+  
+  body {
+    margin-top: 120px;
+  }
+  
+  .navbar {
+    top: 24px;
+  }
+}
+/* Extra Large Marquee Version */
+.marquee-bar {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  color: white;
+  padding: 16px 0;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+  overflow: hidden;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-bottom: 2px solid #3498db;
+}
+
+body {
+  margin-top: 180px;
+}
+
+.navbar {
+  top: 50px;
+}
+
+/* Animation adjustments for taller marquee */
+.marquee-content {
+  animation: marquee 35s linear infinite;
+  line-height: 1.5; /* Better vertical spacing */
+}
