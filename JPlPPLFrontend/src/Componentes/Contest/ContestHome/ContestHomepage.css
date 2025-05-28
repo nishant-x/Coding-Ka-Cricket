@@ -19,12 +19,11 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body {
-  background-color: var(--dark-bg);
-  color: var(--text-primary);
-}
+
 
 .contest-container {
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
   min-height: 100vh;
   display: flex;
   flex-direction: column;

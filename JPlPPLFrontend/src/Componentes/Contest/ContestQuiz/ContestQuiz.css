@@ -20,12 +20,11 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body {
-  background-color: var(--dark-bg);
-  color: var(--text-primary);
-}
+
 
 .contestquiz-container {
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
   min-height: 100vh;
   padding: 2rem;
   max-width: 1200px;
