@@ -1,3 +1,4 @@
+// ParticipantsList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
@@ -39,7 +40,6 @@ export default function ParticipantsList() {
     setSortConfig({ key, direction });
 
     const sortedData = [...filteredParticipants].sort((a, b) => {
-      // Handle null values for sorting
       if (a[key] === null) return direction === 'asc' ? 1 : -1;
       if (b[key] === null) return direction === 'asc' ? -1 : 1;
       if (a[key] < b[key]) return direction === 'asc' ? -1 : 1;
@@ -93,6 +93,11 @@ export default function ParticipantsList() {
     document.body.removeChild(link);
   };
 
+  const handleViewScreenshot = (screenshot) => {
+    const url = `${import.meta.env.VITE_BACKEND_URL}/${screenshot}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="participants-container">
       <div className="header-section">
@@ -112,10 +117,12 @@ export default function ParticipantsList() {
           </button>
         </div>
       </div>
-    <div className="stats-footer">
+
+      <div className="stats-footer">
         <p>Total Participants: {participants.length}</p>
         <p>Showing: {filteredParticipants.length} records</p>
       </div>
+
       <div className="table-responsive">
         <table>
           <thead>
@@ -176,6 +183,11 @@ export default function ParticipantsList() {
                   <FaClock /> Time {getSortIcon('timeToSolveMCQ')}
                 </div>
               </th>
+              <th>
+                <div className="th-content">
+                  <FaImage /> Screenshot
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -194,6 +206,16 @@ export default function ParticipantsList() {
                   <td className="transaction-cell">{p.transaction}</td>
                   <td>{p.quizScore ?? 'N/A'}</td>
                   <td>{p.timeToSolveMCQ ?? 'N/A'}</td>
+                  <td>
+                    {p.screenshot && (
+                      <button
+                        onClick={() => handleViewScreenshot(p.screenshot)}
+                        className="view-btn"
+                      >
+                        View
+                      </button>
+                    )}
+                  </td>
                 </tr>
               ))
             ) : (
