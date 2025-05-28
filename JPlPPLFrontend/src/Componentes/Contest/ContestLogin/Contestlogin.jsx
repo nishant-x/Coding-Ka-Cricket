@@ -1,43 +1,52 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // For navigation
+import { useNavigate } from 'react-router-dom';
 import './Contestlogin.css';
 import { useAuth } from '../../../Context/AuthContext/AuthContext';
+import toast from 'react-hot-toast';
 
 const ContestLogin = () => {
-  const navigate = useNavigate(); // Initialize navigation
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(''); // Password field will store the enrollment number
-  const { setUserRole } = useAuth(); 
+  const [password, setPassword] = useState('');
+  const { setUserRole } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Send a POST request with the user's credentials
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/contestlogin`, { // Fixed URL
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/contestlogin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: email,
-          enrollment: password, // Ensure the property matches backend expectation
+          enrollment: password,
         }),
       });
 
       const data = await response.json();
+
       if (response.ok) {
-        
-        setUserRole('user');
-        navigate('/contesthomepage', { state: { user: data.user } });
+        // ✅ Check quizScore logic
+        const score = data.user?.quizScore;
+
+        if (score === null || score === undefined || score === -1) {
+          setUserRole('user');
+          navigate('/contesthomepage', { state: { user: data.user } });
+        } else if (score >= 0) {
+          toast.error('You have already attempted the quiz.');
+          setUserRole('guest');
+        } else {
+          toast.error('Invalid user data.');
+        }
       } else {
-        // Show an error message if validation fails
-        alert(data.error || 'Invalid credentials. Please try again.');
-        navigate('/contestlogin')
+        toast.error(data.error || 'Invalid credentials. Please try again.');
         setUserRole('guest');
+        navigate('/contestlogin');
       }
     } catch (error) {
-      alert('Server error. Please try again later.');
+      toast.error('Server error. Please try again later.');
     }
   };
 
@@ -54,7 +63,7 @@ const ContestLogin = () => {
             name="email"
             placeholder="Enter Your Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)} // Update email state
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -66,7 +75,7 @@ const ContestLogin = () => {
             name="password"
             placeholder="Enter Your Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)} // Update password state
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
 

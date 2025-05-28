@@ -125,10 +125,10 @@ const ContestHomepage = () => {
       {/* Header Section */}
       <header className="contest-header">
         <h1>TrialOver Challenge</h1>
-        <div className="timer-display">
+        {/* <div className="timer-display">
           <span className="timer-icon">⏱️</span>
           <span className="timer-text">{formatTime(timeLeft)}</span>
-        </div>
+        </div> */}
       </header>
 
       <div className="contest-content">

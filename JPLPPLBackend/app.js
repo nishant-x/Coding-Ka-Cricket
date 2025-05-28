@@ -460,10 +460,15 @@ app.get('/getquiz/:league', async (req, res) => {
   const league = req.params.league;
 
   try {
-    const quizData = await QuizData.find({ selectedLeague: league });
+    const quizData = await QuizData.findOne({ selectedLeague: league });
 
-    if (quizData.length > 0) {
-      res.json({ success: true, quiz: quizData[0].questions });
+    if (quizData && quizData.questions && quizData.questions.length > 0) {
+      
+      // Shuffle and select 6 questions
+      const shuffled = quizData.questions.sort(() => 0.5 - Math.random());
+      const selectedQuestions = shuffled.slice(0, 6);
+
+      res.json({ success: true, quiz: selectedQuestions });
     } else {
       res.status(404).json({ success: false, message: 'Quiz data not found for this league.' });
     }
@@ -472,6 +477,7 @@ app.get('/getquiz/:league', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error fetching quiz data', error });
   }
 });
+
 
 // Get all quizzes GET route
 app.get('/allquizzes', async (req, res) => {

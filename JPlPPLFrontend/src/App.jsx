@@ -1,15 +1,15 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
 import { AuthProvider } from "./Context/AuthContext/AuthContext";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./Componentes/ProtectedRoute/ProtectedRoute";
 
-// Components (original names/paths)
+// Components
 import Navbar from "./Componentes/Navbar/Navbar";
 import Cursor from "./Componentes/Cursor/Cursor";
 import Footer from "./Componentes/Footers/Footer";
 import "./Componentes/Cursor/Cursor.css";
 
-// Pages (original names/paths)
+// Pages
 import Homepage from "./Componentes/Homepage";
 import ContactUs from "./Componentes/ContactUs/ContactUs";
 import Regiter from "./Componentes/RegisterForm/Register";
@@ -27,101 +27,116 @@ import Analytics from "./Componentes/Admin/Analytics/Analytics";
 import Home from "./CodeEditor/Home";
 import EditorPage from "./CodeEditor/EditorPage";
 
+import { useEffect } from "react";
+
+// 👇 Wrapper to use `useLocation` inside `App`
+const AppWrapper = () => (
+  <AuthProvider>
+    <Router>
+      <App />
+    </Router>
+  </AuthProvider>
+);
+
+// 👇 Actual App component
 const App = () => {
+  const location = useLocation();
+
+  // 👇 Define routes where Navbar/Footer should be hidden
+  const hideNavAndFooterRoutes = ["/contestquiz"];
+
+  const shouldHideNavAndFooter = hideNavAndFooterRoutes.includes(location.pathname);
+
   return (
-    <AuthProvider>
-      <div>
-        <Toaster position="top-center" />
-      </div>
-      <Router>
-        <Navbar />
-        {/* <Cursor /> */}
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Homepage />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/register" element={<Regiter />} />
-          <Route path="/guideline" element={<Guideline />} />
-          <Route path="/adminlogin" element={<AdminLogin />} />
-          <Route path="/contestlogin" element={<ContestLogin />} />
+    <>
+      <Toaster position="top-center" />
+      {!shouldHideNavAndFooter && <Navbar />}
+      {/* <Cursor /> */}
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Homepage />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/register" element={<Regiter />} />
+        <Route path="/guideline" element={<Guideline />} />
+        <Route path="/adminlogin" element={<AdminLogin />} />
+        <Route path="/contestlogin" element={<ContestLogin />} />
 
-          {/* Admin Protected Routes */}
-          <Route 
-            path="/adminhomepage" 
-            element={
-              <ProtectedRoute allowedRoles={['admin']} redirectTo="/adminlogin">
-                <AdminHomepage />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/allquestions" 
-            element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <Allquestions />
-              </ProtectedRoute>
-            } 
-          />
-          <Route
-           path="/analytics" 
-           element={
-           <ProtectedRoute allowedRoles={['admin']}>
-                <Analytics />
+        {/* Admin Protected Routes */}
+        <Route 
+          path="/adminhomepage" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']} redirectTo="/adminlogin">
+              <AdminHomepage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/allquestions" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Allquestions />
+            </ProtectedRoute>
+          } 
+        />
+        <Route
+          path="/analytics" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Analytics />
             </ProtectedRoute>} />
-          <Route 
-            path="/add-question" 
-            element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <Addqueform />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/addquiz" 
-            element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <AddQuizForm />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/Participants" 
-            element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <ParticipantsList />
-              </ProtectedRoute>
-            } 
-          />
+        <Route 
+          path="/add-question" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Addqueform />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/addquiz" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AddQuizForm />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/Participants" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <ParticipantsList />
+            </ProtectedRoute>
+          } 
+        />
 
-          {/* Contest Protected Routes */}
-          <Route 
-            path="/contesthomepage" 
-            element={
-              <ProtectedRoute allowedRoles={['user']} redirectTo="/contestlogin">
-                <ContestHomepage />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/contestquiz" 
-            element={
-              <ProtectedRoute allowedRoles={['user']}>
-                <ContestQuiz />
-              </ProtectedRoute>
-            } 
-          />
+        {/* Contest Protected Routes */}
+        <Route 
+          path="/contesthomepage" 
+          element={
+            <ProtectedRoute allowedRoles={['user']} redirectTo="/contestlogin">
+              <ContestHomepage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/contestquiz" 
+          element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <ContestQuiz />
+            </ProtectedRoute>
+          } 
+        />
 
-          {/* Code Editor Routes */}
-          <Route path="/code/" element={<Home />} />
-          <Route path="/editor/:roomId" element={<EditorPage />} />
+        {/* Code Editor Routes */}
+        <Route path="/code/" element={<Home />} />
+        <Route path="/editor/:roomId" element={<EditorPage />} />
 
-          {/* Fallback Route */}
-          <Route path="*" element={<Homepage />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </AuthProvider>
+        {/* Fallback Route */}
+        <Route path="*" element={<Homepage />} />
+      </Routes>
+      {!shouldHideNavAndFooter && <Footer />}
+    </>
   );
 };
 
-export default App;
+export default AppWrapper;
