@@ -40,13 +40,11 @@ const ContestLogin = () => {
           }, 1500);
         } else if (score >= 0) {
           toast.error('You have already attempted the quiz.');
-          setUserRole('guest');
         } else {
           toast.error('Invalid user data.');
         }
       } else {
         toast.error(data.error || 'Invalid credentials. Please try again.');
-        setUserRole('guest');
       }
     } catch (error) {
       toast.error('Server error. Please try again later.');
