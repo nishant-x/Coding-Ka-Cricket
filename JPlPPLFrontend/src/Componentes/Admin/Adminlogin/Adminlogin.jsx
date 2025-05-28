@@ -1,37 +1,38 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Adminlogin.css';
+import { useAuth } from '../../../Context/AuthContext/AuthContext';
 
-// Mock JSON data for admin credentials
 const adminData = [
   {
     email: "jhadenishant@gmail.com",
-    password: "Nishant@1234"
+    password: "Nishant@1234",
+    userRole: "admin"
   },
   {
     email: "moderator@example.com",
-    password: "securePassword456"
+    password: "securePassword456",
+    userRole: "admin"
   }
 ];
 
 const AdminLogin = () => {
-  const navigate = useNavigate(); // For navigation
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setUserRole } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check credentials against JSON data
     const admin = adminData.find(
       (user) => user.email === email && user.password === password
     );
 
     if (admin) {
-      // Navigate to /allquestions if credentials match
-      navigate('/adminhomepage');
+      setUserRole('admin'); 
+      navigate('/adminhomepage'); 
     } else {
-      // Show error message if credentials are invalid
       alert('Invalid credentials. Please try again.');
     }
   };

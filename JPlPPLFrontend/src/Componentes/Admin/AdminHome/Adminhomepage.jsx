@@ -30,7 +30,7 @@ export default function Adminhomepage() {
             <span>Add New Quiz</span>
           </button>
         </Link>
-        <Link to="#">
+        <Link to="/analytics">
           <button>
             <FaChartBar className="button-icon" />
             <span>Analytics</span>

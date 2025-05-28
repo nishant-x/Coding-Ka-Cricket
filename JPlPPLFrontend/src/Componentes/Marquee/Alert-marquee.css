@@ -1,23 +1,40 @@
 .Alert-News {
-    background-color: #b0b6c142; /* Bright red to grab attention */
-    color: #8d2b3e; /* White text for high contrast */
-    padding: 10px 15px; /* Padding to make it compact */
-    border-radius: 5px; /* Rounded corners for a sleek look */
-    font-size: 30px; /* Smaller font size for compact design */
-    font-weight: bold; /* Make the text stand out */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    border: none; /* Slightly darker red border */
-    text-align: center; /* Center-align content */
-  }
-  
-  .Alert-News marquee {
-    font-family: 'Arial', sans-serif; /* Clean and professional font */
-    font-size: 14px; /* Consistent font size */
-    line-height: 1.5; /* Improve readability */
-  }
-  
-  .Alert-News:hover {
-    background-color: #fceaee; /* Slightly darker red on hover */
-    cursor: pointer; /* Pointer cursor to indicate interactivity */
-  }
-  
+    background-color: rgb(245, 243, 243);
+    color: #b8314c;
+    padding: 0px 15px;
+    /* border-radius: 5px; */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    /* position: fixed; */
+    /* top: 1; */
+    z-index: 999999; /* Lower than navbar's z-index */
+}
+
+/* Navbar should have higher z-index */
+.navbar {
+    position: relative;
+    z-index: 1000; /* Higher than alert */
+}
+
+/* Rest of your existing styles... */
+.Alert-News marquee {
+    font-family: 'Arial', sans-serif;
+    font-size: clamp(8px, 1vw, 10px);
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .Alert-News {
+        padding: 8px 10px;
+        top: 50px; /* Adjust for mobile navbar height */
+    }
+    .Alert-News marquee {
+        font-size: clamp(10px, 3vw, 14px);
+    }
+}
