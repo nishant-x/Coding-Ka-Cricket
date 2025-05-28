@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ContestQuiz.css';
 
 const ContestQuiz = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { user } = location.state || {};
 
     const [index, setIndex] = useState(0);
@@ -23,10 +24,15 @@ const ContestQuiz = () => {
     const [totalTimeTaken, setTotalTimeTaken] = useState(0);
     const [startTime, setStartTime] = useState(null);
     const [questionResults, setQuestionResults] = useState([]);
+    const [tabSwitchCount, setTabSwitchCount] = useState(0);
+    const [showWarning, setShowWarning] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     const optionRefs = useRef([]);
     const timerRef = useRef(null);
     const memeTimerRef = useRef(null);
+    const warningTimerRef = useRef(null);
+    const fullscreenRef = useRef(null);
 
     const memes = [
         "https://humornama.com/wp-content/uploads/2020/08/rasode-mein-kaun-tha-440x440.jpg",
@@ -36,8 +42,97 @@ const ContestQuiz = () => {
         "https://img.mensxp.com/media/content/2013/Oct/image10_1383058153.gif"
     ];
 
+    // Enter fullscreen mode
+    const enterFullscreen = () => {
+        const elem = fullscreenRef.current || document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+        setIsFullscreen(true);
+    };
+
+    // Exit fullscreen mode
+    const exitFullscreen = () => {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+        setIsFullscreen(false);
+    };
+
+    // Check if fullscreen is active
+    const checkFullscreen = () => {
+        setIsFullscreen(
+            document.fullscreenElement || 
+            document.webkitFullscreenElement || 
+            document.msFullscreenElement
+        );
+    };
+
+    // Handle visibility change (tab switching)
+    const handleVisibilityChange = () => {
+        if (document.hidden && !result && !showMeme && !quizFinished) {
+            setTabSwitchCount(prev => {
+                const newCount = prev + 1;
+                if (newCount >= 4) {
+                    // Force submit on 4th violation
+                    handleForceSubmit();
+                } else {
+                    // Show warning
+                    setShowWarning(true);
+                    warningTimerRef.current = setTimeout(() => {
+                        setShowWarning(false);
+                    }, 3000);
+                }
+                return newCount;
+            });
+        }
+    };
+
+    // Force submit the quiz
+    const handleForceSubmit = () => {
+        clearInterval(timerRef.current);
+        clearTimeout(memeTimerRef.current);
+        clearTimeout(warningTimerRef.current);
+        
+        const endTime = new Date();
+        const timeTaken = Math.floor((endTime - startTime) / 1000);
+        setTotalTimeTaken(timeTaken);
+        setQuizFinished(true);
+        setResult(true);
+        
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/submit-quiz-score`, {
+            enrollment: user.enrollment,
+            score: parseFloat(score.toFixed(2)),
+            timeToSolveMCQ: timeTaken,
+            tabSwitchCount: 4, // Indicate forced submission
+            status: "terminated"
+        })
+        .then(res => console.log("Score submitted (terminated):", res.data))
+        .catch(err => console.error("Error submitting score:", err));
+    };
+
     useEffect(() => {
-        if (!user) return;
+        if (!user) {
+            navigate('/');
+            return;
+        }
+
+        // Set up event listeners
+        document.addEventListener('fullscreenchange', checkFullscreen);
+        document.addEventListener('webkitfullscreenchange', checkFullscreen);
+        document.addEventListener('msfullscreenchange', checkFullscreen);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        // Enter fullscreen when component mounts
+        enterFullscreen();
 
         const fetchQuizData = async () => {
             try {
@@ -62,10 +157,21 @@ const ContestQuiz = () => {
         fetchQuizData();
 
         return () => {
+            // Clean up event listeners
+            document.removeEventListener('fullscreenchange', checkFullscreen);
+            document.removeEventListener('webkitfullscreenchange', checkFullscreen);
+            document.removeEventListener('msfullscreenchange', checkFullscreen);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            
+            // Clear all timers
             clearInterval(timerRef.current);
             clearTimeout(memeTimerRef.current);
+            clearTimeout(warningTimerRef.current);
+            
+            // Exit fullscreen when component unmounts
+            exitFullscreen();
         };
-    }, [user]);
+    }, [user, navigate]);
 
     useEffect(() => {
         if (quizData.length > 0 && index < quizData.length) {
@@ -73,7 +179,7 @@ const ContestQuiz = () => {
             setQuestion(currentQuestion);
             setSelectedOptions([]);
             setMaxSelections(currentQuestion.isMultipleSelect ? 
-                currentQuestion.options.length : 1); // Allow selecting all options for multiple select
+                currentQuestion.options.length : 1);
             
             resetTimer();
         }
@@ -157,18 +263,13 @@ const ContestQuiz = () => {
             };
             
             if (currentQuestion.isMultipleSelect) {
-                // Each option is worth equal share of total points
                 const pointsPerOption = creditPoints / totalOptions;
                 
-                // Check all options
                 for (let i = 0; i < totalOptions; i++) {
                     const isCorrect = correctIndices.includes(i);
                     const isSelected = selectedOptions.includes(i);
                     let optionPoint = 0;
                     
-                    // Award points for:
-                    // - Correct options that are selected (+1)
-                    // - Incorrect options that are not selected (+1)
                     if ((isCorrect && isSelected) || (!isCorrect && !isSelected)) {
                         optionPoint = pointsPerOption;
                         pointsEarned += pointsPerOption;
@@ -185,13 +286,11 @@ const ContestQuiz = () => {
                 questionResult.earnedPoints = pointsEarned;
                 questionResult.pointsPerOption = pointsPerOption;
             } else {
-                // Single-select questions - all or nothing
                 if (selectedOptions.length === 1 && correctIndices.includes(selectedOptions[0])) {
                     pointsEarned = creditPoints;
                 }
                 questionResult.earnedPoints = pointsEarned;
                 
-                // Record option details for single-select
                 for (let i = 0; i < totalOptions; i++) {
                     questionResult.optionDetails.push({
                         option: currentQuestion.options[i],
@@ -217,10 +316,12 @@ const ContestQuiz = () => {
                 axios.post(`${import.meta.env.VITE_BACKEND_URL}/submit-quiz-score`, {
                     enrollment: user.enrollment,
                     score: parseFloat(newScore.toFixed(2)),
-                    timeToSolveMCQ: timeTaken
+                    timeToSolveMCQ: timeTaken,
+                    tabSwitchCount,
+                    status: "completed"
                 })
-                .then(res => console.log("Score and time submitted:", res.data))
-                .catch(err => console.error("Error submitting score and time:", err));
+                .then(res => console.log("Score submitted:", res.data))
+                .catch(err => console.error("Error submitting score:", err));
 
                 return;
             }
@@ -233,6 +334,7 @@ const ContestQuiz = () => {
     const reset = () => {
         clearInterval(timerRef.current);
         clearTimeout(memeTimerRef.current);
+        clearTimeout(warningTimerRef.current);
         setIndex(0);
         setQuestion(quizData[0]);
         setSelectedOptions([]);
@@ -243,21 +345,41 @@ const ContestQuiz = () => {
         setTimeLeft(60);
         setTotalTimeTaken(0);
         setQuestionResults([]);
+        setTabSwitchCount(0);
+        setShowWarning(false);
         setStartTime(new Date());
         startTimer();
+        enterFullscreen();
+    };
+
+    const exitQuiz = () => {
+        exitFullscreen();
+        navigate('/');
     };
 
     if (loading) {
-        return <div className="contestquiz-loading">Loading quiz...</div>;
+        return (
+            <div className="contestquiz-loading" ref={fullscreenRef}>
+                <div className="contestquiz-spinner"></div>
+                <p>Loading quiz...</p>
+            </div>
+        );
     }
 
     if (quizData.length === 0) {
-        return <div className="contestquiz-no-data">No quiz data available</div>;
+        return (
+            <div className="contestquiz-no-data" ref={fullscreenRef}>
+                <h2>No quiz data available</h2>
+                <button onClick={() => navigate('/')} className="contestquiz-btn">
+                    Return to Home
+                </button>
+            </div>
+        );
     }
 
     if (showMeme) {
         return (
-            <div className="contestquiz-meme-container">
+            <div className="contestquiz-meme-container" ref={fullscreenRef}>
                 <h2>Great job! Here's a meme for you</h2>
                 <img src={memeUrl} alt="Funny meme" className="contestquiz-meme" />
                 <div className="contestquiz-meme-timer">Next question in {Math.ceil(timeLeft/60 * 2)}s...</div>
@@ -266,12 +388,35 @@ const ContestQuiz = () => {
     }
 
     return (
-        <div className='contestquiz-container'>
-            <div className="contestquiz-timer">
-                Time left: {timeLeft}s | Total time: {Math.floor(totalTimeTaken / 60)}m {totalTimeTaken % 60}s
+        <div className='contestquiz-container' ref={fullscreenRef}>
+            {showWarning && (
+                <div className="contestquiz-warning-overlay">
+                    <div className="contestquiz-warning-box">
+                        <h2>Warning!</h2>
+                        <p>You have switched tabs/windows {tabSwitchCount} times.</p>
+                        <p>After {4 - tabSwitchCount} more violations, your quiz will be automatically submitted.</p>
+                    </div>
+                </div>
+            )}
+
+            <div className="contestquiz-header">
+                <div className="contestquiz-timer">
+                    <span className="contestquiz-timer-icon">⏱️</span>
+                    <span className="contestquiz-timer-text">
+                        Question Time: {timeLeft}s | Total: {Math.floor(totalTimeTaken / 60)}m {totalTimeTaken % 60}s
+                    </span>
+                </div>
+                <div className="contestquiz-fullscreen-status">
+                    {isFullscreen ? "✔ Fullscreen" : "⚠ Not Fullscreen"}
+                </div>
+                <div className="contestquiz-violations">
+                    Tab Switches: {tabSwitchCount}/3
+                </div>
             </div>
-            <h1 className='contestquiz-heading'>Quiz</h1>
+
+            <h1 className='contestquiz-heading'>Quiz Challenge</h1>
             <hr className='contestquiz-divider' />
+            
             {result ? (
                 <div className='contestquiz-result'>
                     <h1 className='contestquiz-score'>
@@ -280,19 +425,25 @@ const ContestQuiz = () => {
                     <h2 className='contestquiz-time'>
                         Time taken: {Math.floor(totalTimeTaken / 60)} minutes {totalTimeTaken % 60} seconds
                     </h2>
+                    
                     <div className='contestquiz-breakdown'>
                         <h3>Question Breakdown:</h3>
                         {questionResults.map((result, i) => (
                             <div key={i} className='contestquiz-question-result'>
-                                <div className='contestquiz-question-text'>
-                                    <strong>Q{i+1}:</strong> {result.question}
+                                <div className='contestquiz-question-header'>
+                                    <div className='contestquiz-question-text'>
+                                        <strong>Q{i+1}:</strong> {result.question}
+                                    </div>
+                                    <div className='contestquiz-points'>
+                                        {result.earnedPoints.toFixed(1)}/{result.maxPoints} points
+                                    </div>
                                 </div>
-                                <div className='contestquiz-points'>
-                                    Points: {result.earnedPoints.toFixed(1)}/{result.maxPoints}
-                                </div>
+                                
                                 {result.isMultipleSelect && (
                                     <div className='contestquiz-option-details'>
-                                        <p>Scoring: Each option is worth {(result.maxPoints/result.correctOptions.length).toFixed(1)} points</p>
+                                        <p className="contestquiz-scoring-info">
+                                            Scoring: Each option is worth {(result.maxPoints/result.correctOptions.length).toFixed(1)} points
+                                        </p>
                                         <ul>
                                             {result.optionDetails.map((detail, idx) => (
                                                 <li key={idx} className={`contestquiz-option-result ${
@@ -309,7 +460,15 @@ const ContestQuiz = () => {
                             </div>
                         ))}
                     </div>
-                    <button className='contestquiz-btn' onClick={reset}>Reset</button>
+                    
+                    <div className="contestquiz-result-actions">
+                        <button className='contestquiz-btn contestquiz-reset-btn' onClick={reset}>
+                            Try Again
+                        </button>
+                        <button className='contestquiz-btn contestquiz-exit-btn' onClick={exitQuiz}>
+                            Exit Quiz
+                        </button>
+                    </div>
                 </div>
             ) : (
                 <>
@@ -319,8 +478,8 @@ const ContestQuiz = () => {
                         </h2>
                         <p className='contestquiz-instructions'>
                             {question?.isMultipleSelect ? 
-                                `(Select all that apply - Each correct selection earns points, incorrect selections lose points)` : 
-                                `(Select one correct answer - ${question.creditPoints} points)`}
+                                `(Multiple correct answers - Partial credit for each correct selection)` : 
+                                `(Single correct answer - ${question?.creditPoints || 1} points)`}
                         </p>
                         
                         <ul className='contestquiz-options'>
@@ -349,14 +508,14 @@ const ContestQuiz = () => {
                     
                     <div className='contestquiz-controls'>
                         <button 
-                            className='contestquiz-btn' 
+                            className='contestquiz-btn contestquiz-next-btn' 
                             onClick={next}
                             disabled={selectedOptions.length === 0 && timeLeft > 0}
                         >
-                            {index === quizData.length - 1 ? 'Finish' : 'Next'}
+                            {index === quizData.length - 1 ? 'Finish Quiz' : 'Next Question'}
                         </button>
                         <div className="contestquiz-progress">
-                            {index + 1} of {quizData.length} questions
+                            Question {index + 1} of {quizData.length}
                         </div>
                     </div>
                 </>

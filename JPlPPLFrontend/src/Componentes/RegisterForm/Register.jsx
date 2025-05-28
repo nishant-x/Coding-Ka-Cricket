@@ -15,7 +15,7 @@ const Register = () => {
     const navigate = useNavigate();
 
     const branchesByCollege = {
-        'SISTec-GN': ['CSE', 'CSE - Cyber Security', 'CSE - AIML'],
+        'SISTec-GN': ['CSE', 'CSE - Cyber Security', 'CSE - AIML', 'CSE - AIDS'],
         'SISTec-R': ['CSE', 'CSE - AIML'],
         'SISTec-E': ['CSE', 'CSE - IoT'],
     };

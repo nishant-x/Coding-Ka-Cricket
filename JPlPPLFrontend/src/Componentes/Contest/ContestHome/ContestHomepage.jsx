@@ -4,48 +4,58 @@ import axios from 'axios';
 import './ContestHomepage.css';
 
 const ContestHomepage = () => {
-  const location = useLocation(); // Access navigation state
-  const { user } = location.state || {}; // Retrieve user from state
+  const location = useLocation();
+  const { user } = location.state || {};
+  const navigate = useNavigate();
 
-  const [problems, setProblems] = useState([]); // Declare state to hold problems
-  const [loading, setLoading] = useState(true); // Loading state for fetching problems
-  const [timeLeft, setTimeLeft] = useState(7200); // Time left in seconds (2 hours)
-  const navigate = useNavigate(); // Initialize navigate function
+  const [problems, setProblems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(100); // 2 hours in seconds
+  const [activeProblem, setActiveProblem] = useState(null);
 
   useEffect(() => {
-    if (!user) return; // Stop fetching if user is not defined
+    if (!user) {
+      navigate('/'); // Redirect if no user data
+      return;
+    }
 
-    // Fetch problems data
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/contesthomepage`) // Correct template literal usage
-      .then(response => {
-        setProblems(response.data); // Set fetched problems
-        setLoading(false); // Set loading to false
-      })
-      .catch(error => {
-        console.error("Error fetching data:", error);
-        setLoading(false); // Set loading to false even if there's an error
-      });
-
-    // Set a timer for 2 hours (7200000 milliseconds)
-    const timer = setTimeout(() => {
-      alert("Time's up! Redirecting to the homepage.");
-      navigate('/home'); // Navigate to homepage after time is up
-    }, 7200000); // 2 hours in milliseconds
-
-    // Countdown timer every second
-    const countdown = setInterval(() => {
-      setTimeLeft(prevTime => {
-        if (prevTime <= 1) {
-          clearInterval(countdown); // Stop countdown when time is up
+    const fetchProblems = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/contesthomepage`);
+        setProblems(response.data);
+        if (response.data.length > 0) {
+          setActiveProblem(response.data[0]._id); // Set first problem as active by default
         }
-        return prevTime - 1;
-      });
-    }, 1000); // Update every second
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load problems. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // Cleanup the timers if the component is unmounted or the user state changes
+    fetchProblems();
+
+    // Timer for total test duration
+    const testTimer = setTimeout(() => {
+      alert("Time's up! The test has ended.");
+      navigate('/');
+    }, 7200000);
+
+    // Countdown timer
+    const countdown = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(countdown);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
     return () => {
-      clearTimeout(timer);
+      clearTimeout(testTimer);
       clearInterval(countdown);
     };
   }, [user, navigate]);
@@ -61,12 +71,13 @@ const ContestHomepage = () => {
   };
 
   const handleAttemptQuiz = () => {
-    navigate('/contestquiz', { state: { user: userDetails } }); // Pass user data to the contestquiz page
+    navigate('/contestquiz', { state: { user: userDetails } });
   };
 
   const handleEndTest = () => {
-    alert("Test ended! Redirecting to the homepage.");
-    navigate('/'); // Redirect to homepage when the test ends
+    if (window.confirm("Are you sure you want to end the test? Your progress will be saved.")) {
+      navigate('/');
+    }
   };
 
   const formatTime = (seconds) => {
@@ -76,52 +87,126 @@ const ContestHomepage = () => {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
-  if (loading) {
-    return <div>Loading...</div>; // Display loading message
+  const handleProblemClick = (problemId) => {
+    setActiveProblem(problemId);
+  };
+
+  if (!user) {
+    return null; // Already redirecting in useEffect
   }
 
+  if (loading) {
+    return (
+      <div className="contest-container loading">
+        <div className="skeleton-header"></div>
+        <div className="skeleton-timer"></div>
+        <div className="skeleton-content">
+          <div className="skeleton-problems"></div>
+          <div className="skeleton-details"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="contest-container error">
+        <h2>Error</h2>
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()}>Retry</button>
+      </div>
+    );
+  }
+
+  const activeProblemData = problems.find(problem => problem._id === activeProblem);
+
   return (
-    <div className="contesthome-problem-stat-container">
-      {/* Countdown Timer Display */}
-      <div className="countdown-timer">{formatTime(timeLeft)}</div>
+    <div className="contest-container">
+      {/* Header Section */}
+      <header className="contest-header">
+        <h1>TrialOver Challenge</h1>
+        <div className="timer-display">
+          <span className="timer-icon">⏱️</span>
+          <span className="timer-text">{formatTime(timeLeft)}</span>
+        </div>
+      </header>
 
-      {/* Heading */}
-      <h1 className="contesthome-page-heading">Problem Statement</h1>
+      <div className="contest-content">
+        {/* Problems List Section */}
+        <div className="problems-section">
+          <h2>Problem Statements</h2>
+          <div className="problems-list">
+            {problems.map((problem) => (
+              <div 
+                key={problem._id} 
+                className={`problem-item ${activeProblem === problem._id ? 'active' : ''}`}
+                onClick={() => handleProblemClick(problem._id)}
+              >
+                <div className="problem-title">
+                  <span className="problem-id">#{problem._id.slice(-4)}</span>
+                  {problem.title}
+                </div>
+                <button className="problem-button">
+                  <span className="arrow-icon">➔</span>
+                </button>
+              </div>
+            ))}
+          </div>
 
-      <div className="contesthome-content-container">
-        {/* Problem Statements Section (Left Side) */}
-        <div className="contesthome-problem-statements">
-          {problems.map((problem) => (
-            <div key={problem._id} className="contesthome-problem-item">
-              <div className="contesthome-problem-text">{problem.title}</div>
-              <button className="contesthome-compile-button">{'>'}</button>
+          <div className="action-buttons">
+            <button className="quiz-button" onClick={handleAttemptQuiz}>
+              Attempt Quiz
+            </button>
+            <button className="end-test-button" onClick={handleEndTest}>
+              End Test
+            </button>
+          </div>
+        </div>
+
+        {/* Problem Details Section */}
+        {/* <div className="problem-details-section">
+          {activeProblemData ? (
+            <>
+              <h3>{activeProblemData.title}</h3>
+              <div className="problem-description">
+                <p>{activeProblemData.description}</p>
+                {activeProblemData.example && (
+                  <div className="problem-example">
+                    <h4>Example:</h4>
+                    <pre>{activeProblemData.example}</pre>
+                  </div>
+                )}
+              </div>
+              <div className="code-editor-placeholder">
+                <textarea placeholder="Write your code here..."></textarea>
+                <button className="submit-button">Submit Code</button>
+              </div>
+            </>
+          ) : (
+            <div className="no-problem-selected">
+              <p>Select a problem from the list to view details</p>
             </div>
-          ))}
-          <button className="contesthome-attempt-quiz-btn" onClick={handleAttemptQuiz}>
-            Attempt Quiz
-          </button>
-          <button className="contesthome-end-test-btn" onClick={handleEndTest}>
-            End Test
-          </button>
-        </div>
+          )}
+        </div> */}
 
-        {/* Partition */}
-        <div className="contesthome-partition"></div>
-
-        {/* User Details Section (Right Side) */}
-        <div className="contesthome-user-details">
-          <h2>Student Details</h2>
-          <ul>
-            <li><strong>Name:</strong> {userDetails.name}</li>
-            <li><strong>Enrollment:</strong> {userDetails.enrollment}</li>
-            <li><strong>Email:</strong> {userDetails.email}</li>
-            <li><strong>College:</strong> {userDetails.college}</li>
-            <li><strong>Year:</strong> {userDetails.year}</li>
-            <li><strong>Branch:</strong> {userDetails.branch}</li>
-            <li><strong>Participation League:</strong> {userDetails.participation}</li>
-          </ul>
+        {/* User Details Section */}
+        <div className="user-details-section">
+          <h2>Participant Details</h2>
+          <div className="user-details-card">
+            <div className="user-avatar">
+              {userDetails.name.charAt(0).toUpperCase()}
+            </div>
+            <div className="user-info">
+              <p><strong>Name:</strong> {userDetails.name}</p>
+              <p><strong>Enrollment:</strong> {userDetails.enrollment}</p>
+              <p><strong>Email:</strong> {userDetails.email}</p>
+              <p><strong>College:</strong> {userDetails.college}</p>
+              <p><strong>Year:</strong> {userDetails.year}</p>
+              <p><strong>Branch:</strong> {userDetails.branch}</p>
+              <p><strong>League:</strong> {userDetails.participation}</p>
+            </div>
+          </div>
         </div>
-        
       </div>
     </div>
   );
