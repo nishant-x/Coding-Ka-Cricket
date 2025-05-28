@@ -91,7 +91,7 @@ const ContestLogin = () => {
           </div>
 
           <div className="input-group">
-            <label htmlFor="password">Enrollment Number</label>
+            <label htmlFor="password">Password </label>
             <div className="input-field">
               <svg className="input-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M19 11H5C3.89543 11 3 11.8954 3 13V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V13C21 11.8954 20.1046 11 19 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -100,7 +100,7 @@ const ContestLogin = () => {
               <input
                 type="text"
                 id="password"
-                placeholder="Enter your enrollment number"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -123,8 +123,8 @@ const ContestLogin = () => {
         </form>
 
         <div className="login-footer">
-          <p>New to quiz? <span onClick={() => navigate('/register')}>Create account</span></p>
-          <p onClick={() => toast('Contact admin for enrollment help')}>Forgot enrollment?</p>
+          <p>New to quiz? <span  onClick={() => toast('Contact admin for enrollment help')}>Create account</span></p>
+          {/* <p onClick={() => toast('Contact admin for enrollment help')}>Forgot password?</p> */}
         </div>
       </div>
 
