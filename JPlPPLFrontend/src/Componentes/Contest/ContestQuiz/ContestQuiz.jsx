@@ -60,7 +60,6 @@ const ContestQuiz = () => {
             enrollment: user.enrollment,
             score: parseFloat(score.toFixed(2)),
             timeToSolveMCQ: timeTaken,
-            status: terminationReason ? "terminated" : "completed"
         })
         .then(() => {
             toast.success(terminationReason ? "Quiz submitted" : "Quiz completed");

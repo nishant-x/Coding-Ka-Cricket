@@ -1,102 +1,259 @@
-/* General styles for the main container */
-.contest-main-container {
-  background-color: #f7f9fcf6;
-  background-image: url('../../../assets/contestlogin.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-blend-mode: overlay;
+:root {
+  --primary: #6c5ce7;
+  --primary-light: #a29bfe;
+  --secondary: #00cec9;
+  --text: #f5f6fa;
+  --text-secondary: #b2bec3;
+  --bg: #0f0f1a;
+  --card-bg: rgba(30, 31, 46, 0.8);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --error: #ff7675;
+  --success: #55efc4;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+.contest-login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 85vh;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f1a 0%, #1e1e2e 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Container for the form */
-.contest-form-container {
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  padding: 20px 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.login-glass-card {
   width: 100%;
-  height: 20rem;
-  max-width: 400px;
-  background-color: #f8f9faf5;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-blend-mode: overlay;
+  max-width: 420px;
+  padding: 2.5rem;
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  z-index: 2;
+  transform: translateY(0);
+  transition: var(--transition);
 }
 
-/* Form title */
-.contest-form-title {
+.login-glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.login-header {
   text-align: center;
-  color: cadetblue;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
-/* Label styles */
-.contest-form-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: #555;
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
-/* Input styles */
-.contest-form-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Focus effect for inputs */
-.contest-form-input:focus {
-  border-color: cadetblue;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-  outline: none;
-}
-
-/* Submit button styles */
-.contest-form-submit {
-  width: 100%;
-  margin-top: 1.5rem;
-  padding: 10px;
-  background-color: cadetblue; /* Matches the text color */
+.logo-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
-  font-weight: bold;
+}
+
+.logo-container h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-light), var(--text));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.login-header p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.input-field {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+
+.input-field input {
+  width: 100%;
+  padding: 0.85rem 1rem 0.85rem 2.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text);
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.input-field input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+}
+
+.input-field input:focus + .input-icon {
+  color: var(--primary);
+}
+
+.login-button {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
   border: none;
-  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition);
 }
 
-/* Hover effect for submit button */
-.contest-form-submit:hover {
-  background-color: #4682B4; /* Slightly darker shade for hover */
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
 }
 
-/* Responsive design */
+.login-button:disabled {
+  background: var(--text-secondary);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.arrow-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.login-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.login-footer p {
+  margin: 0.5rem 0;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.login-footer p span {
+  color: var(--primary-light);
+  font-weight: 600;
+}
+
+.login-footer p:hover {
+  color: var(--text);
+}
+
+.login-footer p span:hover {
+  text-decoration: underline;
+}
+
+.background-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  background: rgba(108, 92, 231, 0.2);
+  border-radius: 50%;
+  left: var(--x);
+  top: var(--y);
+  animation: float var(--duration) infinite ease-in-out var(--delay);
+  opacity: 0.6;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(20px, -30px);
+  }
+  50% {
+    transform: translate(-20px, 20px);
+  }
+  75% {
+    transform: translate(30px, 10px);
+  }
+}
+
 @media (max-width: 480px) {
-  .contest-form-container {
-      padding: 15px;
-  }
-
-  .contest-form-title {
-      font-size: 20px;
-  }
-
-  .contest-form-submit {
-      font-size: 14px;
+  .login-glass-card {
+    padding: 1.5rem;
+    margin: 1rem;
   }
 }
