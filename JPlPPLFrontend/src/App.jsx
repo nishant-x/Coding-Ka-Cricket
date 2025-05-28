@@ -43,7 +43,7 @@ const App = () => {
   const location = useLocation();
 
   // 👇 Define routes where Navbar/Footer should be hidden
-  const hideNavAndFooterRoutes = ["/contestquiz"];
+  const hideNavAndFooterRoutes = ["/contestquiz" , "/contesthomepage"];
 
   const shouldHideNavAndFooter = hideNavAndFooterRoutes.includes(location.pathname);
 

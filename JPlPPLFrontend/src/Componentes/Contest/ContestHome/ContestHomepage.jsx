@@ -38,7 +38,7 @@ const ContestHomepage = () => {
   };
 
   const handleAttemptQuiz = () => {
-    navigate('/contestquiz', { state: { user: userDetails } });
+    navigate('/contestquiz', { state: { user: userDetails } , replace: true});
   };
 
   // Determine contest title based on league

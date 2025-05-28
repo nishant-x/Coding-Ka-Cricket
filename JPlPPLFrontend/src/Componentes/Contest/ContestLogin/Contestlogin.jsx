@@ -36,7 +36,7 @@ const ContestLogin = () => {
           setUserRole('user');
           toast.success('Login successful! Redirecting...');
           setTimeout(() => {
-            navigate('/contesthomepage', { state: { user: data.user } });
+            navigate('/contesthomepage', { state: { user: data.user }});
           }, 1500);
         } else if (score >= 0) {
           toast.error('You have already attempted the quiz.');

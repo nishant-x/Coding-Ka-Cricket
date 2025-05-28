@@ -63,7 +63,7 @@ const ContestQuiz = () => {
         })
         .then(() => {
             toast.success(terminationReason ? "Quiz submitted" : "Quiz completed");
-            setTimeout(() => navigate('/'), 1000);
+            setTimeout(() => navigate('/', { replace: true }), 1000);
         })
         .catch(err => console.error("Error submitting score:", err));
     };
