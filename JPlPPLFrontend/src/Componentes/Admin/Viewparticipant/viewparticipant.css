@@ -16,6 +16,21 @@
   flex-wrap: wrap;
   gap: 1rem;
 }
+.screenshot-link {
+  background-color: #333;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  display: inline-block;
+  color: #ddd;
+  transition: all 0.3s ease;
+}
+
+.screenshot-link:hover {
+  background-color: cadetblue;
+  color: white;
+  text-decoration: none;
+}
+
 
 .header-section h2 {
   color: cadetblue;

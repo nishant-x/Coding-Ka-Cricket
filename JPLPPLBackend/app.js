@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
+const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const http = require('http'); // Import http to create server
@@ -44,6 +45,7 @@ app.use(cors({
 // Middleware to parse JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/participants', RegistrationRoute);
 // Create HTTP server from Express app
 const server = http.createServer(app);
@@ -59,6 +61,19 @@ const io = new Server(server, {
 ], // Replace with your frontend URL
     methods: ["GET", "POST"],
   },
+});
+
+app.get('/uploads/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, 'uploads', filename);
+
+  // Check if file exists
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).json({ error: 'File not found' });
+    }
+    res.sendFile(filePath);
+  });
 });
 
 // User map to keep track of connected clients (socketId -> username)

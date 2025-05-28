@@ -1,226 +1,394 @@
-/* Full-page container */
-.contesthome-problem-stat-container {
-  padding-top: 25px;
-  background-color: #f9f9f9;
-  min-height: 90vh; /* Full page height */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+:root {
+  --primary-color: #6c63ff;
+  --secondary-color: #4a42e8;
+  --dark-bg: #121212;
+  --darker-bg: #0d0d0d;
+  --card-bg: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --accent-color: #ff6584;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --border-color: #333333;
 }
 
-/* Heading */
-.contesthome-page-heading {
-  text-align: center;
-  color: cadetblue;
-  font-size: 36px;
-  margin-bottom: 20px;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  letter-spacing: 2px; /* Slight letter spacing for added elegance */
-}
-
-/* Container for problem statements and user details side by side */
-.contesthome-content-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 2px;
-  width: 90%;
-  max-width: 1200px; /* Ensures the content doesn’t stretch too wide */
-  height: 100%; /* Ensures full-height layout */
-}
-
-/* Left side for Problem Statements */
-.contesthome-problem-statements {
-  flex: 2;
-  padding-right: 20px;
-  background-color: #ffffff; /* White background for problem statements */
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Align content to the top */
-}
-
-.contesthome-problem-statements h2 {
-  color: cadetblue;
-  margin-bottom: 10px;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.contesthome-problem-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: #f9f9f9; /* Light background for each item */
-  border-radius: 8px;
-  transition: background-color 0.3s ease; /* Smooth hover effect */
-}
-
-.contesthome-problem-item:hover {
-  background-color: #e0f7fa; /* Light blue hover effect */
-}
-
-.contesthome-problem-text {
-  font-size: 16px;
-  color: #333;
-  flex: 1;
-}
-
-.contesthome-compile-button {
-  background-color: cadetblue; /* Button color */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.contesthome-compile-button:hover {
-  background-color: cadetblue;
-}
-
-/* Attempt Quiz Button */
-.contesthome-attempt-quiz-btn {
-  background-color: cadetblue; /* Darker blue background */
-  color: white;
-  padding: 12px 20px;
-  font-size: 18px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 20px;
- 
-}
-
-.contesthome-attempt-quiz-btn:hover {
-  background-color: #4682b4; /* Lighter blue on hover */
-}
-
-/* Partition between the two sections */
-.contesthome-partition {
-  width: 2px;
-  background-color: #b0c4de; /* Light partition color */
-  height: 100%;
-  margin: 0 20px;
-}
-
-/* Right side for User Details (Centered from Top) */
-.contesthome-user-details {
-  flex: 1;
-  padding-left: 30px;
-  background-color: #ffffff; /* White background for user details */
-  border-radius: 12px;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  padding: 25px 30px; /* Increased padding for a more spacious feel */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Align the content from the top */
-  transition: all 0.3s ease; /* Smooth transition for hover effect */
-}
-
-/* Title styling for the user details header */
-.contesthome-user-details h2 {
-  color: cadetblue; /* Darker color for text */
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  text-align: center;
-  letter-spacing: 1px; /* Slight letter spacing */
-  text-transform: uppercase; /* Capitalize the header */
-  border-bottom: 2px solid #b8babc; /* Soft border at the bottom */
-  padding-bottom: 10px;
-}
-
-/* List styling for user details */
-.contesthome-user-details ul {
-  list-style-type: none;
+* {
+  box-sizing: border-box;
+  margin: 0;
   padding: 0;
-  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Individual list item styling */
-.contesthome-user-details li {
-  margin-bottom: 15px; /* Spacing between each detail */
-  font-size: 20px;
-  font-weight: 500;
-  color: #555; /* Lighter shade of gray for text */
+body {
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
+}
+
+.contest-container {
+  min-height: 100vh;
   display: flex;
-  justify-content: space-between; /* Space between label and value */
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.contest-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  transition: all 0.3s ease; /* Smooth transition for hover effect */
-  padding: 8px 15px; /* Padding for a comfortable layout */
-  border-radius: 8px; /* Rounded corners for each list item */
+  padding: 1rem 2rem;
+  background-color: var(--darker-bg);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.contesthome-user-details li:hover {
-  background-color: #f1f1f1; /* Light background on hover */
-  color: #4682b4; /* Change text color on hover */
-  transform: translateX(10px); /* Slide effect when hovered */
+.contest-header h1 {
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-/* Styling for the label text */
-.contesthome-user-details li strong {
-  color: #333; /* Darker color for the labels */
-  font-weight: 600; /* Slightly bolder for labels */
-}
-
-/* Interactive hover effect for the entire section */
-.contesthome-user-details:hover {
-  transform: scale(1.02); /* Slightly enlarge the container on hover */
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15); /* Increase the shadow for more focus */
-}
-
-/* Add a subtle animation to the user details section */
-.contesthome-user-details {
-  animation: fadeIn 1s ease-out;
-}
-
-/* Animation for fading in the user details */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.countdown-timer {
-  margin-top: 7rem;
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;
+.timer-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  background-color: cadetblue; /* Set the background color to cadetblue */
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  color: var(--accent-color);
 }
 
-.contesthome-end-test-btn {
-  width: 20%;
-  background-color: rgba(218, 41, 59, 0.74);
+.contest-content {
+  display: grid;
+  grid-template-columns: 300px 1fr 280px;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.problems-section {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.problems-section h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  color: var(--primary-color);
+}
+
+.problems-list {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+}
+
+.problem-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  background-color: var(--darker-bg);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.problem-item:hover {
+  background-color: #2a2a2a;
+  transform: translateX(5px);
+}
+
+.problem-item.active {
+  border-left: 3px solid var(--primary-color);
+  background-color: #2a2a2a;
+}
+
+.problem-title {
+  font-size: 0.95rem;
+}
+
+.problem-id {
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.problem-button {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+}
+
+.problem-button:hover {
+  transform: translateX(3px);
+  color: var(--primary-color);
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.quiz-button, .end-test-button {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quiz-button {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.quiz-button:hover {
+  background-color: var(--secondary-color);
+}
+
+.end-test-button {
+  background-color: transparent;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+}
+
+.end-test-button:hover {
+  background-color: rgba(255, 101, 132, 0.1);
+}
+
+.problem-details-section {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.problem-details-section h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.problem-description {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.problem-example {
+  background-color: var(--darker-bg);
+  padding: 1rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+
+.problem-example h4 {
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.problem-example pre {
+  white-space: pre-wrap;
+  font-family: 'Consolas', monospace;
+  color: var(--text-primary);
+}
+
+.code-editor-placeholder {
+  margin-top: 2rem;
+}
+
+.code-editor-placeholder textarea {
+  width: 100%;
+  height: 200px;
+  background-color: var(--darker-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1rem;
+  color: var(--text-primary);
+  font-family: 'Consolas', monospace;
+  resize: none;
+  margin-bottom: 1rem;
+}
+
+.submit-button {
+  padding: 0.8rem 1.5rem;
+  background-color: var(--success-color);
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  margin: auto  20px auto auto;
+  border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
-  border-radius: 5px;
+  transition: background-color 0.2s;
 }
 
-.contesthome-end-test-btn:hover {
-  background-color: #4b8b8b; /* Slightly darker shade on hover */
+.submit-button:hover {
+  background-color: #3d8b40;
 }
 
+.user-details-section {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.user-details-section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+}
+
+.user-details-card {
+  background-color: var(--darker-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 auto 1rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.user-info p {
+  font-size: 0.9rem;
+}
+
+.user-info strong {
+  color: var(--text-secondary);
+  margin-right: 0.5rem;
+}
+
+/* Loading Skeletons */
+.loading .skeleton-header,
+.loading .skeleton-timer,
+.loading .skeleton-problems,
+.loading .skeleton-details {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading .skeleton-header {
+  height: 80px;
+  margin-bottom: 1.5rem;
+}
+
+.loading .skeleton-timer {
+  height: 40px;
+  width: 150px;
+  margin-bottom: 1.5rem;
+  align-self: flex-end;
+}
+
+.loading .skeleton-content {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.loading .skeleton-problems {
+  flex: 0 0 300px;
+}
+
+.loading .skeleton-details {
+  flex: 1;
+}
+
+/* Error State */
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.error h2 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.error button {
+  padding: 0.8rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-top: 1.5rem;
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .contest-content {
+    grid-template-columns: 250px 1fr 250px;
+  }
+}
+
+@media (max-width: 992px) {
+  .contest-content {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  
+  .problems-section {
+    order: 1;
+  }
+  
+  .problem-details-section {
+    order: 2;
+  }
+  
+  .user-details-section {
+    order: 3;
+  }
+}
+
+@media (max-width: 576px) {
+  .contest-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .timer-display {
+    font-size: 1rem;
+  }
+  
+  .action-buttons {
+    flex-direction: row;
+  }
+  
+  .quiz-button, .end-test-button {
+    flex: 1;
+    font-size: 0.9rem;
+  }
+}
