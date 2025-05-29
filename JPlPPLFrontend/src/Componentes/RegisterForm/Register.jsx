@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import payment from '../../assets/paymentQR/newQRPushpendra.jpg';
+import payment from '../../assets/paymentQR/newQRPushpendra.png';
 import './Register.css';
 
 const Register = () => {
