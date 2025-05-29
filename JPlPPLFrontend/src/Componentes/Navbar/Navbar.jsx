@@ -15,7 +15,7 @@ const Navbar = () => {
   e.preventDefault();
   try {
     
-    const pdfUrl = "/assets/Result/JPL-Teams.pdf"; 
+    const pdfUrl = "/Result/JPL-Teams.pdf"; 
     
    
     const response = await fetch(pdfUrl, {

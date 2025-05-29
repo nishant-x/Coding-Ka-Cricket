@@ -29,7 +29,7 @@ const UrgentAlert = () => {
  const handleDownload = async (e) => {
   e.preventDefault();
   try {
-    const pdfUrl = "/assets/Result/JPL-Teams.pdf"; 
+    const pdfUrl = "/Result/JPL-Teams.pdf"; 
     
     const response = await fetch(pdfUrl, {
       credentials: 'include', // Include cookies if needed
