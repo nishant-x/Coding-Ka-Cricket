@@ -1,0 +1,60 @@
+.registration-closed-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+  text-align: center;
+}
+
+.registration-closed-content {
+  max-width: 500px;
+  padding: 40px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.registration-closed-svg {
+  width: 80px;
+  height: 80px;
+  fill: #dc3545; /* Red color for the icon */
+  margin-bottom: 20px;
+}
+
+.registration-closed-heading {
+  color: #dc3545;
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+
+.registration-closed-message {
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.registration-closed-contact {
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.registration-closed-contact a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.registration-closed-contact a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+  .registration-closed-content {
+    padding: 30px 20px;
+  }
+  
+  .registration-closed-heading {
+    font-size: 1.5rem;
+  }
+}

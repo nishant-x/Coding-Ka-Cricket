@@ -62,8 +62,8 @@ const ContestQuiz = () => {
             timeToSolveMCQ: timeTaken,
         })
         .then(() => {
-            toast.success(terminationReason ? "Quiz submitted" : "Quiz completed");
-            setTimeout(() => navigate('/', { replace: true }), 1000);
+            toast.success("Quiz Submmited Successfully");
+            setTimeout(() => navigate('/contestlogin', { replace: true }), 3000);
         })
         .catch(err => console.error("Error submitting score:", err));
     };
@@ -123,7 +123,7 @@ const ContestQuiz = () => {
             setSelectedOptions([]);
             setMaxSelections(currentQuestion.isMultipleSelect ? 
                 currentQuestion.options.length : 1);
-            setTimeLeft(60);
+            setTimeLeft(90);
         }
     }, [index, quizData]);
 

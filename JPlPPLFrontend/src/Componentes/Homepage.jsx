@@ -30,9 +30,7 @@ const UrgentAlert = () => {
 
   return (
     <div className="urgent-alert">
-      <h2>🚨 URGENT: Registration closing soon! Final deadline approaching! 🚨</h2>
-      <p>Register now before it's too late! 🚀</p>
-      <p>Last chance to secure your spot - Don't miss out! ⏳</p>
+      <h2>🚨 URGENT: Registration Closed! Final deadline approached! 🚨</h2>
       <button className="close-btn" onClick={handleClose}>
         Close
       </button>
