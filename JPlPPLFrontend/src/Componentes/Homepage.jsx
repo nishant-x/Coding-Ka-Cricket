@@ -30,7 +30,7 @@ const UrgentAlert = () => {
     e.preventDefault();
     try {
       // Path to your PDF file
-      const pdfUrl = "/assets/Result/JPL-Teams.pdf";
+      const pdfUrl = "../assets/Result/JPL-Teams.pdf";
       
       // Fetch the file
       const response = await fetch(pdfUrl);
