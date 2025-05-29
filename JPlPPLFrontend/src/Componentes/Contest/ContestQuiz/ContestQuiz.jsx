@@ -19,9 +19,7 @@ const ContestQuiz = () => {
     const [timeLeft, setTimeLeft] = useState(60);
     const [showMeme, setShowMeme] = useState(false);
     const [memeUrl, setMemeUrl] = useState('');
-    const [totalTimeTaken, setTotalTimeTaken] = useState(0);
     const [startTime, setStartTime] = useState(null);
-    const optionRefs = useRef([]);
     const timerRef = useRef(null);
     const memeTimerRef = useRef(null);
     const fullscreenRef = useRef(null);
@@ -38,7 +36,7 @@ const ContestQuiz = () => {
         const elem = fullscreenRef.current || document.documentElement;
         if (elem.requestFullscreen) {
             elem.requestFullscreen().catch(err => {
-                console.error("Error attempting to enable fullscreen:", err);
+                console.error("Fullscreen error:", err);
             });
         }
     };
@@ -54,30 +52,29 @@ const ContestQuiz = () => {
         clearTimeout(memeTimerRef.current);
         const endTime = new Date();
         const timeTaken = Math.floor((endTime - startTime) / 1000);
-        setTotalTimeTaken(timeTaken);
-        
+
         axios.post(`${import.meta.env.VITE_BACKEND_URL}/submit-quiz-score`, {
             enrollment: user.enrollment,
             score: parseFloat(score.toFixed(2)),
             timeToSolveMCQ: timeTaken,
         })
         .then(() => {
-            toast.success("Quiz Submmited Successfully");
+            toast.success(terminationReason ? "Quiz submitted" : "Quiz completed");
             setTimeout(() => navigate('/contestlogin', { replace: true }), 3000);
         })
-        .catch(err => console.error("Error submitting score:", err));
+        .catch(err => console.error("Submission error:", err));
     };
 
     const handleKeyDown = (e) => {
         if (e.key === 'Escape') {
             e.preventDefault();
-            submitQuiz("pressing Escape key");
+            submitQuiz("pressed Escape");
         }
     };
 
     const handleVisibilityChange = () => {
         if (document.hidden) {
-            submitQuiz("tab switching");
+            submitQuiz("tab switch");
         }
     };
 
@@ -101,10 +98,11 @@ const ContestQuiz = () => {
                 setStartTime(new Date());
                 startTimer();
             } catch (error) {
-                console.error("Error fetching quiz data:", error);
+                console.error("Fetch error:", error);
                 setLoading(false);
             }
         };
+
         fetchQuizData();
 
         return () => {
@@ -118,11 +116,10 @@ const ContestQuiz = () => {
 
     useEffect(() => {
         if (quizData.length > 0 && index < quizData.length) {
-            const currentQuestion = quizData[index];
-            setQuestion(currentQuestion);
+            const current = quizData[index];
+            setQuestion(current);
             setSelectedOptions([]);
-            setMaxSelections(currentQuestion.isMultipleSelect ? 
-                currentQuestion.options.length : 1);
+            setMaxSelections(current.isMultipleSelect ? current.options.length : 1);
             setTimeLeft(90);
         }
     }, [index, quizData]);
@@ -174,14 +171,15 @@ const ContestQuiz = () => {
     };
 
     const next = () => {
-        const currentQuestion = quizData[index];
-        const correctIndices = currentQuestion.correctOptionIndices;
-        const creditPoints = currentQuestion.creditPoints || 1;
+        if (!question || index >= quizData.length) return;
+
+        const correctIndices = question.correctOptionIndices;
+        const creditPoints = question.creditPoints || 1;
         let pointsEarned = 0;
 
-        if (currentQuestion.isMultipleSelect) {
-            const pointsPerOption = creditPoints / currentQuestion.options.length;
-            for (let i = 0; i < currentQuestion.options.length; i++) {
+        if (question.isMultipleSelect) {
+            const pointsPerOption = creditPoints / question.options.length;
+            for (let i = 0; i < question.options.length; i++) {
                 const isCorrect = correctIndices.includes(i);
                 const isSelected = selectedOptions.includes(i);
                 if ((isCorrect && isSelected) || (!isCorrect && !isSelected)) {
@@ -193,7 +191,12 @@ const ContestQuiz = () => {
         }
 
         setScore(prev => prev + pointsEarned);
-        showMemeScreen();
+
+        if (index >= quizData.length - 1) {
+            submitQuiz();
+        } else {
+            showMemeScreen();
+        }
     };
 
     if (loading) {
@@ -240,36 +243,40 @@ const ContestQuiz = () => {
             <h1 className="contestquiz-heading">Quiz Challenge</h1>
             <hr className="contestquiz-divider" />
 
-            <div className="contestquiz-question-container">
-                <h2 className="contestquiz-question">
-                    {index + 1}. {question.question}
-                </h2>
-                <p className="contestquiz-instructions">
-                    {question.isMultipleSelect
-                        ? "(Multiple correct answers)"
-                        : "(Single correct answer)"}
-                </p>
+            {question ? (
+                <div className="contestquiz-question-container">
+                    <h2 className="contestquiz-question">
+                        {index + 1}. {question.question}
+                    </h2>
+                    <p className="contestquiz-instructions">
+                        {question.isMultipleSelect
+                            ? "(Multiple correct answers)"
+                            : "(Single correct answer)"}
+                    </p>
 
-                <ul className="contestquiz-options">
-                    {question.options.map((option, i) => (
-                        <li
-                            key={i}
-                            className={`contestquiz-option ${selectedOptions.includes(i) ? "contestquiz-selected" : ""}`}
-                            onClick={() => handleOptionSelect(i)}
-                        >
-                            {question.isMultipleSelect && (
-                                <input
-                                    type="checkbox"
-                                    checked={selectedOptions.includes(i)}
-                                    readOnly
-                                    className="contestquiz-checkbox"
-                                />
-                            )}
-                            <span className="contestquiz-option-text">{option}</span>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                    <ul className="contestquiz-options">
+                        {question.options.map((option, i) => (
+                            <li
+                                key={i}
+                                className={`contestquiz-option ${selectedOptions.includes(i) ? "contestquiz-selected" : ""}`}
+                                onClick={() => handleOptionSelect(i)}
+                            >
+                                {question.isMultipleSelect && (
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedOptions.includes(i)}
+                                        readOnly
+                                        className="contestquiz-checkbox"
+                                    />
+                                )}
+                                <span className="contestquiz-option-text">{option}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ) : (
+                <p className="contestquiz-loading-text">Preparing next question...</p>
+            )}
 
             <div className="contestquiz-controls">
                 <button
