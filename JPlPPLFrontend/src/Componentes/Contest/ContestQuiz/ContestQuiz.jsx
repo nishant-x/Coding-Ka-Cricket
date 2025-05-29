@@ -4,6 +4,18 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ContestQuiz.css';
+import memes1 from '../../../assets/memes/memes (1).jpg';
+import memes2 from '../../../assets/memes/memes (2).jpg';
+import memes3 from '../../../assets/memes/memes (3).jpg';
+import memes4 from '../../../assets/memes/memes (4).jpg';
+import memes5 from '../../../assets/memes/memes (5).jpg';
+import memes6 from '../../../assets/memes/memes (7).jpg';
+import memes7 from '../../../assets/memes/memes (8).jpg';
+import memes8 from '../../../assets/memes/memes (9).jpg';
+import memes9 from '../../../assets/memes/memes (10).jpg';
+
+
+
 
 const ContestQuiz = () => {
     const location = useLocation();
@@ -25,11 +37,7 @@ const ContestQuiz = () => {
     const fullscreenRef = useRef(null);
 
     const memes = [
-        "https://humornama.com/wp-content/uploads/2020/08/rasode-mein-kaun-tha-440x440.jpg",
-        "https://quizizz.com/media/resource/gs/quizizz-media/quizzes/28cd881f-0902-44d6-839e-87b51a5b1239",
-        "https://indianmemetemplates.com/wp-content/uploads/kyu-hilaa-daala-na-1024x574.jpg",
-        "https://i.pinimg.com/originals/f7/4c/a3/f74ca30e5990935f8a869669248a4524.jpg",
-        "https://img.mensxp.com/media/content/2013/Oct/image10_1383058153.gif"
+     memes1,memes2,memes3,memes4, memes5,memes6
     ];
 
     const enterFullscreen = () => {
@@ -60,7 +68,7 @@ const ContestQuiz = () => {
         })
         .then(() => {
             toast.success(terminationReason ? "Quiz submitted" : "Quiz completed");
-            setTimeout(() => navigate('/contestlogin', { replace: true }), 3000);
+            setTimeout(() => navigate('/contestlogin', { replace: true }), 1000);
         })
         .catch(err => console.error("Submission error:", err));
     };
