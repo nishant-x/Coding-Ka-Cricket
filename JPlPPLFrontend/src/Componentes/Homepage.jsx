@@ -33,12 +33,12 @@ const UrgentAlert = () => {
   <h2>🚨 URGENT: Java Premier league result is out now check it out 🚨</h2>
   <div className="alert-buttons-container">
     <a 
-      href="../assets/Result/JPL-Teams.pdf" 
-      className="download-btn"
-      download="Java_Premier_League_Results.pdf"
-    >
-      Download Result
-    </a>
+  href="../assets/Result/JPL-Teams.pdf" 
+  className="download-btn"
+  download="Java_Premier_League_Results.pdf"
+>
+  Download Result
+</a>
     <button className="close-btn" onClick={handleClose}>
       Close
     </button>
