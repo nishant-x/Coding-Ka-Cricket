@@ -38,7 +38,7 @@ const Navbar = () => {
         </ul>
         <div className="nav-buttons">
           {/* <Link to="/register" className="register-btn">Register</Link> */}
-          <a href="../../assets/Result/JPL-Teams.pdf" className="register-btn" download="JPLResult.pdf">Download Result</a>
+          <a href="/assets/Result/JPL-Teams.pdf" className="register-btn" download="JPLResult.pdf">Download Result</a>
         </div>
         <div className="hamburger" onClick={toggleMenu}>
           <span></span>
