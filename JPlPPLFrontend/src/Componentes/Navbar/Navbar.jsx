@@ -12,34 +12,40 @@ const Navbar = () => {
   };
 
   const handleDownload = async (e) => {
-    e.preventDefault();
-    try {
-      // Path to your PDF file
-      const pdfUrl = "../../assets/Result/JPL-Teams.pdf";
-      
-      // Fetch the file
-      const response = await fetch(pdfUrl);
-      const blob = await response.blob();
-      
-      // Create a blob URL
-      const blobUrl = window.URL.createObjectURL(blob);
-      
-      // Create a temporary anchor element
-      const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = 'JPLResult.pdf';
-      document.body.appendChild(a);
-      a.click();
-      
-      // Clean up
+  e.preventDefault();
+  try {
+    
+    const pdfUrl = "/assets/Result/JPL-Teams.pdf"; 
+    
+   
+    const response = await fetch(pdfUrl, {
+      credentials: 'include', 
+    });
+    
+    if (!response.ok) throw new Error("Failed to fetch PDF");
+    
+    
+    const blob = await response.blob();
+    
+   
+    const blobUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = "JPL-Result.pdf"; 
+    document.body.appendChild(link);
+    link.click();
+    
+    // 5. Cleanup
+    setTimeout(() => {
+      document.body.removeChild(link);
       window.URL.revokeObjectURL(blobUrl);
-      document.body.removeChild(a);
-    } catch (error) {
-      console.error('Error downloading file:', error);
-      // Fallback: open in new tab if download fails
-      window.open("/assets/Result/JPL-Teams.pdf", '_blank');
-    }
-  };
+    }, 100);
+  } catch (error) {
+    console.error("Download failed:", error);
+    // Fallback: Open PDF in new tab
+    window.open(pdfUrl, "_blank");
+  }
+};
 
   return (
     <>
