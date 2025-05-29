@@ -215,7 +215,7 @@ const showMemeScreen = () => {
 
         if (index >= quizData.length - 1) {
             submitQuiz();
-        } else {
+        } else {    
             showMemeScreen();
         }
     };
@@ -239,17 +239,19 @@ const showMemeScreen = () => {
             </div>
         );
     }
+if (showThankYou) {
+    const totalMarks = quizData.reduce((acc, q) => acc + (q.creditPoints || 1), 0);
+    return (
+        <div className="contestquiz-thank-you" ref={fullscreenRef}>
+            <h2>Thank You For Participating!</h2>
+            <p>Your quiz has been submitted successfully.</p>
+            <h3>Your Score: {score.toFixed(2)} / {totalMarks}</h3>
+            <p>Redirecting you back to login page...</p>
+            <div className="contestquiz-spinner"></div>
+        </div>
+    );
+}
 
-    if (showThankYou) {
-        return (
-            <div className="contestquiz-thank-you" ref={fullscreenRef}>
-                <h2>Thank You For Participating!</h2>
-                <p>Your quiz has been submitted successfully.</p>
-                <p>Redirecting you back to login page...</p>
-                <div className="contestquiz-spinner"></div>
-            </div>
-        );
-    }
 
     if (showMeme) {
         return (
