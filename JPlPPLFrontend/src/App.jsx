@@ -13,6 +13,7 @@ import "./Componentes/Cursor/Cursor.css";
 import Homepage from "./Componentes/Homepage";
 import ContactUs from "./Componentes/ContactUs/ContactUs";
 import Regiter from "./Componentes/RegisterForm/Register";
+// import Regiter from "./Componentes/RegisterForm/RegistrationClose";
 import Guideline from "./Componentes/Guidelines/guideline";
 import AdminLogin from "./Componentes/Admin/Adminlogin/Adminlogin";
 import ContestLogin from "./Componentes/Contest/ContestLogin/Contestlogin";

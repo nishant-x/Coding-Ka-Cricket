@@ -4,18 +4,15 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ContestQuiz.css';
-import memes1 from '../../../assets/memes/memes (1).jpg';
-import memes2 from '../../../assets/memes/memes (2).jpg';
+// import memes1 from '../../../assets/memes/memes (1).jpg';
+// import memes2 from '../../../assets/memes/memes (2).jpg';
+// import memes9 from '../../../assets/memes/memes (10).jpg';
 import memes3 from '../../../assets/memes/memes (3).jpg';
 import memes4 from '../../../assets/memes/memes (4).jpg';
 import memes5 from '../../../assets/memes/memes (5).jpg';
 import memes6 from '../../../assets/memes/memes (7).jpg';
 import memes7 from '../../../assets/memes/memes (8).jpg';
 import memes8 from '../../../assets/memes/memes (9).jpg';
-import memes9 from '../../../assets/memes/memes (10).jpg';
-
-
-
 
 const ContestQuiz = () => {
     const location = useLocation();
@@ -32,13 +29,14 @@ const ContestQuiz = () => {
     const [showMeme, setShowMeme] = useState(false);
     const [memeUrl, setMemeUrl] = useState('');
     const [startTime, setStartTime] = useState(null);
+    const [showThankYou, setShowThankYou] = useState(false);
     const timerRef = useRef(null);
     const memeTimerRef = useRef(null);
     const fullscreenRef = useRef(null);
+    const [shuffledMemes, setShuffledMemes] = useState([]);
 
-    const memes = [
-     memes1,memes2,memes3,memes4, memes5,memes6
-    ];
+
+    const memes = [ memes3, memes4, memes5, memes6, memes7, memes8];
 
     const enterFullscreen = () => {
         const elem = fullscreenRef.current || document.documentElement;
@@ -67,10 +65,15 @@ const ContestQuiz = () => {
             timeToSolveMCQ: timeTaken,
         })
         .then(() => {
+            setShowThankYou(true);
             toast.success(terminationReason ? "Quiz submitted" : "Quiz completed");
-            setTimeout(() => navigate('/contestlogin', { replace: true }), 1000);
+            setTimeout(() => navigate('/contestlogin', { replace: true }), 2000);
         })
-        .catch(err => console.error("Submission error:", err));
+        .catch(err => {
+            console.error("Submission error:", err);
+            setShowThankYou(true);
+            setTimeout(() => navigate('/contestlogin', { replace: true }), 2000);
+        });
     };
 
     const handleKeyDown = (e) => {
@@ -102,6 +105,7 @@ const ContestQuiz = () => {
                 const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/getquiz/${league}`);
                 setQuizData(response.data.quiz);
                 setQuestion(response.data.quiz[0]);
+                setShuffledMemes(shuffleArray(memes));
                 setLoading(false);
                 setStartTime(new Date());
                 startTimer();
@@ -148,19 +152,28 @@ const ContestQuiz = () => {
     const getRandomMeme = () => {
         return memes[Math.floor(Math.random() * memes.length)];
     };
+    const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+};
 
-    const showMemeScreen = () => {
-        if (index < quizData.length - 1) {
-            setShowMeme(true);
-            setMemeUrl(getRandomMeme());
-            memeTimerRef.current = setTimeout(() => {
-                setShowMeme(false);
-                setIndex(prev => prev + 1);
-            }, 2000);
-        } else {
-            submitQuiz();
-        }
-    };
+const showMemeScreen = () => {
+    if (index < quizData.length - 1) {
+        setShowMeme(true);
+        setMemeUrl(shuffledMemes[index % shuffledMemes.length]); // show one meme per question
+        memeTimerRef.current = setTimeout(() => {
+            setShowMeme(false);
+            setIndex(prev => prev + 1);
+        }, 2000);
+    } else {
+        submitQuiz();
+    }
+};
+
 
     const handleOptionSelect = (optionIndex) => {
         if (!question || showMeme) return;
@@ -223,6 +236,17 @@ const ContestQuiz = () => {
                 <button onClick={() => navigate('/')} className="contestquiz-btn">
                     Return to Home
                 </button>
+            </div>
+        );
+    }
+
+    if (showThankYou) {
+        return (
+            <div className="contestquiz-thank-you" ref={fullscreenRef}>
+                <h2>Thank You For Participating!</h2>
+                <p>Your quiz has been submitted successfully.</p>
+                <p>Redirecting you back to login page...</p>
+                <div className="contestquiz-spinner"></div>
             </div>
         );
     }
@@ -302,4 +326,4 @@ const ContestQuiz = () => {
     );
 };
 
-export default ContestQuiz;
+export default ContestQuiz; 
