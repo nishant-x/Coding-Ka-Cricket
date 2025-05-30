@@ -29,7 +29,7 @@ const UrgentAlert = () => {
  const handleDownload = async (e) => {
   e.preventDefault();
   try {
-    const pdfUrl = "/Result/JPL-Teams.pdf"; 
+    const pdfUrl = "/Result/PPL-Teams.pdf"; 
     
     const response = await fetch(pdfUrl, {
       credentials: 'include', // Include cookies if needed
@@ -42,7 +42,7 @@ const UrgentAlert = () => {
     const blobUrl = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = blobUrl;
-    link.download = "JPL-Result.pdf"; // <-- Ensures correct filename
+    link.download = "PPL-Result.pdf"; // <-- Ensures correct filename
     document.body.appendChild(link);
     link.click();
     
@@ -61,7 +61,7 @@ const UrgentAlert = () => {
 
   return (
     <div className="urgent-alert">
-      <h2>🚨 URGENT: Java Premier league result is out now check it out 🚨</h2>
+      <h2>🚨 URGENT: Python Premier league result is out now check it out 🚨</h2>
       <div className="alert-buttons-container">
         <button 
           onClick={handleDownload} 

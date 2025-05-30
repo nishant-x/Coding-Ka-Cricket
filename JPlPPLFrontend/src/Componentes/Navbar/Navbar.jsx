@@ -15,7 +15,7 @@ const Navbar = () => {
   e.preventDefault();
   try {
     
-    const pdfUrl = "/Result/JPL-Teams.pdf"; 
+    const pdfUrl = "/Result/PPL-Teams.pdf"; 
     
    
     const response = await fetch(pdfUrl, {
@@ -31,7 +31,7 @@ const Navbar = () => {
     const blobUrl = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = blobUrl;
-    link.download = "JPL-Result.pdf"; 
+    link.download = "PPL-Result.pdf"; 
     document.body.appendChild(link);
     link.click();
     
