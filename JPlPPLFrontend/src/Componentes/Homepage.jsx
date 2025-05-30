@@ -61,7 +61,7 @@ const UrgentAlert = () => {
 
   return (
     <div className="urgent-alert">
-      <h2>🚨 URGENT: Python Premier league result is out now check it out 🚨</h2>
+      <h2>🚨 URGENT: Python Premier league result are out now🚨</h2>
       <div className="alert-buttons-container">
         <button 
           onClick={handleDownload} 
