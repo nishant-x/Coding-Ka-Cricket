@@ -15,7 +15,7 @@ export default function ParticipantsList() {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/participants`)
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/registration`)
       .then(res => {
         setParticipants(res.data);
         setFilteredParticipants(res.data);

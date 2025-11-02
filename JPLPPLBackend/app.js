@@ -5,18 +5,22 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
-const http = require('http'); // Import http to create server
+const http = require('http'); 
 const { Server } = require('socket.io');
 const axios = require('axios')
 
 const connect = require('./db/conn'); // MongoDB connection
 const Registration = require('./models/Registration');
-const ProblemStatement = require('./models/Addqueform.js');
-const QuizData = require('./models/Addquizform.js');
+const ProblemStatement = require('./models/problemstatement.js');
+const QuizData = require('./models/Quiz.js');
 const ACTIONS = require('./Actions');
 
-
+// Importin Routers
 const RegistrationRoute = require('./Router/registrationRoutes.js')
+const AdminRoutes = require('./Router/AdminRoutes.js')
+const AuthRouter = require('./Router/authRoutes')
+const Quizrouter = require('./Router/QuizRouter.js')
+const ContactUs = require('./Router/ContactUsRoute.js')
 
 const app = express();
 
@@ -46,7 +50,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/api/participants', RegistrationRoute);
+
 // Create HTTP server from Express app
 const server = http.createServer(app);
 
@@ -55,12 +59,41 @@ const io = new Server(server, {
   cors: {
     origin: [
   "http://localhost:5173",
-  "http://localhost:3000",
   "https://coding-ka-cricket.vercel.app/",
   "https://coding-ka-cricket-81k2r8vbr-nishant-jhades-projects.vercel.app/"
-], // Replace with your frontend URL
+],
     methods: ["GET", "POST"],
   },
+});
+
+
+// Server Routes
+app.use('/api/registration' , RegistrationRoute)
+app.use('/api/admin' , AdminRoutes)
+app.use('/api/auth' , AuthRouter)
+app.use('/api/quiz' , Quizrouter);
+app.use('/api/contact', ContactUs)
+
+
+
+
+app.post("/compile", async (req, res) => {
+  const { code, language } = req.body;
+
+  try {
+    const response = await axios.post("https://api.jdoodle.com/v1/execute", {
+      script: code,
+      language: language,
+      versionIndex: languageConfig[language].versionIndex,
+      clientId: process.env.jDoodle_clientId,
+      clientSecret: process.env.kDoodle_clientSecret,
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to compile code" });
+  }
 });
 
 app.get('/uploads/:filename', (req, res) => {
@@ -157,29 +190,6 @@ const languageConfig = {
   r: { versionIndex: "3" },
 };
 
-
-
-app.use('/api/registration' , RegistrationRoute)
-
-app.post("/compile", async (req, res) => {
-  const { code, language } = req.body;
-
-  try {
-    const response = await axios.post("https://api.jdoodle.com/v1/execute", {
-      script: code,
-      language: language,
-      versionIndex: languageConfig[language].versionIndex,
-      clientId: process.env.jDoodle_clientId,
-      clientSecret: process.env.kDoodle_clientSecret,
-    });
-
-    res.json(response.data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to compile code" });
-  }
-});
-
 // Multer config for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -191,323 +201,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// ========== Routes ==========
-
-// Registration form POST route
-app.post('/register', upload.single('screenshot'), async (req, res) => {
-  const { name, email, enrollment, contact, college, branch, year, section, league, transaction } = req.body;
-  const screenshot = req.file;
-
-  if (!screenshot) {
-    return res.status(400).json({  error: 'Screenshot is required' });
-  }
-
-  try {
-    const newRegistration = new Registration({
-      name,
-      email,
-      enrollment,
-      contact,
-      college,
-      branch,
-      year,
-      section,
-      league,
-      transaction,
-      screenshot: screenshot.path,
-    });
-
-    await newRegistration.save();
-    res.status(200).json({ message: 'Registration successful' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error. Please try again later.' });
-  }
-});
-
-// Add new problem statement POST route
-app.post('/add-question', async (req, res) => {
-  const { league, question, description, testCases } = req.body;
-
-  try {
-    const newProblem = new ProblemStatement({
-      league,
-      title: question,
-      description,
-      testCases,
-    });
-
-    await newProblem.save();
-    res.status(201).json({ message: 'Problem added successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(400).json({ error: 'Failed to add problem' });
-  }
-});
-
-
-app.post('/submit-quiz-score', async (req, res) => {
-    try {
-        const { enrollment, score, timeToSolveMCQ } = req.body;
-        
-        const updatedRegistration = await Registration.findOneAndUpdate(
-            { enrollment: enrollment },
-            { 
-                quizScore: score,
-                timeToSolveMCQ: timeToSolveMCQ
-            },
-            { new: true }
-        );
-
-        if (!updatedRegistration) {
-            return res.status(404).json({ message: 'Registration not found' });
-        }
-
-        res.status(200).json({
-            message: 'Score and time updated successfully',
-            registration: updatedRegistration
-        });
-    } catch (error) {
-        console.error('Error updating quiz score:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
-
-// Fetch all problem statements GET route
-app.get('/allquestions', async (req, res) => {
-  try {
-    const problems = await ProblemStatement.find({}, 'title description');
-    res.status(200).json(problems);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to fetch questions' });
-  }
-});
-
-// Delete problem statement DELETE route
-app.delete("/delete-question/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedProblem = await ProblemStatement.findByIdAndDelete(id);
-
-    if (!deletedProblem) {
-      return res.status(404).json({ error: "Problem not found" });
-    }
-    res.status(200).json({ message: "Problem removed successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to delete problem" });
-  }
-});
-
-// Contest login POST route
-app.post('/contestlogin', async (req, res) => {
-  const { email, enrollment } = req.body;
-
-  try {
-    const user = await Registration.findOne({ email, enrollment });
-
-    if (user) {
-      res.status(200).json({ message: 'Welcome to contest page', user });
-    } else {
-      res.status(400).json({ error: 'Invalid email or enrollment number' });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error. Please try again later.' });
-  }
-});
-
-// Contest homepage GET route (all problems)
-app.get('/contesthomepage', async (req, res) => {
-  try {
-    const problems = await ProblemStatement.find();
-    res.status(200).json(problems);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to fetch problems' });
-  }
-});
-
-// Admin login POST route
-app.post('/adminlogin', async (req, res) => {
-  const { email, enrollment } = req.body;
-
-  try {
-    const user = await Registration.findOne({ email, enrollment });
-
-    if (user) {
-      res.status(200).json({ message: 'Welcome to contest page', userId: user._id });
-    } else {
-      res.status(400).json({ error: 'Invalid email or enrollment number' });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error. Please try again later.' });
-  }
-});
-
-// Add quiz POST route
-app.post('/addquiz', async (req, res) => {
-  try {
-    const quizData = req.body;
-
-    // Validate input
-    if (!quizData.selectedLeague || !quizData.questions || quizData.questions.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required fields'
-      });
-    }
-
-    // Validate each question
-    for (const [index, question] of quizData.questions.entries()) {
-      // Validate question text
-      if (!question.question?.trim()) {
-        return res.status(400).json({
-          success: false,
-          message: `Question ${index + 1} text is required`
-        });
-      }
-
-      // Filter out empty options
-      const validOptions = question.options.filter(opt => opt?.trim() !== "");
-      
-      // Validate options count
-      if (validOptions.length < 2) {
-        return res.status(400).json({
-          success: false,
-          message: `Question ${index + 1} needs at least 2 valid options`
-        });
-      }
-
-      // Validate correct indices
-      if (!question.correctOptionIndices || question.correctOptionIndices.length === 0) {
-        return res.status(400).json({
-          success: false,
-          message: `Question ${index + 1} must have at least one correct answer`
-        });
-      }
-
-      // Validate correct indices based on question type
-      const isMultiple = question.isMultipleSelect;
-      if (!isMultiple && question.correctOptionIndices.length !== 1) {
-        return res.status(400).json({
-          success: false,
-          message: `Question ${index + 1} is single-select but has multiple correct answers`
-        });
-      }
-
-      // Validate all indices are within range of valid options
-      for (const correctIndex of question.correctOptionIndices) {
-        if (correctIndex < 0 || correctIndex >= 6) {
-          return res.status(400).json({
-            success: false,
-            message: `Question ${index + 1} has invalid correct answer index`
-          });
-        }
-      }
-
-      // Validate credit points
-      if (!question.creditPoints || question.creditPoints < 1) {
-        return res.status(400).json({
-          success: false,
-          message: `Question ${index + 1} must have at least 1 credit point`
-        });
-      }
-    }
-
-    // Create and save new quiz document
-    const newQuiz = new QuizData({
-      selectedLeague: quizData.selectedLeague,
-      questions: quizData.questions.map(q => ({
-        question: q.question,
-        options: q.options.filter(opt => opt?.trim() !== ""),
-        isMultipleSelect: q.isMultipleSelect,
-        correctOptionIndices: q.correctOptionIndices,
-        creditPoints: q.creditPoints
-      }))
-    });
-
-    await newQuiz.save();
-
-    res.status(201).json({
-      success: true,
-      message: 'Quiz added successfully!',
-      data: newQuiz,
-    });
-  } catch (error) {
-    console.error('Error adding quiz:', error);
-
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation error',
-        error: error.message
-      });
-    }
-
-    res.status(500).json({
-      success: false,
-      message: 'An error occurred while adding the quiz.',
-      error: error.message,
-    });
-  }
-});
-
-// Get quiz by league GET route
-app.get('/getquiz/:league', async (req, res) => {
-  const league = req.params.league;
-
-  try {
-    const quizData = await QuizData.findOne({ selectedLeague: league });
-
-    if (quizData && quizData.questions && quizData.questions.length > 0) {
-      
-      // Shuffle and select 6 questions
-      const shuffled = quizData.questions.sort(() => 0.5 - Math.random());
-      const selectedQuestions = shuffled.slice(0, 6);
-
-      res.json({ success: true, quiz: selectedQuestions });
-    } else {
-      res.status(404).json({ success: false, message: 'Quiz data not found for this league.' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Error fetching quiz data', error });
-  }
-});
-
-
-// Get all quizzes GET route
-app.get('/allquizzes', async (req, res) => {
-  try {
-    const quizzes = await QuizData.find();
-    res.status(200).json(quizzes);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-// Delete quiz DELETE route
-app.delete('/delete-quiz/:id', async (req, res) => {
-  const { id } = req.params;
-  const { league } = req.body;
-
-  try {
-    const quiz = await QuizData.findOneAndDelete({ _id: id, selectedLeague: league });
-
-    if (!quiz) {
-      return res.status(404).json({ message: 'Quiz not found or league mismatch' });
-    }
-
-    res.status(200).json({ message: 'Quiz deleted successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
 // ========== Start server ==========
 server.listen(5000, () => {

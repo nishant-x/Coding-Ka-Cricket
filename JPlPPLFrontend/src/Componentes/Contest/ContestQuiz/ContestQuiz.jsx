@@ -59,7 +59,7 @@ const ContestQuiz = () => {
         const endTime = new Date();
         const timeTaken = Math.floor((endTime - startTime) / 1000);
 
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/submit-quiz-score`, {
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/quiz/submit-quiz-score`, {
             enrollment: user.enrollment,
             score: parseFloat(score.toFixed(2)),
             timeToSolveMCQ: timeTaken,
@@ -102,7 +102,7 @@ const ContestQuiz = () => {
         const fetchQuizData = async () => {
             try {
                 const league = encodeURIComponent(user.participation);
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/getquiz/${league}`);
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/quiz/getquiz/${league}`);
                 setQuizData(response.data.quiz);
                 setQuestion(response.data.quiz[0]);
                 setShuffledMemes(shuffleArray(memes));

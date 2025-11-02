@@ -187,7 +187,7 @@ const AddQuizForm = () => {
     };
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/addquiz`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/quiz/addquiz`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

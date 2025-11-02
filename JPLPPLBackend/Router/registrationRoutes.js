@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
 });
 const upload = multer({ storage });
-
+  
 // Handle registration form data
 router.post('/', upload.single('screenshot'), async (req, res) => {
   const { name, email, enrollment, phone, college, branch, year, section, league, transaction } = req.body;
@@ -50,8 +50,6 @@ router.post('/', upload.single('screenshot'), async (req, res) => {
     res.status(500).json({ error: 'Server error. Please try again later.' });
   }
 });
-
-
 
 router.get('/', async (req, res) => {
   try {

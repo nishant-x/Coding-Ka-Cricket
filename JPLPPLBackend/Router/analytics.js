@@ -1,4 +1,3 @@
-// In your backend routes (e.g., routes/analytics.js)
 import express from 'express';
 import Participant from '../models/Participant.js'; // Your participant model
 

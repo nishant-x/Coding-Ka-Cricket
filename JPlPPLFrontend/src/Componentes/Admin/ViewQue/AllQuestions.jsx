@@ -14,7 +14,7 @@ const Allquestions = () => {
 
   const fetchProblems = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/allquestions`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/allproblemstatements`);
       setProblems(response.data);
     } catch (error) {
       console.error("There was an error fetching the problems!", error);
@@ -23,7 +23,7 @@ const Allquestions = () => {
 
   const fetchQuizzes = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/allquizzes`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/quiz/allquizzes`);
       setQuizzes(response.data);
     } catch (error) {
       console.error("There was an error fetching the quizzes!", error);
@@ -33,7 +33,7 @@ const Allquestions = () => {
   const removeProblem = async (id) => {
     setLoading(true);
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/delete-question/${id}`);
+      const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/admin/delete-problemstatements/${id}`);
       console.log(response.data); // Log the response for debugging
       fetchProblems(); // Refresh the list after deletion
     } catch (error) {
@@ -50,7 +50,7 @@ const Allquestions = () => {
   const removeQuiz = async (id, league) => {
     setLoading(true);
     try {
-      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/delete-quiz/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/quiz/delete-quiz/${id}`, {
         data: { league },
       });
       fetchQuizzes();

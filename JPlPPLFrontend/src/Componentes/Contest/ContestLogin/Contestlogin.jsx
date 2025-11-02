@@ -16,7 +16,7 @@ const ContestLogin = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/contestlogin`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/contestlogin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
