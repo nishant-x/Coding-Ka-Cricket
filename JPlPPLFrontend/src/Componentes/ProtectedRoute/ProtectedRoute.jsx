@@ -1,9 +1,7 @@
-// src/components/ProtectedRoute.js
-import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext/AuthContext';
 
-const ProtectedRoute = ({ children, allowedRoles }) => {
+const ProtectedRoute = ({ children, allowedRoles, redirectTo = "/" }) => {
   const { userRole } = useAuth();
 
   // If no allowedRoles, allow access (public route)
@@ -11,11 +9,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
   // If userRole is not in allowedRoles, redirect
   if (!allowedRoles.includes(userRole)) {
-    return userRole === 'guest' ? (
-      <Navigate to="/" replace />  // Guests go to login
-    ) : (
-      <Navigate to="/" replace />  // Logged-in but wrong role
-    );
+    return <Navigate to={redirectTo} replace />;
   }
 
   // If allowed, render children

@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Slider from './Sliders/Slider.jsx';
+import { useState, useEffect } from 'react';
 import IntroText from './Introduction/IntroText.jsx';
 import ProcessFlow from './ProcessFlow/ProcessFlow.jsx';
-import Timeline from './Timelines/Timeline.jsx';
 import ProfileCard from './Card/ProfileCard.jsx';
 import Faq from './Faq/Faq.jsx';
 import Mainpage from './mainpage/Mainpage.jsx';
@@ -13,6 +11,7 @@ import './UrgentAlert.css'; // Import the CSS file
 
 const UrgentAlert = () => {
   const [isVisible, setIsVisible] = useState(true);
+  const pdfUrl = "/Result/PPL-Teams.pdf";
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,8 +28,6 @@ const UrgentAlert = () => {
  const handleDownload = async (e) => {
   e.preventDefault();
   try {
-    const pdfUrl = "/Result/PPL-Teams.pdf"; 
-    
     const response = await fetch(pdfUrl, {
       credentials: 'include', // Include cookies if needed
     });
@@ -81,7 +78,7 @@ const Homepage = () => {
   return (
     <>
       <Cursor />
-      <UrgentAlert />
+      {/* <UrgentAlert /> */} {/*Use only when any urgentaltert you have to show like result release etc.  */}
       
       <div className="MainPage">
         <Mainpage />

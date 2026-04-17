@@ -1,63 +1,82 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef } from "react";
-import "codemirror/mode/javascript/javascript";
-import "codemirror/theme/dracula.css";
-import "codemirror/addon/edit/closetag";
-import "codemirror/addon/edit/closebrackets";
-import "codemirror/lib/codemirror.css";
-import CodeMirror from "codemirror";
+import { useEffect, useRef } from "react";
 import ACTIONS from "../Actions";
 
 function Editor({ socketRef, roomId, onCodeChange }) {
   const editorRef = useRef(null);
 
   useEffect(() => {
-    const editor = CodeMirror.fromTextArea(
-      document.getElementById("realtimeEditor"),
-      {
-        mode: { name: "javascript", json: true },
-        theme: "dracula",
-        autoCloseTags: true,
-        autoCloseBrackets: true,
-        lineNumbers: true,
-      }
-    );
+    const editorElement = editorRef.current;
 
-    editorRef.current = editor;
-    editor.setSize(null, "100%");
+    if (!editorElement) {
+      return undefined;
+    }
 
-    editor.on("change", (instance, changes) => {
-      const { origin } = changes;
-      const code = instance.getValue();
+    const handleInput = (event) => {
+      const code = event.target.value;
       onCodeChange(code);
-      if (origin !== "setValue") {
+
+      if (socketRef.current) {
         socketRef.current.emit(ACTIONS.CODE_CHANGE, {
           roomId,
           code,
         });
       }
-    });
-  }, []);
+    };
 
-  useEffect(() => {
-    if (socketRef.current) {
-      socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
-        if (code !== null) {
-          editorRef.current.setValue(code);
-        }
-      });
-    }
+    editorElement.addEventListener("input", handleInput);
 
     return () => {
-      if (socketRef.current) {
-        socketRef.current.off(ACTIONS.CODE_CHANGE);
+      editorElement.removeEventListener("input", handleInput);
+    };
+  }, [onCodeChange, roomId, socketRef]);
+
+  useEffect(() => {
+    const socket = socketRef.current;
+
+    if (!socket) {
+      return undefined;
+    }
+
+    const handleCodeChange = ({ code }) => {
+      if (code === null || !editorRef.current) {
+        return;
+      }
+
+      if (editorRef.current.value !== code) {
+        editorRef.current.value = code;
+        onCodeChange(code);
       }
     };
-  }, [socketRef.current]);
+
+    socket.on(ACTIONS.CODE_CHANGE, handleCodeChange);
+
+    return () => {
+      socket.off(ACTIONS.CODE_CHANGE, handleCodeChange);
+    };
+  }, [onCodeChange, socketRef]);
 
   return (
     <div style={{ height: "600px" }}>
-      <textarea id="realtimeEditor"></textarea>
+      <textarea
+        id="realtimeEditor"
+        ref={editorRef}
+        defaultValue=""
+        spellCheck={false}
+        style={{
+          width: "100%",
+          height: "100%",
+          resize: "none",
+          border: "none",
+          outline: "none",
+          padding: "16px",
+          backgroundColor: "#282a36",
+          color: "#f8f8f2",
+          fontFamily: "Consolas, 'Courier New', monospace",
+          fontSize: "14px",
+          lineHeight: "1.5",
+        }}
+      />
     </div>
   );
 }

@@ -5,15 +5,13 @@ import ProtectedRoute from "./Componentes/ProtectedRoute/ProtectedRoute";
 
 // Components
 import Navbar from "./Componentes/Navbar/Navbar";
-import Cursor from "./Componentes/Cursor/Cursor";
 import Footer from "./Componentes/Footers/Footer";
-import "./Componentes/Cursor/Cursor.css";
 
 // Pages
 import Homepage from "./Componentes/Homepage";
 import ContactUs from "./Componentes/ContactUs/ContactUs";
-// import Regiter from "./Componentes/RegisterForm/Register";
-import Regiter from "./Componentes/RegisterForm/RegistrationClose";
+import Regiter from "./Componentes/RegisterForm/Register";
+// import Regiter from "./Componentes/RegisterForm/RegistrationClose";
 import Guideline from "./Componentes/Guidelines/guideline";
 import AdminLogin from "./Componentes/Admin/Adminlogin/Adminlogin";
 import ContestLogin from "./Componentes/Contest/ContestLogin/Contestlogin";
@@ -27,8 +25,6 @@ import ContestQuiz from "./Componentes/Contest/ContestQuiz/ContestQuiz";
 import Analytics from "./Componentes/Admin/Analytics/Analytics";
 import Home from "./CodeEditor/Home";
 import EditorPage from "./CodeEditor/EditorPage";
-
-import { useEffect } from "react";
 
 // 👇 Wrapper to use `useLocation` inside `App`
 const AppWrapper = () => (
@@ -74,7 +70,7 @@ const App = () => {
         <Route 
           path="/allquestions" 
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
+            <ProtectedRoute allowedRoles={['admin']} redirectTo="/adminlogin">
               <Allquestions />
             </ProtectedRoute>
           } 
@@ -82,13 +78,13 @@ const App = () => {
         <Route
           path="/analytics" 
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
+            <ProtectedRoute allowedRoles={['admin']} redirectTo="/adminlogin">
               <Analytics />
             </ProtectedRoute>} />
         <Route 
           path="/add-question" 
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
+            <ProtectedRoute allowedRoles={['admin']} redirectTo="/adminlogin">
               <Addqueform />
             </ProtectedRoute>
           } 
@@ -96,7 +92,7 @@ const App = () => {
         <Route 
           path="/addquiz" 
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
+            <ProtectedRoute allowedRoles={['admin']} redirectTo="/adminlogin">
               <AddQuizForm />
             </ProtectedRoute>
           } 
@@ -104,7 +100,7 @@ const App = () => {
         <Route 
           path="/Participants" 
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
+            <ProtectedRoute allowedRoles={['admin']} redirectTo="/adminlogin">
               <ParticipantsList />
             </ProtectedRoute>
           } 
@@ -122,7 +118,7 @@ const App = () => {
         <Route 
           path="/contestquiz" 
           element={
-            <ProtectedRoute allowedRoles={['user']}>
+            <ProtectedRoute allowedRoles={['user']} redirectTo="/contestlogin">
               <ContestQuiz />
             </ProtectedRoute>
           } 

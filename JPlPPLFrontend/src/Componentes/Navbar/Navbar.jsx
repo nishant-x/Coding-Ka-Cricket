@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../../assets/sisteclogo.png";
-import Alertmarquee from "../Marquee/Alert-marquee";
 
 const Navbar = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
+  const pdfUrl = "/Result/PPL-Teams.pdf";
 
   const toggleMenu = () => {
     setIsMenuActive(!isMenuActive);
@@ -14,10 +14,6 @@ const Navbar = () => {
   const handleDownload = async (e) => {
   e.preventDefault();
   try {
-    
-    const pdfUrl = "/Result/PPL-Teams.pdf"; 
-    
-   
     const response = await fetch(pdfUrl, {
       credentials: 'include', 
     });
@@ -73,7 +69,8 @@ const Navbar = () => {
             <li><Link to="/contact">Contact Us</Link></li>
           </ul>
           <div className="nav-buttons">
-            <button onClick={handleDownload} className="register-btn">Download Result</button>
+            {/* <button onClick={handleDownload} className="register-btn">Download Result</button> */}
+            <Link className="register-btn" to="/register">Register</Link>
           </div>
           <div className="hamburger" onClick={toggleMenu}>
             <span></span>

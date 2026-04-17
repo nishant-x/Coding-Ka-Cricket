@@ -1,5 +1,5 @@
 // src/context/AuthContext.js
-import React, { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext } from 'react';
 
 const AuthContext = createContext({
   userRole: 'guest',
@@ -7,10 +7,15 @@ const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
-  const [userRole, setUserRole] = useState('user'); 
+  const [userRole, setUserRole] = useState(() => sessionStorage.getItem('userRole') || 'guest');
+
+  const updateUserRole = (role) => {
+    sessionStorage.setItem('userRole', role);
+    setUserRole(role);
+  };
 
   return (
-    <AuthContext.Provider value={{ userRole, setUserRole }}>
+    <AuthContext.Provider value={{ userRole, setUserRole: updateUserRole }}>
       {children}
     </AuthContext.Provider>
   );
