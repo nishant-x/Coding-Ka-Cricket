@@ -1,15 +1,7 @@
-import React from 'react';
-import './Alert-marquee.css';
-
-function Alertmarquee() {
+﻿function Alertmarquee() {
   return (
-    <div className="Alert-News">
-      <marquee width="100%" direction="left" scrollamount="10">
-        <h3>🚨 URGENT: Registration closing soon! Final deadline approaching! 🚨 
-        Register now before it's too late! 🚀 
-        Last chance to secure your spot - Don't miss out! ⏳ 
-        </h3>
-      </marquee>
+    <div className="rounded-xl border border-amber-400/50 bg-amber-500/10 px-4 py-2 text-center text-sm font-semibold text-amber-100">
+      URGENT: Registration closing soon. Final deadline approaching. Register now before it is too late.
     </div>
   );
 }

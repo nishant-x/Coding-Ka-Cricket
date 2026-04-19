@@ -1,17 +1,11 @@
-/* eslint-disable react/prop-types */
-import React from 'react';
-import Avatar from 'react-avatar';
+﻿/* eslint-disable react/prop-types */
+import Avatar from "react-avatar";
 
 function Client({ username }) {
   return (
-    <div className="d-flex align-items-center mb-3">
-      <Avatar
-        name={username.toString()}
-        size="50"
-        round="14px"
-        className="me-2"
-      />
-      <span>{username.toString()}</span>
+    <div className="mb-3 flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/70 p-2">
+      <Avatar name={username.toString()} size="38" round="10px" />
+      <span className="truncate text-sm text-slate-200">{username.toString()}</span>
     </div>
   );
 }

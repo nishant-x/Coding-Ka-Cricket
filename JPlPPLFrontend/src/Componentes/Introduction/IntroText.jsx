@@ -1,62 +1,54 @@
-import "./IntroText.css";
-import { motion } from "framer-motion";
-import React from "react";
+﻿import { motion } from "framer-motion";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link } from "react-router-dom";
 
 const IntroText = () => {
-  const text = "Welcome to the Coding Ka Cricket🏏".split(" ");
-  const details = "Get ready for an exciting and competitive journey. Challenge your coding abilities. Showcase your creativity and problem-solving skills! The Java Premier League and Python Premier League are two thrilling competitions designed to challenge your coding abilities, creativity, and problem-solving prowess.";
+  const text = "Welcome to Coding Ka Cricket".split(" ");
 
   return (
-    <>   
-     <div className="IntroText-container" id="intro">
-      <div className="IntroText-left">
-        <div className="IntroText-part">
-          {text.map((el, i) => (
+    <section id="intro" className="grid items-center gap-8 rounded-3xl border border-slate-800 bg-slate-900/60 p-6 shadow-soft lg:grid-cols-2 lg:p-10">
+      <div>
+        <h2 className="font-display text-3xl font-bold leading-tight text-white sm:text-4xl">
+          {text.map((word, i) => (
             <motion.span
-              key={i}
-              initial={{ opacity: 0, y: 50 }} // Start below
-              whileInView={{ opacity: 1, y: 0 }} // Animate to normal
-              transition={{
-                duration: 0.7,
-                delay: i / 10, // Stagger effect
-                ease: "easeOut",
-              }}
+              key={word + i}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: i / 14 }}
               viewport={{ once: true }}
+              className="mr-2 inline-block"
             >
-              {el}{" "}
+              {word}
             </motion.span>
           ))}
-        </div>
+        </h2>
+
         <motion.p
-          className="IntroText-detail"
-          initial={{ opacity: 0, y: 50 }} // Start below like title
-          whileInView={{ opacity: 1, y: 0 }} // Animate to normal
-          transition={{
-            duration: 0.4,
-            delay: 0.1, // Delay slightly after title
-            ease: "easeOut",
-          }}
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.18 }}
           viewport={{ once: true }}
+          className="mt-5 text-sm leading-7 text-slate-300 sm:text-base"
         >
-          {details}
+          Get ready for an exciting coding journey. The Java Premier League and Python Premier League are designed to sharpen your problem-solving, teamwork, and programming skills through fun competitive rounds.
         </motion.p>
-        <div className="register-buttons">
-          <Link to="/register" className="register-btn">Register Now</Link>
-        </div>
+
+        <Link
+          to="/register"
+          className="mt-7 inline-flex rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:scale-[1.02]"
+        >
+          Register Now
+        </Link>
       </div>
 
-      <div className="IntroText-right">
+      <div className="rounded-2xl border border-slate-700 bg-slate-950/40 p-2">
         <DotLottieReact
           src="https://lottie.host/602dd5e1-ea3b-4827-8704-2d4af89bf49b/UJ2EOksxOY.lottie"
           loop
           autoplay
         />
       </div>
-    </div>
-    </>
-
+    </section>
   );
 };
 

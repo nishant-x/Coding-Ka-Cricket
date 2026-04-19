@@ -1,199 +1,127 @@
-import React from "react";
-import { motion } from "framer-motion";
-import "./ProfileCard.css";
-// import '@fortawesome/fontawesome-free/css/all.min.css';  
-
-// Importing images
+﻿import { motion } from "framer-motion";
 import sudhirImage from "../../assets/Facaltyimg/sudir.jpg";
 import siddharthImage from "../../assets/Facaltyimg/siddharth.jpg";
 import jyotiImage from "../../assets/Facaltyimg/jyoti.jpg";
-import manishImage from "../../assets/Facaltyimg/Drmanishbillore.jpg";
 import ajitImage from "../../assets/Facaltyimg/Ajitshrivastav.jpg";
 import prachiImage from "../../assets/Facaltyimg/priyankabhatele.jpg";
 import arvindImage from "../../assets/Facaltyimg/arvindjain.jpg";
 import principal from "../../assets/Facaltyimg/principal.jpg";
+
+const profiles = [
+  {
+    name: "Mr. Sudhir Kumar Agrawal",
+    title: "Chairman, Sagar Group",
+    bio: "Visionary leader driving innovation and excellence in education and technology at Sagar Group.",
+    imgSrc: sudhirImage,
+    section: "Chief Patrons",
+  },
+  {
+    name: "Mr. Siddharth Agrawal",
+    title: "MD, Sagar Group",
+    bio: "Leads Sagar Group growth with focus on technology and educational success.",
+    imgSrc: siddharthImage,
+    section: "Chief Patrons",
+  },
+  {
+    name: "Dr. Abhishek Choubey",
+    title: "Principal",
+    bio: "Dedicated to academic excellence and student development with strong leadership.",
+    imgSrc: principal,
+    section: "Patrons",
+  },
+  {
+    name: "Dr. Jyoti Deshmukh",
+    title: "Group Director at SISTec",
+    bio: "Promotes research culture and academic excellence across institutions.",
+    imgSrc: jyotiImage,
+    section: "Patrons",
+  },
+  {
+    name: "Dr. Ajit Shrivastav",
+    title: "Head of Department (CSE)",
+    bio: "Guides the CSE department to produce industry-ready engineers.",
+    imgSrc: ajitImage,
+    section: "HOD",
+  },
+  {
+    name: "Priyanka Bhatele",
+    title: "Head of AIML",
+    bio: "Mentors students in AI and ML with practical, project-first learning.",
+    imgSrc: prachiImage,
+    section: "HOD",
+  },
+  {
+    name: "Arvind Kumar Jain",
+    title: "Head of IoT",
+    bio: "Pioneers IoT innovation and connects academia with real-world systems.",
+    imgSrc: arvindImage,
+    section: "HOD",
+  },
+];
+
 const ProfileCard = () => {
-  const profiles = [
-    {
-      name: "Mr. Sudhir Kumar Agrawal",
-      title: "Chairman, Sagar Group",
-      bio: "Visionary leader driving innovation and excellence in education and technology at Sagar Group.",
-      imgSrc: sudhirImage,
-      badges: ["fas fa-users", "fas fa-briefcase"],
-      section: "chief_patron",
-    },
-    {
-      name: "Mr. Siddharth Agrawal",
-      title: "MD, Sagar Group",
-      bio: "Leads Sagar Group's growth, focusing on technological advancements and educational success.",
-      imgSrc: siddharthImage,
-      badges: ["fas fa-building", "fas fa-chart-line"],
-      section: "chief_patron",
-    },
-    {
-      name: "Dr. Abhishek Choubey",
-      title: "Principal",
-      bio: "Dedicated to academic excellence and student development with over two decades of leadership.",
-      imgSrc: principal,
-      badges: ["fas fa-graduation-cap", "fas fa-chalkboard-teacher"],
-      section: "patron",
-    },
-    {
-      name: "Dr. Ajit Shrivastav",
-      title: "Head of Department (CSE)",
-      bio: "Leads the CSE department, enhancing curriculum and guiding students in the tech field.",
-      imgSrc: ajitImage,
-      badges: ["fas fa-laptop-code", "fas fa-cogs"],
-      section: "hod",
-    },
-    {
-      name: "Priyanka Bhatele",
-      title: "Head of AIML",
-      bio: "Leads AIML, mentoring students and collaborating with industry leaders to shape AI and ML.",
-      imgSrc: prachiImage,
-      badges: ["fas fa-users", "fas fa-briefcase"],
-      section: "hod",
-    },
-    {
-      name: "Arvind Kumar Jain",
-      title: "Head of IoT",
-      bio: "Pioneers IoT innovations, preparing students to excel in connected technologies.",
-      imgSrc: arvindImage,
-      badges: ["fas fa-building", "fas fa-chart-line"],
-      section: "hod",
-    },
-    {
-      name: "Dr. Jyoti Deshmukh",
-      title: "Group Director at SISTec",
-      bio: "A leader in education and research, promoting academic excellence at SISTec.",
-      imgSrc: jyotiImage,
-      badges: ["fas fa-graduation-cap", "fas fa-lightbulb"],
-      section: "patron",
-    },
-  ];
-
-
-  // Animation variants
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.9, y: 50 },
-    visible: { opacity: 1, scale: 1, y: 0 },
-  };
+  const sections = ["Chief Patrons", "Patrons", "HOD"];
 
   return (
-    <div className="main_card_div" >
-      <div className="card-titles">
-        <h1>Ours Patrons</h1>
-        <h3>Here are Our Patrons</h3>
+    <section className="space-y-10 rounded-3xl border border-slate-800 bg-slate-900/60 p-6 shadow-soft lg:p-10">
+      
+      <div className="text-center">
+        <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">
+          Our Patrons
+        </h2>
+        <p className="mt-2 text-sm text-slate-400">
+          Leaders guiding Coding Ka Cricket
+        </p>
       </div>
-      {/* Chief Patrons Section */}
 
-      <section className="section">
-        <h2 className="section-heading">Chief Patrons</h2>
-        <div className="card_collection">
-          {profiles
-            .filter((profile) => profile.section === "chief_patron")
-            .map((profile, index) => (
-              <motion.div
-                className="content"
-                key={index}
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }} // Trigger when 20% of the component is in view
-                transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-              >
-                <div className="card">
-                  <div className="firstinfo">
-                    <img src={profile.imgSrc} alt={profile.name} />
-                    <div className="profileinfo">
-                      <h1>{profile.name}</h1>
-                      <h3>{profile.title}</h3>
-                      <p className="bio">{profile.bio}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="badgescard">
-                  {profile.badges.map((badge, badgeIndex) => (
-                    <span className={`icon ${badge}`} key={badgeIndex}></span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-        </div>
-      </section>
+      {sections.map((section) => (
+        <div key={section}>
+          
+          <h3 className="mb-6 text-center font-display text-xl font-semibold text-cyan-300">
+            {section}
+          </h3>
 
-      {/* Patrons Section */}
-      <section className="section">
-        <h2 className="section-heading">Patrons</h2>
-        <div className="card_collection">
-          {profiles
-            .filter((profile) => profile.section === "patron")
-            .map((profile, index) => (
-              <motion.div
-                className="content"
-                key={index}
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }} // Trigger when 20% of the component is in view
-                transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-              >
-                <div className="card">
-                  <div className="firstinfo">
-                    <img src={profile.imgSrc} alt={profile.name} />
-                    <div className="profileinfo">
-                      <h1>{profile.name}</h1>
-                      <h3>{profile.title}</h3>
-                      <p className="bio">{profile.bio}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="badgescard">
-                  {profile.badges.map((badge, badgeIndex) => (
-                    <span className={`icon ${badge}`} key={badgeIndex}></span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-        </div>
-      </section>
+          {/* FLEX CONTAINER */}
+          <div className="flex flex-wrap justify-center gap-6">
+            
+            {profiles
+              .filter((profile) => profile.section === section)
+              .map((profile) => (
+                <motion.article
+                  key={profile.name}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.35 }}
 
-      {/* Heads of Departments Section */}
-      <section className="section">
-        <h2 className="section-heading">Heads of Departments (HOD)</h2>
-        <div className="card_collection">
-          {profiles
-            .filter((profile) => profile.section === "hod")
-            .map((profile, index) => (
-              <motion.div
-                className="content"
-                key={index}
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }} // Trigger when 20% of the component is in view
-                transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-              >
-                <div className="card">
-                  <div className="firstinfo">
-                    <img src={profile.imgSrc} alt={profile.name} />
-                    <div className="profileinfo">
-                      <h1>{profile.name}</h1>
-                      <h3>{profile.title}</h3>
-                      <p className="bio">{profile.bio}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="badgescard">
-                  {profile.badges.map((badge, badgeIndex) => (
-                    <span className={`icon ${badge}`} key={badgeIndex}></span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+                  /* Max 3 per row */
+                  className="w-full max-w-sm md:w-[48%] xl:w-[30%] rounded-2xl border border-slate-700 bg-slate-950/70 p-4 transition duration-300 hover:-translate-y-2 hover:border-indigo-400/70 hover:shadow-xl"
+                >
+                  
+                  <img
+                    src={profile.imgSrc}
+                    alt={profile.name}
+                    className="h-56 w-full rounded-xl object-cover object-center"
+                  />
+
+                  <h4 className="mt-4 font-display text-lg font-semibold text-white text-center">
+                    {profile.name}
+                  </h4>
+
+                  <p className="text-sm font-medium text-indigo-300 text-center">
+                    {profile.title}
+                  </p>
+
+                  <p className="mt-2 text-sm leading-6 text-slate-300 text-center">
+                    {profile.bio}
+                  </p>
+
+                </motion.article>
+              ))}
+          </div>
         </div>
-      </section>
-    </div>
+      ))}
+    </section>
   );
 };
 

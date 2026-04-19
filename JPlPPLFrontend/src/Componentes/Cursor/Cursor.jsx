@@ -1,25 +1,31 @@
-import React, { useEffect, useRef } from "react";
-import "./Cursor.css";
-// import ballImage from "./ball.png"; 
+﻿import { useEffect, useRef } from "react";
 
 const Cursor = () => {
   const cursorRef = useRef(null);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      const cursor = cursorRef.current;
-      if (cursor) {
-        cursor.style.left = `${clientX}px`;
-        cursor.style.top = `${clientY}px`;
-      }
+    if (window.innerWidth < 1024) {
+      return undefined;
+    }
+
+    const handleMouseMove = (event) => {
+      if (!cursorRef.current) return;
+      cursorRef.current.style.left = `${event.clientX - 14}px`;
+      cursorRef.current.style.top = `${event.clientY - 14}px`;
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  return <img ref={cursorRef} src='https://pngfre.com/wp-content/uploads/Cricket-1-1-1024x1024.png' alt="cursor" className="custom-cursor" />;
+  return (
+    <img
+      ref={cursorRef}
+      src="https://pngfre.com/wp-content/uploads/Cricket-1-1-1024x1024.png"
+      alt="cursor"
+      className="pointer-events-none fixed z-50 hidden h-7 w-7 opacity-70 lg:block"
+    />
+  );
 };
 
 export default Cursor;

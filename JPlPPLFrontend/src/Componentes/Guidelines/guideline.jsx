@@ -1,92 +1,42 @@
-import React from "react";
-import { motion } from "framer-motion";
-import "./guideline.css";
+﻿import { motion } from "framer-motion";
+
+const guidelines = [
+  "Eligibility: Only second-year students from SISTec Gandhi Nagar and SISTec Ratibad campuses can participate.",
+  "Competition Choice: Choose either JPL (Java) or PPL (Python). Switching later is not allowed.",
+  "Registration Process: Fill the online form carefully with accurate details.",
+  "Registration Fee: Rs. 20 per participant.",
+  "Trial Over: 6 individual MCQ questions; top scorers move ahead.",
+  "Team Formation: Qualified students are grouped into teams for advanced rounds.",
+  "Rounds: Trial Over, Qualifier, Semi-Final, and Final.",
+  "Evaluation: Accuracy, efficiency, teamwork, and originality.",
+  "System Requirements: Bring your own laptop with Java or Python setup.",
+  "Code of Conduct: Fair play and discipline are mandatory.",
+];
 
 const Guideline = () => {
-  const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.4, staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.3 },
-    },
-  };
-
   return (
-    <motion.section
-      className="guideline-section"
-      id="guideline"
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-    >
-      <div className="guideline-heading">
-        <motion.h1 variants={itemVariants}>Guidelines</motion.h1>
-        <h3>Please read all the instructions carefully before participating</h3>
-      </div>
+    <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 shadow-soft lg:p-10"
+      >
+        <div className="mb-8 text-center">
+          <h1 className="font-display text-3xl font-bold text-white sm:text-4xl">Guidelines</h1>
+          <p className="mt-2 text-sm text-slate-400">Please read all instructions before participating</p>
+        </div>
 
-      <motion.div className="guideline-list" variants={itemVariants}>
-        <ul>
-          <li>
-            <strong>Eligibility:</strong> Only second-year students from SISTec Gandhi Nagar and SISTec Ratibad campuses are eligible to participate. This restriction ensures a fair and focused competition among peers of the same academic level.
-          </li>
-
-          <li>
-            <strong>Competition Choice:</strong> Participants must choose between JPL (Java Premier League) or PPL (Python Premier League) based on their preferred programming language. Once selected, participants cannot switch competitions, so make your choice carefully.
-          </li>
-
-          <li>
-            <strong>Registration Process:</strong> Interested students must complete the online registration form available on the event website or through official student coordinators. Ensure all details entered are correct and complete to avoid any issues during verification.
-          </li>
-
-          <li>
-            <strong>Registration Fee:</strong> A minimal fee of ₹20 per participant is charged. This fee contributes to essential arrangements such as printed materials, certificates, and basic refreshments during the event.
-          </li>
-
-          <li>
-            <strong>Initial Round (Trial Over):</strong> The first round consists of 6 individual MCQ-based technical questions. Participants will be scored individually, and top scorers from each group will move forward to form random teams for the upcoming rounds.
-          </li>
-
-          <li>
-            <strong>Team Formation:</strong> Based on scores from the Trial Over, eleven top performers from each group will be selected and randomly divided into teams. This helps promote collaboration among participants and gives everyone a fair chance regardless of their previous group.
-          </li>
-
-          <li>
-            <strong>Competition Rounds:</strong> The event follows a multi-round format—Trial Over, Qualifier Round, Semi-Final, and Final. In team-based rounds, participants will receive development modules to solve under time constraints. Each round evaluates teamwork, logic, and coding abilities.
-          </li>
-
-          <li>
-            <strong>Module Guidelines:</strong> Modules will be designed to test real-world programming and problem-solving skills. Teams must submit working solutions within the allotted time. Partial solutions may receive partial credit based on their quality and functionality.
-          </li>
-
-          <li>
-            <strong>Evaluation Criteria:</strong> Submissions will be judged based on code accuracy, optimal logic, efficiency, and team collaboration. Any team submitting plagiarized or copied code will be immediately disqualified.
-          </li>
-
-          <li>
-            <strong>System Requirements:</strong> Participants must carry their own laptops with either Java or Python environments properly installed. A stable internet connection is also necessary. Assistance will be provided for minor technical issues, but participants are expected to manage their systems independently.
-          </li>
-
-          <li>
-            <strong>Code of Conduct:</strong> All participants are expected to maintain discipline, fairness, and a positive competitive spirit. Misconduct, use of unauthorized resources, or misbehavior with coordinators or judges will result in immediate disqualification.
-          </li>
-
-          <li>
-            <strong>Final Round Expectations:</strong> The top 2 teams from the Semi-Final will face off in the Final Round with an advanced problem statement that challenges their creativity and problem-solving depth. The team with the best solution will be crowned the winner of the league.
-          </li>
-        </ul>
-      </motion.div>
-    </motion.section>
+        <ol className="space-y-3">
+          {guidelines.map((item, idx) => (
+            <li key={item} className="rounded-xl border border-slate-700 bg-slate-950/70 p-4 text-sm leading-6 text-slate-200">
+              <span className="mr-2 font-semibold text-cyan-300">{idx + 1}.</span>
+              {item}
+            </li>
+          ))}
+        </ol>
+      </motion.section>
+    </main>
   );
 };
 

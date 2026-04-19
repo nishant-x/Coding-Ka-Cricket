@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { initSocket } from "../Socket";
+﻿import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { initSocket } from "../Socket";
+import ACTIONS from "../Actions";
 import Client from "./Client";
 import Editor from "./Editor";
-import ACTIONS from "../Actions";
 
 const LANGUAGES = ["cpp", "python", "java", "nodejs"];
 
@@ -22,10 +22,6 @@ function EditorPage() {
   const [selectedLanguage, setSelectedLanguage] = useState("cpp");
   const [isCompileWindowOpen, setIsCompileWindowOpen] = useState(false);
 
-  const toggleCompileWindow = () => {
-    setIsCompileWindowOpen(!isCompileWindowOpen);
-  };
-
   const runCode = async () => {
     setIsCompiling(true);
     try {
@@ -35,7 +31,7 @@ function EditorPage() {
       });
       setOutput(response.data.output);
     } catch (error) {
-      setOutput("Error: " + error.message);
+      setOutput(`Error: ${error.message}`);
     } finally {
       setIsCompiling(false);
     }
@@ -58,15 +54,12 @@ function EditorPage() {
         username: location.state?.username,
       });
 
-      socketRef.current.on(ACTIONS.JOINED, ({ clients, username, socketId }) => {
+      socketRef.current.on(ACTIONS.JOINED, ({ clients: joinedClients, username, socketId }) => {
         if (username !== location.state?.username) {
           toast.success(`${username} joined the room.`);
         }
-        setClients(clients);
-        socketRef.current.emit(ACTIONS.SYNC_CODE, {
-          code: codeRef.current,
-          socketId,
-        });
+        setClients(joinedClients);
+        socketRef.current.emit(ACTIONS.SYNC_CODE, { code: codeRef.current, socketId });
       });
 
       socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId, username }) => {
@@ -94,109 +87,74 @@ function EditorPage() {
     }
   };
 
-  const leaveRoom = () => {
-    reactNavigator("/");
-  };
-
   return (
-    <div className="container-fluid vh-100 d-flex flex-column">
-      <div className="row flex-grow-1">
-        {/* Sidebar */}
-        <div className="col-md-2 bg-dark text-light d-flex flex-column">
-          <img
-            src="/images/codecast.png"
-            alt="Logo"
-            className="img-fluid mx-auto"
-            style={{ maxWidth: "150px", marginTop: "-43px" }}
-          />
-          <hr style={{ marginTop: "-3rem" }} />
-          <div className="d-flex flex-column flex-grow-1 overflow-auto">
-            <span className="mb-2">Members</span>
+    <main className="h-screen overflow-hidden bg-slate-950 text-slate-100">
+      <div className="flex h-full flex-col lg:flex-row">
+        <aside className="flex w-full flex-col border-b border-slate-800 bg-slate-900/80 p-4 lg:w-72 lg:border-b-0 lg:border-r">
+          <img src="/images/codecast.png" alt="Logo" className="mx-auto h-20 w-auto" />
+          <p className="mt-3 text-sm font-semibold text-cyan-300">Members</p>
+          <div className="mt-2 flex-1 overflow-auto pr-1">
             {clients.map((client) => (
               <Client key={client.socketId} username={client.username} />
             ))}
           </div>
-          <hr />
-          <div className="mt-auto mb-3">
-            <button className="btn btn-success w-100 mb-2" onClick={copyRoomId}>
-              Copy Room ID
-            </button>
-            <button className="btn btn-danger w-100" onClick={leaveRoom}>
-              Leave Room
-            </button>
+          <div className="mt-3 grid gap-2">
+            <button className="rounded-xl bg-emerald-500 px-3 py-2 text-sm font-semibold text-white" onClick={copyRoomId}>Copy Room ID</button>
+            <button className="rounded-xl bg-red-500 px-3 py-2 text-sm font-semibold text-white" onClick={() => reactNavigator("/")}>Leave Room</button>
           </div>
-        </div>
+        </aside>
 
-        {/* Editor Panel */}
-        <div className="col-md-10 text-light d-flex flex-column">
-          <div className="bg-dark p-2 d-flex justify-content-end">
+        <section className="flex flex-1 flex-col">
+          <div className="flex items-center justify-end border-b border-slate-800 bg-slate-900/80 p-3">
             <select
-              className="form-select w-auto"
+              className="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100"
               value={selectedLanguage}
               onChange={(e) => setSelectedLanguage(e.target.value)}
             >
               {LANGUAGES.map((lang) => (
-                <option key={lang} value={lang}>
-                  {lang}
-                </option>
+                <option key={lang} value={lang}>{lang}</option>
               ))}
             </select>
           </div>
-          <Editor
-            socketRef={socketRef}
-            roomId={roomId}
-            onCodeChange={(code) => {
-              codeRef.current = code;
-            }}
-          />
-        </div>
+
+          <div className="flex-1 overflow-hidden">
+            <Editor
+              socketRef={socketRef}
+              roomId={roomId}
+              onCodeChange={(code) => {
+                codeRef.current = code;
+              }}
+            />
+          </div>
+        </section>
       </div>
 
-      {/* Compiler Toggle Button */}
       <button
-        className="btn btn-primary position-fixed bottom-0 end-0 m-3"
-        onClick={toggleCompileWindow}
-        style={{ zIndex: 1050 }}
+        className="fixed bottom-4 right-4 z-40 rounded-xl bg-indigo-500 px-4 py-2 text-sm font-semibold text-white"
+        onClick={() => setIsCompileWindowOpen((prev) => !prev)}
       >
         {isCompileWindowOpen ? "Close Compiler" : "Open Compiler"}
       </button>
 
-      {/* Compiler Output */}
-      <div
-        className={`bg-dark text-light p-3 ${
-          isCompileWindowOpen ? "d-block" : "d-none"
-        }`}
-        style={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: isCompileWindowOpen ? "30vh" : "0",
-          transition: "height 0.3s ease-in-out",
-          overflowY: "auto",
-          zIndex: 1040,
-        }}
-      >
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <h5 className="m-0">Compiler Output ({selectedLanguage})</h5>
-          <div>
-            <button
-              className="btn btn-success me-2"
-              onClick={runCode}
-              disabled={isCompiling}
-            >
-              {isCompiling ? "Compiling..." : "Run Code"}
-            </button>
-            <button className="btn btn-secondary" onClick={toggleCompileWindow}>
-              Close
-            </button>
+      {isCompileWindowOpen && (
+        <div className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-700 bg-slate-900 p-4 shadow-2xl">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+            <h2 className="font-display text-lg font-semibold text-white">Compiler Output ({selectedLanguage})</h2>
+            <div className="flex gap-2">
+              <button className="rounded-lg bg-emerald-500 px-3 py-2 text-sm font-semibold text-white" onClick={runCode} disabled={isCompiling}>
+                {isCompiling ? "Compiling..." : "Run Code"}
+              </button>
+              <button className="rounded-lg border border-slate-600 px-3 py-2 text-sm text-slate-200" onClick={() => setIsCompileWindowOpen(false)}>
+                Close
+              </button>
+            </div>
           </div>
+          <pre className="max-h-52 overflow-auto rounded-xl border border-slate-700 bg-slate-950 p-3 text-xs text-slate-200">
+            {output || "Output will appear here after compilation"}
+          </pre>
         </div>
-        <pre className="bg-secondary p-3 rounded">
-          {output || "Output will appear here after compilation"}
-        </pre>
-      </div>
-    </div>
+      )}
+    </main>
   );
 }
 

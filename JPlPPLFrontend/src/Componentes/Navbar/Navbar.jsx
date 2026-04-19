@@ -1,86 +1,73 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link } from "react-router-dom";
-import "./Navbar.css";
 import logo from "../../assets/sisteclogo.png";
+
+const navItems = [
+  { label: "Home", to: "/" },
+  { label: "Guidelines", to: "/guideline" },
+  { label: "Process Flow", to: "/#processflow", isAnchor: true },
+  { label: "FAQs", to: "/#faq", isAnchor: true },
+  { label: "Join Contest", to: "/contestlogin" },
+  { label: "Contact", to: "/contact" },
+];
 
 const Navbar = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
-  const pdfUrl = "/Result/PPL-Teams.pdf";
-
-  const toggleMenu = () => {
-    setIsMenuActive(!isMenuActive);
-  };
-
-  const handleDownload = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await fetch(pdfUrl, {
-      credentials: 'include', 
-    });
-    
-    if (!response.ok) throw new Error("Failed to fetch PDF");
-    
-    
-    const blob = await response.blob();
-    
-   
-    const blobUrl = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = blobUrl;
-    link.download = "PPL-Result.pdf"; 
-    document.body.appendChild(link);
-    link.click();
-    
-    // 5. Cleanup
-    setTimeout(() => {
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    }, 100);
-  } catch (error) {
-    console.error("Download failed:", error);
-    // Fallback: Open PDF in new tab
-    window.open(pdfUrl, "_blank");
-  }
-};
 
   return (
-    <>
-      <header className="navbarheader">
-        <nav className="navbar">
-          <div className="logo">
-            <Link to="/">
-              <img src={logo} alt="logo" />
+    <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-lg">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <Link to="/" className="shrink-0 ">
+          <img src={logo} alt="Coding Ka Cricket" className="h-11 w-auto object-contain" />
+        </Link>
+
+        <button
+          type="button"
+          className="inline-flex items-center rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-200 transition hover:border-indigo-400 hover:text-indigo-300 lg:hidden"
+          onClick={() => setIsMenuActive((prev) => !prev)}
+          aria-label="Toggle menu"
+        >
+          Menu
+        </button>
+
+        <ul
+          className={`absolute left-0 top-full w-full border-b border-slate-800 bg-slate-950/95 px-4 py-4 lg:static lg:flex lg:w-auto lg:items-center lg:gap-7 lg:border-0 lg:bg-transparent lg:p-0 ${
+            isMenuActive ? "block" : "hidden lg:flex"
+          }`}
+        >
+          {navItems.map((item) => (
+            <li key={item.label} className="py-1 lg:py-0">
+              {item.isAnchor ? (
+                <a
+                  href={item.to}
+                  className="text-sm font-medium text-slate-200 transition hover:text-cyan-300"
+                  onClick={() => setIsMenuActive(false)}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  to={item.to}
+                  className="text-sm font-medium text-slate-200 transition hover:text-cyan-300"
+                  onClick={() => setIsMenuActive(false)}
+                >
+                  {item.label}
+                </Link>
+              )}
+            </li>
+          ))}
+          <li className="mt-3 lg:mt-0">
+            <Link
+              className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-soft transition hover:scale-[1.02]"
+              to="/register"
+              onClick={() => setIsMenuActive(false)}
+            >
+              Register
             </Link>
-          </div>
-          <ul className={`nav-menu ${isMenuActive ? "active" : ""}`}>
-            <li><Link to="/">Home</Link></li>
-            <li className="dropdown">
-              <Link to="/guideline">Guidelines</Link>
-            </li>
-            <li className="dropdown">
-              <a href="#">Explore</a>
-              <ul className="dropdown-menu">
-                <li><a href="/#processflow">Process Flow</a></li>
-                <li><a href="/#faq">FAQ's</a> </li>
-              </ul>
-            </li>
-            <li><Link to="/contestlogin">Join Contest</Link></li>
-            {/* <li><Link to="/adminlogin">Admin Login</Link></li> */}
-            <li><Link to="/contact">Contact Us</Link></li>
-          </ul>
-          <div className="nav-buttons">
-            {/* <button onClick={handleDownload} className="register-btn">Download Result</button> */}
-            <Link className="register-btn" to="/register">Register</Link>
-          </div>
-          <div className="hamburger" onClick={toggleMenu}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </nav>
-      </header>
-      {/* <Alertmarquee/> */}
-    </>
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 };
 
