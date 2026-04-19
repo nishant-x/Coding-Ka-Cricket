@@ -6,48 +6,19 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "*",
-    "@lottiefiles/dotlottie-react": "*",
-    "@monaco-editor/react": "*",
-    "@react-spring/web": "*",
-    "axios": "*",
-    "bootstrap": "*",
-    "chart.js": "*",
-    "codemirror": "*",
-    "dotenv": "*",
-    "framer-motion": "*",
-    "react": "*",
-    "react-avatar": "*",
-    "react-chartjs-2": "*",
-    "react-dom": "*",
-    "react-hot-toast": "*",
-    "react-icons": "*",
-    "react-intersection-observer": "*",
-    "react-router-dom": "*",
-    "react-scripts": "*",
-    "react-slideshow-image": "*",
-    "react-spinners": "*",
-    "react-toastify": "*",
-    "socket.io-client": "*",
-    "typewriter-effect": "*",
-    "uuid": "*",
-    "web-vitals": "*"
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-router-dom": "^7.14.1",
+    "axios": "^1.15.0",
+    "framer-motion": "^12.38.0",
+    "react-icons": "^5.6.0",
+    "react-hot-toast": "^2.6.0"
   },
   "devDependencies": {
-    "@eslint/js": "*",
-    "@types/react": "*",
-    "@types/react-dom": "*",
-    "@vitejs/plugin-react": "*",
-    "esbuild": "*",
-    "eslint": "*",
-    "eslint-plugin-react": "*",
-    "eslint-plugin-react-hooks": "*",
-    "eslint-plugin-react-refresh": "*",
-    "globals": "*",
-    "vite": "*"
+    "@vitejs/plugin-react": "^6.0.1",
+    "vite": "^8.0.8"
   }
 }
