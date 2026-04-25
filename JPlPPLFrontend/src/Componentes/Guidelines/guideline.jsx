@@ -2,12 +2,12 @@
 
 const guidelines = [
   "Eligibility: Only second-year students from SISTec Gandhi Nagar and SISTec Ratibad campuses can participate.",
-  "Competition Choice: Choose either JPL (Java) or PPL (Python). Switching later is not allowed.",
+  "Competition Choice: CSE Students choose only JPL and CS  / IT / IOT / AIML / AIDS students choose only PPL.",
   "Registration Process: Fill the online form carefully with accurate details.",
-  "Registration Fee: Rs. 20 per participant.",
-  "Trial Over: 6 individual MCQ questions; top scorers move ahead.",
-  "Team Formation: Qualified students are grouped into teams for advanced rounds.",
-  "Rounds: Trial Over, Qualifier, Semi-Final, and Final.",
+  "Registration Fee: Rs. 100 per participant.",
+  "Super Over: 6 in questions; top scorers move ahead.",
+  "Team Formation: Top 11 Qualified students are grouped into teams for advanced rounds.",
+  "Rounds: Super Over, Qualifier, Semi-Final(Top 4 teams), and Final.",
   "Evaluation: Accuracy, efficiency, teamwork, and originality.",
   "System Requirements: Bring your own laptop with Java or Python setup.",
   "Code of Conduct: Fair play and discipline are mandatory.",

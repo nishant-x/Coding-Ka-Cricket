@@ -2,9 +2,7 @@
 import sudhirImage from "../../assets/Facaltyimg/sudir.jpg";
 import siddharthImage from "../../assets/Facaltyimg/siddharth.jpg";
 import jyotiImage from "../../assets/Facaltyimg/jyoti.jpg";
-import ajitImage from "../../assets/Facaltyimg/Ajitshrivastav.jpg";
 import prachiImage from "../../assets/Facaltyimg/priyankabhatele.jpg";
-import arvindImage from "../../assets/Facaltyimg/arvindjain.jpg";
 import principal from "../../assets/Facaltyimg/principal.jpg";
 
 const profiles = [
@@ -36,27 +34,15 @@ const profiles = [
     imgSrc: jyotiImage,
     section: "Patrons",
   },
-  {
-    name: "Dr. Ajit Shrivastav",
-    title: "Head of Department (CSE)",
-    bio: "Guides the CSE department to produce industry-ready engineers.",
-    imgSrc: ajitImage,
-    section: "HOD",
-  },
+  
   {
     name: "Priyanka Bhatele",
-    title: "Head of AIML",
+    title: "Head of CSE-AIML",
     bio: "Mentors students in AI and ML with practical, project-first learning.",
     imgSrc: prachiImage,
     section: "HOD",
   },
-  {
-    name: "Arvind Kumar Jain",
-    title: "Head of IoT",
-    bio: "Pioneers IoT innovation and connects academia with real-world systems.",
-    imgSrc: arvindImage,
-    section: "HOD",
-  },
+  
 ];
 
 const ProfileCard = () => {

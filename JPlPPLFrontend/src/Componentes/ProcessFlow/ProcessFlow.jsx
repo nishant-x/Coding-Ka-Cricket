@@ -7,7 +7,7 @@ import { GiTrophy, GiLaurelsTrophy } from "react-icons/gi";
 const ProcessFlow = () => {
   const steps = [
     { id: 1, title: "Registration", description: "Sign up to secure your spot in the competition.", icon: <FaRegIdBadge /> },
-    { id: 2, title: "Trial Over", description: "Prove your skills in a rapid Q&A to advance.", icon: <BiSolidCricketBall /> },
+    { id: 2, title: "Super Over", description: "Prove your skills in a rapid Q&A to advance.", icon: <BiSolidCricketBall /> },
     { id: 3, title: "Team Formation", description: "Collaborate and strategize with your team.", icon: <RiTeamFill /> },
     { id: 4, title: "Qualifier Round", description: "Compete to solve modules and reach the semis.", icon: <MdSportsCricket /> },
     { id: 5, title: "Semi-Final", description: "Battle with top teams to reach the final.", icon: <GiTrophy /> },

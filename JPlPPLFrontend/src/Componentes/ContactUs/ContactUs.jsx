@@ -18,7 +18,7 @@ const contactCards = [
     icon: <FaEnvelope />,
     title: "Email",
     subtitle: "Mail us and we will get back soon.",
-    lines: ["rohitbansal@sistec.ac.in", "himanshuyadav@sistec.ac.in", "priyankabhatele@sistec.ac.in"],
+    lines: [ "priyankabhatele@sistec.ac.in","priyankasaxena@sistec.ac.in","divyajain@sistec.ac.in"],
   },
 ];
 

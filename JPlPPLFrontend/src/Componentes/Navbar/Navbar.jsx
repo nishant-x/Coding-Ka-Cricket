@@ -7,7 +7,6 @@ const navItems = [
   { label: "Guidelines", to: "/guideline" },
   { label: "Process Flow", to: "/#processflow", isAnchor: true },
   { label: "FAQs", to: "/#faq", isAnchor: true },
-  { label: "Join Contest", to: "/contestlogin" },
   { label: "Contact", to: "/contact" },
 ];
 

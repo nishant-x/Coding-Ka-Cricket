@@ -1,6 +1,6 @@
 ﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import payment from "../../assets/paymentQR/newQRPushpendra.png";
+import payment from "../../assets/paymentQR/sistecr.jpg";
 
 const inputBase =
   "w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-slate-100 outline-none transition focus:border-indigo-400";
@@ -20,7 +20,6 @@ const Register = () => {
   const branchesByCollege = {
     "SISTec-GN": ["CSE", "CSE - Cyber Security", "CSE - AIML", "CSE - AIDS"],
     "SISTec-R": ["CSE", "CSE - AIML"],
-    "SISTec-E": ["CSE", "CSE - IoT"],
   };
 
   const leagues = [
@@ -178,7 +177,7 @@ const Register = () => {
               Exciting prizes for winners
             </p>
             <p className="rounded-xl border border-slate-700 bg-slate-950/60 p-3">
-              30/05/2025 - JPL, 31/05/2025 - PPL
+              12/05/2026 - JPL, 13/05/2026 - PPL
             </p>
             <p className="rounded-xl border border-slate-700 bg-slate-950/60 p-3">
               SISTec-R Campus, Ratibad, Bhopal
@@ -282,7 +281,6 @@ const Register = () => {
                 <option value="">Select College</option>
                 <option value="SISTec-GN">SISTec-GN</option>
                 <option value="SISTec-R">SISTec-R</option>
-                <option value="SISTec-E">SISTec-E</option>
               </select>
 
               <select
@@ -331,7 +329,7 @@ const Register = () => {
             {year && (
               <div className="rounded-xl border border-slate-700 bg-slate-950/60 p-4 text-center">
                 <p className="text-sm text-slate-300">
-                  Please make the payment of ₹20
+                  Please make the payment of ₹100
                 </p>
 
                 <img
