@@ -3,7 +3,7 @@ import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import PiyushImage from "../../assets/coders/piyush.jpg";
 import PawanImage from "../../assets/coders/pawan.jpg";
 import VishalImage from "../../assets/coders/vishal.jpg";
-import NishantImage from "../../assets/coders/nishant.jpg";
+import NishantImage from "../../assets/coders/nishant2.jpeg";
 
 const cards = [
   {
