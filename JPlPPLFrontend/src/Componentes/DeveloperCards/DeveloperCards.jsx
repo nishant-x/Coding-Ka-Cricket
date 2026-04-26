@@ -35,7 +35,7 @@ const cards = [
     role: "MERN Developer",
     imageUrl: NishantImage,
     linkedinUrl: "https://www.linkedin.com/in/nishant-jhade-6b9a2b27b/",
-    instagramUrl: "https://www.instagram.com/_nishanttt.zd__/",
+    instagramUrl: "https://www.instagram.com/_nishantt.zd__/",
     githubUrl: "https://github.com/nishant-x",
   },
 ];
