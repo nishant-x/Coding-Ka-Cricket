@@ -15,6 +15,14 @@ const cards = [
     githubUrl: "https://github.com/p4p-iyush",
   },
   {
+    name: "Nishant Jhade",
+    role: "MERN Developer",
+    imageUrl: NishantImage,
+    linkedinUrl: "https://www.linkedin.com/in/nishant-jhade-6b9a2b27b/",
+    instagramUrl: "https://www.instagram.com/_nishantt.zd__/",
+    githubUrl: "https://github.com/nishant-x",
+  },
+  {
     name: "Pawan Darwai",
     role: "Backend Developer",
     imageUrl: PawanImage,
@@ -29,15 +37,7 @@ const cards = [
     linkedinUrl: "https://www.linkedin.com/in/vishal-fulbandhe-16662832b",
     instagramUrl: "https://www.instagram.com/vishal_fulbandhe24?igsh=bTIzbGNlMHBtY2h0_",
     githubUrl: "https://github.com/vishalfulbandhe",
-  },
-  {
-    name: "Nishant Jhade",
-    role: "MERN Developer",
-    imageUrl: NishantImage,
-    linkedinUrl: "https://www.linkedin.com/in/nishant-jhade-6b9a2b27b/",
-    instagramUrl: "https://www.instagram.com/_nishantt.zd__/",
-    githubUrl: "https://github.com/nishant-x",
-  },
+  } 
 ];
 
 const DeveloperCard = ({ card }) => (
