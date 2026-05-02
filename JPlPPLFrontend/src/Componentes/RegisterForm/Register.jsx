@@ -68,7 +68,7 @@ const Register = () => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
-    const enrollmentRegex = /^[0-9]{12}$/;
+    const enrollmentRegex = /^\d{4}[A-Za-z]{2}\d{6}$/;
 
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
