@@ -7,7 +7,7 @@
     "start": "nodemon app.js"
   },
   "engines": {
-    "node": "18.x"
+    "node": "18.20.0"
   },
   "author": "",
   "license": "ISC",
@@ -15,9 +15,9 @@
     "axios": "",
     "body-parser": "",
     "cors": "",
-    "debug": "^4.4.3",
+    "debug": "^4.3.4",
     "dotenv": "",
-    "express": "",
+    "express": "^4.22.1",
     "mongoose": "",
     "multer": "",
     "nodemon": "",
