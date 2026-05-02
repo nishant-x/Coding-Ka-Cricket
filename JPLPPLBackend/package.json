@@ -7,14 +7,15 @@
     "start": "nodemon app.js"
   },
   "engines": {
-  "node": "18.x"
-},
+    "node": "18.x"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "",
     "body-parser": "",
     "cors": "",
+    "debug": "^4.4.3",
     "dotenv": "",
     "express": "",
     "mongoose": "",
