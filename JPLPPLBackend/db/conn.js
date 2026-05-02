@@ -1,9 +1,15 @@
 const mongoose = require('mongoose');
-require('dotenv').config(); 
+const crypto = require('crypto');
+global.crypto = crypto;
+require('dotenv').config();
 
 mongoose.connect(process.env.MONGOOSE_URL)
   .then(() => {
     console.log('Connected to MongoDB');
+
+    app.listen(process.env.PORT || 5000, () => {
+      console.log('Server running');
+    });
   })
   .catch((err) => {
     console.error('MongoDB connection error:', err);
