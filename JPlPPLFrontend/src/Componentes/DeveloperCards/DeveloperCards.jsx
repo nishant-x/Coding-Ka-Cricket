@@ -45,7 +45,7 @@ const DeveloperCard = ({ card }) => (
   <img
     src={card.imageUrl}
     alt={card.name}
-    className="h-64 w-full rounded-xl object-cover"
+    className="h-72 w-full rounded-xl object-cover"
   />
 
   <h3 className="mt-4 font-display text-lg font-semibold text-white">
