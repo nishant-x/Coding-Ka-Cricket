@@ -71,47 +71,34 @@ const DeveloperCards = () => {
 
   return (
     <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 shadow-soft lg:p-10">
-  <div className="mb-8 text-center">
-    <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">
-      Our Developers
-    </h2>
-    <p className="mt-2 text-sm text-slate-400">
-      Meet the team behind this platform
-    </p>
-  </div>
-
-  {isMobile ? (
-    <div>
-      <div className="flex justify-center">
-        <DeveloperCard card={cards[activeIndex]} />
+      <div className="mb-8 text-center">
+        <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">Our Developers</h2>
+        <p className="mt-2 text-sm text-slate-400">Meet the team behind this platform</p>
       </div>
 
-      <div className="mt-4 flex justify-center gap-2">
-        {cards.map((card, idx) => (
-          <button
-            key={card.name}
-            type="button"
-            aria-label={`Go to ${card.name}`}
-            onClick={() => setActiveIndex(idx)}
-            className={`h-2.5 w-2.5 rounded-full transition-colors ${
-              idx === activeIndex
-                ? "bg-indigo-400"
-                : "bg-slate-600 hover:bg-slate-500"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  ) : (
-    <div className="flex justify-center">
-      <div className="grid gap-6 justify-items-center sm:grid-cols-2 xl:grid-cols-4">
-        {cards.map((card) => (
-          <DeveloperCard key={card.name} card={card} />
-        ))}
-      </div>
-    </div>
-  )}
-</section>
+      {isMobile ? (
+        <div>
+          <DeveloperCard card={cards[activeIndex]} />
+          <div className="mt-4 flex justify-center gap-2">
+            {cards.map((card, idx) => (
+              <button
+                key={card.name}
+                type="button"
+                aria-label={`Go to ${card.name}`}
+                onClick={() => setActiveIndex(idx)}
+                className={`h-2.5 w-2.5 rounded-full ${idx === activeIndex ? "bg-indigo-400" : "bg-slate-600"}`}
+              />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {cards.map((card) => (
+            <DeveloperCard key={card.name} card={card} />
+          ))}
+        </div>
+      )}
+    </section>
   );
 };
 
