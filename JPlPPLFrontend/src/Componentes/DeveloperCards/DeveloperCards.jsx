@@ -41,16 +41,48 @@ const cards = [
 ];
 
 const DeveloperCard = ({ card }) => (
-  <article className="rounded-2xl border border-slate-700 bg-slate-950/70 p-4 shadow-soft transition hover:-translate-y-1 hover:border-indigo-400/70">
-    <img src={card.imageUrl} alt={card.name} className="h-52 w-full rounded-xl object-cover" />
-    <h3 className="mt-4 font-display text-lg font-semibold text-white">{card.name}</h3>
-    <p className="text-sm text-cyan-300">{card.role}</p>
-    <div className="mt-4 flex gap-2 text-slate-200">
-      <a className="rounded-lg border border-slate-700 p-2 hover:border-indigo-400 hover:text-indigo-300" href={card.linkedinUrl} target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-      <a className="rounded-lg border border-slate-700 p-2 hover:border-indigo-400 hover:text-indigo-300" href={card.instagramUrl} target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-      <a className="rounded-lg border border-slate-700 p-2 hover:border-indigo-400 hover:text-indigo-300" href={card.githubUrl} target="_blank" rel="noopener noreferrer"><FaGithub /></a>
-    </div>
-  </article>
+  <article className="rounded-2xl border border-slate-700 bg-slate-950/70 p-4 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-indigo-400/70">
+  <img
+    src={card.imageUrl}
+    alt={card.name}
+    className="h-64 w-full rounded-xl object-cover"
+  />
+
+  <h3 className="mt-4 font-display text-lg font-semibold text-white">
+    {card.name}
+  </h3>
+
+  <p className="text-sm text-cyan-300">{card.role}</p>
+
+  <div className="mt-4 flex gap-2 text-slate-200">
+    <a
+      className="rounded-lg border border-slate-700 p-2 transition hover:border-indigo-400 hover:text-indigo-300"
+      href={card.linkedinUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FaLinkedin />
+    </a>
+
+    <a
+      className="rounded-lg border border-slate-700 p-2 transition hover:border-indigo-400 hover:text-indigo-300"
+      href={card.instagramUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FaInstagram />
+    </a>
+
+    <a
+      className="rounded-lg border border-slate-700 p-2 transition hover:border-indigo-400 hover:text-indigo-300"
+      href={card.githubUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FaGithub />
+    </a>
+  </div>
+</article>
 );
 
 const DeveloperCards = () => {
