@@ -1,8 +1,7 @@
 ﻿import { useEffect, useState } from "react";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import PiyushImage from "../../assets/coders/piyush.jpg";
-import PawanImage from "../../assets/coders/pawan.jpg";
-import VishalImage from "../../assets/coders/vishal.jpg";
+import KrishImage from "../../assets/coders/piyush.jpg";
 import NishantImage from "../../assets/coders/nishant2.jpeg";
 
 const cards = [
@@ -23,21 +22,22 @@ const cards = [
     githubUrl: "https://github.com/nishant-x",
   },
   {
-    name: "Pawan Darwai",
-    role: "Backend Developer",
-    imageUrl: PawanImage,
-    linkedinUrl: "https://www.linkedin.com/in/pawan-darwai-02821238a",
-    instagramUrl: "https://www.instagram.com/pawan_darwai_?igsh=MWRrZ3hwd3R3d24zZQ==",
-    githubUrl: "https://github.com/pawandarwai59",
+    name: "Krish Signhai",
+    role: "MERN Developer",
+    imageUrl: KrishImage,
+    linkedinUrl: "https://www.linkedin.com/in/krish-singhai",
+    instagramUrl: "https://www.instagram.com/krish_singhai_",
+    githubUrl: "https://github.com/Krishsinghai",
   },
-  {
-    name: "Vishal Fulbandhe",
-    role: "AI Frontend Developer",
-    imageUrl: VishalImage,
-    linkedinUrl: "https://www.linkedin.com/in/vishal-fulbandhe-16662832b",
-    instagramUrl: "https://www.instagram.com/vishal_fulbandhe24?igsh=bTIzbGNlMHBtY2h0_",
-    githubUrl: "https://github.com/vishalfulbandhe",
-  } 
+  // {
+  //   name: "RajKumar Lodhi",
+  //   role: "UI/UX Designer",
+  //   imageUrl: RajImage,
+  //   linkedinUrl: "https://www.linkedin.com/in/rajkumar-lodhi-90181b339/",
+  //   instagramUrl: "https://www.instagram.com/ll._.raj_.ll/",
+  //   githubUrl: "https://github.com/rajxxlodhi",
+  // },
+  
 ];
 
 const DeveloperCard = ({ card }) => (
