@@ -1,7 +1,7 @@
 ﻿import { useEffect, useState } from "react";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import PiyushImage from "../../assets/coders/piyush.jpg";
-import KrishImage from "../../assets/coders/piyush.jpg";
+import KrishImage from "../../assets/coders/krish.jpg";
 import NishantImage from "../../assets/coders/nishant2.jpeg";
 
 const cards = [
